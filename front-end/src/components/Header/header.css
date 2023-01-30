@@ -1,0 +1,31 @@
+.header-top {
+    background: #0C0C14;
+}
+
+.header-logo {
+    background-color: rgba(0, 0, 0, 0.0);
+    background: linear-gradient(#0C0C14, #0C0C14) padding-box,
+    linear-gradient(to top left, #1767F1, #CA0CF2,  #D74D29, #F8C129) border-box;
+    border-radius: 50em;
+    border: 2px solid transparent;
+}
+
+.header-top .form-control {
+    background-color: rgba(0, 0, 0, 0.0);
+    background: linear-gradient(#0C0C14, #0C0C14) padding-box,
+    linear-gradient(to top left, #1767F1, #CA0CF2,  #D74D29, #F8C129) border-box;
+    border-radius: 50em;
+    border: 2px solid transparent;
+    padding-left: 2.375rem;
+    width: 100%;
+}
+
+.header-search {
+    height: max-content;
+    width: 30%;
+}
+
+.header-icon {
+    width: 30px;
+    height: 30px;
+}
