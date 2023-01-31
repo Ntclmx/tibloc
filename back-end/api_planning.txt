@@ -1,0 +1,82 @@
+Standar API
+
+{baseUrl}/{version}/{endpoint}
+
+Example:
+http://localhost:4000/v1/events
+
+200	- OK    			- Get Sukses
+201	- CREATED			- Post Sukses
+400	- BAD REQUEST		- Error di Client Side
+401	- UNAUTHORIZE		- User tidak terauthorize
+403	- FORBIDDEN			- User tidak boleh mengakses ini
+404	- NOT FOUND			- Endpoint gaditemukan
+500	- INTERNAL SERVER ERROR	- Error di Server Side
+502	- BAD GATEWAY		- Invalid response
+
+Authentication
+
+1. Register
+2. Login
+
+Event
+
+1. Get List Events
+
+GET http://localhost:4000/v1/events
+
+req:
+
+res:
+{
+    [
+        {
+            "eventId" : "1",
+            "eventTitle" : "Event 1",
+            "eventDescription" : "Event seru",
+            "eventTnc" : "Gaboleh ga seru",
+            "eventAddress" : "Menara BCA",
+            "eventDate" : "2023-02-26",
+            "eventLogo" : "ini.png"
+        },
+        {
+            "eventId" : "2",
+            "eventTitle" : "Event 1",
+            "eventDescription" : "Event seru",
+            "eventTnc" : "Gaboleh ga seru",
+            "eventAddress" : "Menara BCA",
+            "eventDate" : "2023-02-26",
+            "eventLogo" : "ini.png" 
+        }
+    ]
+}
+
+2. Post Event
+
+POST http://localhost:4000/v1/events
+
+req
+{
+    "eventId" : "1",
+    "eventTitle" : "Event 1",
+    "eventDescription" : "Event seru",
+    "eventTnc" : "Gaboleh ga seru",
+    "eventAddress" : "Menara BCA",
+    "eventDate" : "2023-02-26",
+    "eventLogo" : "ini.png"
+}
+
+res
+{
+    "message": "post event successfully",
+    "event": {
+        "event_id": "1",
+        "event_title": "Event 1",
+        "event_description": "Event seru",
+        "event_tnc": "Gaboleh ga seru",
+        "event_address": "Menara BCA",
+        "event_date": "2023-02-26",
+        "event_logo": "ini.png"
+    }
+}
+
