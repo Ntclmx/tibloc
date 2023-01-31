@@ -1,0 +1,43 @@
+.register-card {
+    border-radius: 1rem;
+    max-width: 400px;
+}
+
+.register-form ::placeholder {
+    text-align: center; 
+    color: #0c0c14;
+}
+
+.register-button {
+    width: 100%;
+    max-height: fit-content;
+    background-color: #1767f1;
+    font-weight: bold;
+}
+
+.register-other-create {
+    color: #0c0c14;
+    font-size: small;
+}
+
+.register-terms {
+    font-size: small;
+}
+
+.register-already {
+    color: #0c0c14;
+}
+
+.register-other-create-button {
+    border: 1px solid;
+    border-color: #0c0c14;
+    background-color: white;
+}
+
+.register-other-create-button p {
+    color: #0c0c14;
+}
+
+.register-icon {
+    background-color: linear-gradient(to top left, #1767F1, #CA0CF2,  #D74D29, #F8C129);
+}
