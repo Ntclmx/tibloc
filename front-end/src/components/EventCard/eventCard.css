@@ -28,3 +28,12 @@
     height: 25px;
     width: 25px;
 }
+
+.event-card-date {
+    top: 64%;
+    width: 60%;
+    background-color: #1767F1;
+    padding-left: 15%;
+    border-radius: 0px 10px 10px 0px;
+    font-size: small;
+}

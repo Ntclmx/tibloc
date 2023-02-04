@@ -15,7 +15,7 @@ const MainApp = () => {
             <Header/>
         </div>
         <Container>
-            <div className='content-wrapper d-flex justify-content-center align-items-center'>
+            <div className='content-wrapper d-flex justify-content-center align-items-center my-3 pt-3'>
                 <Router>
                     <Switch>
                         <Route path='/home'>
