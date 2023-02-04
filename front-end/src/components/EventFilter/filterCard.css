@@ -1,0 +1,14 @@
+.filter-card {
+    border: 3px solid;
+    border-color: rgba(12, 12, 20, 0.3);
+}
+
+.filter-card-font-bold {
+    font-size: large;
+    font-weight: bolder;
+}
+
+.filter-card-font-small {
+    font-size: smaller;
+    font-weight: normal;
+}
