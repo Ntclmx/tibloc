@@ -1,11 +1,40 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const eventRoutes = require('./src/routes/event');
-const app = express();
+const multer = require('multer');
+const path = require('path');
 
 const PORT = 4000;
 
+const eventRoutes = require('./src/routes/event');
+
+const app = express();
+
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, new Date().getTime() + '-' + file.originalname)
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
+        cb(null, true);
+    }
+    else {
+        cb(null, false);
+    }
+};
+
 app.use(bodyParser.json());
+app.use(multer({
+    storage: fileStorage,
+    fileFilter: fileFilter
+}).single('eventLogo'));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,6 +58,10 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message : message, data: data});
 });
 
-app.listen(PORT, () => {
-    console.log(`Tibloc running on http://localhost:${PORT}`);
-});
+mongoose.connect('mongodb+srv://tibloc:MongoDBtibloc@cluster0.vlfqswq.mongodb.net/event?retryWrites=true&w=majority')
+.then( () => {
+    app.listen(PORT, () => {
+        console.log(`Tibloc running on http://localhost:${PORT}`);
+    });
+}).catch( err => console.log(err));
+
