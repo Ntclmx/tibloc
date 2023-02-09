@@ -1,0 +1,14 @@
+.event-sort-container {
+    max-width: 35%;
+    /* background-color: aqua; */
+}
+
+.sort-font-thin {
+    font-size: large;
+    font-weight: lighter;
+}
+
+.link-sort {
+    text-decoration: none;
+    color: black;
+}
