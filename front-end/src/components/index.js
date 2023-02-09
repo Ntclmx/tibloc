@@ -5,3 +5,4 @@ import EventFilter from "./EventFilter";
 import EventSort from "./EventSort";
 
 export { Header, Footer, EventCard, EventFilter, EventSort };
+
