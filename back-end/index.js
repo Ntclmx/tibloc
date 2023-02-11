@@ -58,7 +58,7 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message : message, data: data});
 });
 
-mongoose.connect('mongodb+srv://tibloc:MongoDBtibloc@cluster0.vlfqswq.mongodb.net/event?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://tibloc:MongoDBtibloc@cluster0.vlfqswq.mongodb.net/tibloc?retryWrites=true&w=majority')
 .then( () => {
     app.listen(PORT, () => {
         console.log(`Tibloc running on http://localhost:${PORT}`);
