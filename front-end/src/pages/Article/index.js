@@ -2,9 +2,9 @@ import React from "react";
 
 const Article = () => {
     return (
-        <div> 
-            <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
-                <a class="navbar-brand" href="#">Navbar</a>
+        <div class="row"> 
+            <nav id="navbar-example3" class="col-sm-3 navbar-light bg-light flex-column align-items-stretch">
+                <a class="navbar-brand" href="/#">FAQ</a>
                 <nav class="nav nav-pills flex-column">
                     <a class="nav-link" href="#item-1">Item 1</a>
                     <nav class="nav nav-pills flex-column">
@@ -18,9 +18,9 @@ const Article = () => {
                         <a class="nav-link ms-3 my-1" href="#item-3-2">Item 3-2</a>
                     </nav>
                 </nav>
-            </nav>
+            </nav>   
 
-            <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
+            <div class="col-sm-9" data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
                 <h4 id="item-1">Item 1</h4>
                 <p>...</p>
                 <h5 id="item-1-1">Item 1-1</h5>
@@ -35,7 +35,7 @@ const Article = () => {
                 <p>...</p>
                 <h5 id="item-3-2">Item 3-2</h5>
                 <p>...</p>
-            </div>
+            </div>         
         </div>
     )
 };
