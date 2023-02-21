@@ -5,6 +5,8 @@ import DetailEvent from '../DetailEvent'
 import Home from '../Home'
 import ListEvents from '../ListEvents';
 import './mainApp.css'
+import Container from 'react-bootstrap/Container';
+import Article from '../Article'
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
@@ -32,6 +34,9 @@ const MainApp = () => {
                     <Switch>
                         <Route path='/home'>
                             <Home/>
+                        </Route>
+                        <Route path='/article'>
+                            <Article/>
                         </Route>
                         <Route path='/create-event'>
                             <EventProgress />
