@@ -1,8 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { CreateEventComp, CreateTickets } from '../../components';
+
 
 const CreateEvent = () => {
   return (
-    <div>CreateEvent</div>
+    <Router>
+      <Switch>
+        
+      </Switch>
+    </Router>
   )
 }
 
