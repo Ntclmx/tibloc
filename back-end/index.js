@@ -28,6 +28,12 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+})
 app.use(bodyParser.json());
 app.use(multer({
     storage: fileStorage,
@@ -36,12 +42,6 @@ app.use(multer({
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-})
 
 app.use('/v1/', eventRoutes);
 
@@ -52,7 +52,7 @@ app.use((req, res) => {
 
 app.use((error, req, res, next) => {
     const status = error.errorStatus || 500;
-    const message = error.message;
+    const message = error.message + ' Sempet masuk sini';
     const data = error.data;
 
     res.status(status).json({ message : message, data: data});

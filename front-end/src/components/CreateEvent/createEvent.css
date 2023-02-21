@@ -1,0 +1,29 @@
+.create-event-upload-image {
+    width: 100%;
+    height: 300px;
+    opacity: 0%;
+    position: relative;;
+    z-index: 1;
+}
+
+.create-event-image {
+    border-radius: 15px 15px 15px 15px;
+    height: 300px;
+    position: absolute;;
+    z-index: 0;
+}
+
+.create-event-button:hover {
+    background-color: rgba(255, 255, 255, 0);
+    background: linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(to top left, #1767F1, #CA0CF2,  #D74D29, #F8C129) border-box;
+    border: 1px solid transparent;
+}
+
+.create-event-button {
+    background-color: rgb(190, 190, 190);
+    background: linear-gradient(#ffffff, #ffffff) padding-box,
+    rgb(190, 190, 190) border-box;
+    border: 1px solid transparent;
+    font-weight: bolder;
+}

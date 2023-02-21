@@ -1,6 +1,6 @@
 import React from "react";
 import ArticleCard from "../../components/ArticleCard";
-import CarouselTibloc from "../../components/Carousel";
+import {CarouselTibloc} from "../../components";
 import ListCategory from "../../components/ListCategory";
 
 // let Banners = [
@@ -12,9 +12,7 @@ import ListCategory from "../../components/ListCategory";
 const Home = () => {
   return (
     <div>
-      Home
       <CarouselTibloc/>
-      tessssssssss
       <ListCategory/>
       {/* <ArticleCard/> */}
     </div>

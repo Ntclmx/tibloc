@@ -1,28 +1,51 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Footer, Header } from '../../components'
-import CreateEvent from '../CreateEvent'
+import { Footer, Header, EventProgress, CreateEventComp, CreateTickets } from '../../components'
 import DetailEvent from '../DetailEvent'
 import Home from '../Home'
-import ListEvents from '../ListEvents'
+import ListEvents from '../ListEvents';
 import './mainApp.css'
-import Container from 'react-bootstrap/Container';
 
 const MainApp = () => {
+    const [event, setEvent] = useState({});
+
+    const updateEvent = (data) => {
+        setEvent((prevEvent) => {
+            return {
+              ...prevEvent,
+              ...data
+            };
+          });
+
+    };
+
+    console.log(event);
+
   return (
     <div className='main-app-wrapper '>
         <div className='header-wrapper'>
             <Header/>
         </div>
-        <Container>
-            <div className='content-wrapper justify-content-center align-items-center my-3 pt-3'>
+        <div className='mx-5' >
+            <div className='content-wrapper justify-content-center align-items-center my-3 pt-3 '>
                 <Router>
                     <Switch>
                         <Route path='/home'>
                             <Home/>
                         </Route>
                         <Route path='/create-event'>
-                            <CreateEvent/>
+                            <EventProgress />
+                            <Route  render={(props) => (
+                                <CreateTickets {...props} event={event} updateEvent={updateEvent} />
+                                )}
+                                path="/create-event/tickets" >
+                            </Route>
+                            <Route render={(props) => (
+                                <CreateEventComp {...props} event={event} updateEvent={updateEvent} />
+                                )}
+                                path="/create-event/events"
+                                >
+                            </Route>
                         </Route>
                         <Route path='/detail-event'>
                             <DetailEvent/>
@@ -33,7 +56,7 @@ const MainApp = () => {
                     </Switch>
                 </Router>
             </div>
-        </Container>
+        </div>
         <div className='footer-wrapper'>
             <Footer/>
         </div>
