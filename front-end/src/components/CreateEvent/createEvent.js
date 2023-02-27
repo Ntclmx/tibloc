@@ -11,7 +11,7 @@ const CreateEventComp = (props) => {
     eventTitle: '',
     eventOrganizer: '',
     eventDate: '',
-    eventHour: '',
+    eventTime: '',
     eventDescription: '',
     eventAddress: '',
     eventTnc: '',
@@ -43,7 +43,7 @@ const CreateEventComp = (props) => {
       eventTitle: '',
       eventOrganizer: '',
       eventDate: '',
-      eventHour: '',
+      eventTime: '',
       eventDescription: '',
       eventAddress: '',
       eventTnc: '',
@@ -126,15 +126,15 @@ const CreateEventComp = (props) => {
                   </Form.Group>
                 </Col>
                 <Col sm={6}>
-                  <Form.Group as={Row} className="mb-2" controlId="eventHour">
-                    <Form.Label column sm={3}>eventHour</Form.Label>
+                  <Form.Group as={Row} className="mb-2" controlId="eventTime">
+                    <Form.Label column sm={3}>Start Time</Form.Label>
                     <Col sm={9}>
                       <Form.Control
-                        type="number"
-                        name="eventHour"
-                        placeholder="Enter your event event hour here"
+                        type="time"
+                        name="eventTime"
+                        placeholder="Enter your event start time here"
                         autoComplete="off"
-                        value={event.eventHour}
+                        value={event.eventTime}
                         onChange={handleChange}
                         />
                     </Col>
@@ -143,7 +143,7 @@ const CreateEventComp = (props) => {
               </Row>
 
               <Form.Group as={Row} className="mb-2" controlId="eventDescription">
-                <Form.Label column sm={2}>eventDescription</Form.Label>
+                <Form.Label column sm={2}>Description</Form.Label>
                 <Col sm={10}>
                   <Form.Control
                     as="textarea"

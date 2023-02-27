@@ -79,6 +79,9 @@ exports.updateEvent = (req, res, next) => {
     const eventDate = req.body.eventDate;
     const eventLogo = req.file.path;
     const eventId = req.params.eventId;
+    const eventOrganizer = req.params.eventOrganizer;
+    const eventTime = req.params.eventTime;
+    const eventCategory = req.params.eventCategory;
 
     Event.findById(eventId)
     .then( result => {
@@ -94,6 +97,9 @@ exports.updateEvent = (req, res, next) => {
         result.eventAddress = eventAddress;
         result.eventDate = eventDate;
         result.eventLogo = eventLogo;
+        result.eventOrganizer = eventOrganizer;
+        result.eventTime = eventTime;
+        result.eventCategory = eventCategory;
 
         return result.save();
     })
@@ -135,6 +141,10 @@ exports.postEvent = (req, res, next) => {
     const eventAddress = req.body.eventAddress;
     const eventDate = req.body.eventDate;
     const eventLogo = req.file.path;
+    const eventOrganizer = req.body.eventOrganizer;
+    const eventTime = req.body.eventTime;
+    const eventCategory = req.body.eventCategory;
+
 
     const PostEvent = new Event({
         eventTitle : eventTitle,
@@ -142,7 +152,10 @@ exports.postEvent = (req, res, next) => {
         eventTnc: eventTnc,
         eventAddress: eventAddress,
         eventDate: eventDate,
-        eventLogo: eventLogo
+        eventLogo: eventLogo,
+        eventOrganizer: eventOrganizer,
+        eventTime: eventTime,
+        eventCategory: eventCategory
     });
 
     PostEvent.save()

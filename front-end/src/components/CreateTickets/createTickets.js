@@ -10,10 +10,10 @@ const CreateTickets = (props) => {
     const history = useHistory();
     const [tickets, setTicket] = useState([
         {
-            name : '',
-            price : '',
-            description : '',
-            stock : '',
+            categoryName : '',
+            categoryPrice : '',
+            categoryDescription : '',
+            categoryStock : '',
         }
     ]);
     
@@ -26,33 +26,40 @@ const CreateTickets = (props) => {
     
     const submitButton = (e) => {
         e.preventDefault();
-        const allTickets = {
-            tickets : tickets
-        }
         const {event} = props;
-        const allData = {...event,...allTickets};
-
-
-        Axios.post('http://127.0.0.1:4000/v1/event', allData, {
+        
+        Axios.post('http://127.0.0.1:4000/v1/event', event, {
             headers: {
                 'content-type': 'multipart/form-data'
             }
         })
         .then(res => {
-            console.log(res);
-            history.push('/events');
+            
+            const allTickets = {
+                eventId : res.data.event._id,
+                tickets : tickets
+            }
+            Axios.post('http://127.0.0.1:4000/v1/categories', allTickets)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err.response.data);
+            });
         })
         .catch(err => {
             console.log(err.response.data);
         })
+
+        history.push('/events');
     };
 
     const addCategory = () => {
         setTicket([...tickets, {
-            name : '',
-            price : '',
-            description : '',
-            stock : '',
+            categoryName : '',
+            categoryPrice : '',
+            categoryDescription : '',
+            categoryStock : '',
         }]);
     }
 
@@ -78,7 +85,7 @@ const CreateTickets = (props) => {
     return (
       <div className='mb-5'>
         <div className='justify-content-center align-items-center text-center'>
-          <h1 className='pt-2 pb-4'>Create Tickets</h1>
+          <h1 className='pt-2 pb-4'>Create Tickets Category</h1>
         </div>
         {/* <Form.Group as={Row} className="mb-3" controlId="organizer">
         <Form.Label column sm={2}>Organizer</Form.Label>
@@ -94,55 +101,55 @@ const CreateTickets = (props) => {
             <Card.Body>
                 <Form className="input-form px-3 pt-4 pb-3">
                     <h4 className="mb-3">Category {index+1}</h4>
-                    <Form.Group as={Row} className="mb-3" controlId="name">
+                    <Form.Group as={Row} className="mb-3" controlId="categoryName">
                         <Form.Label column sm={2}>Name</Form.Label>
                         <Col sm={10}>
                         <Form.Control
                             type="text"
-                            name="name"
-                            placeholder="Enter your ticket name here"
+                            name="categoryName"
+                            placeholder="Enter your ticket category name here"
                             autoComplete="off"
-                            value={ticket.name}
+                            value={ticket.categoryName}
                             onChange={e => handleChange(index,e)}
                             />
                         </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="price">
+                    <Form.Group as={Row} className="mb-3" controlId="categoryPrice">
                         <Form.Label column sm={2}>Price</Form.Label>
                         <Col sm={10}>
                         <Form.Control
                             type="text"
-                            name="price"
-                            placeholder="Enter your ticket price here"
+                            name="categoryPrice"
+                            placeholder="Enter your ticket category price here"
                             autoComplete="off"
-                            value={ticket.price}
+                            value={ticket.categoryPrice}
                             onChange={e => handleChange(index,e)}
                             />
                         </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="description">
+                    <Form.Group as={Row} className="mb-3" controlId="categoryDescription">
                         <Form.Label column sm={2}>Description</Form.Label>
                         <Col sm={10}>
                         <Form.Control
                             as="textarea"
-                            name="description"
-                            placeholder="Enter your ticket description here"
+                            name="categoryDescription"
+                            placeholder="Enter your ticket category description here"
                             autoComplete="off"
-                            value={ticket.description}
+                            value={ticket.categoryDescription}
                             onChange={e => handleChange(index,e)}
                             rows={3}
                             />
                         </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="stock">
+                    <Form.Group as={Row} className="mb-3" controlId="categoryStock">
                         <Form.Label column sm={2}>Stock</Form.Label>
                         <Col sm={10}>
                         <Form.Control
                             type="text"
-                            name="stock"
+                            name="categoryStock"
                             placeholder="Enter your ticket stock here"
                             autoComplete="off"
-                            value={ticket.stock}
+                            value={ticket.categoryStock}
                             onChange={e => handleChange(index,e)}
                             />
                         </Col>
@@ -150,8 +157,6 @@ const CreateTickets = (props) => {
                     <div className="d-flex flex-row-reverse mt-3">
                         <Button className='ms-2 create-ticket-button' onClick={addCategory}><PlusLg color='secondary'></PlusLg></Button>
                         {index===1?(<Button className='me-3 create-ticket-button' onClick={() => removeCategory(index)}><DashLg color='secondary'></DashLg></Button>):<div></div>}
-                        
-                        
                     </div>
                 </Form>
             </Card.Body>
