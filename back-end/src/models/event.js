@@ -21,6 +21,15 @@ const Event = new Schema({
     eventLogo : {
         type : String,
     },
+    eventOrganizer : {
+        type : String,
+    },
+    eventTime : {
+        type : String,
+    },
+    eventCategory : {
+        type : String,
+    },
 }, {
     timestamps : true
 });

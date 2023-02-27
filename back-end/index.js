@@ -41,8 +41,6 @@ app.use(multer({
 }).single('eventLogo'));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-
-
 app.use('/v1/', eventRoutes);
 
 app.use((req, res) => {
@@ -52,7 +50,7 @@ app.use((req, res) => {
 
 app.use((error, req, res, next) => {
     const status = error.errorStatus || 500;
-    const message = error.message + ' Sempet masuk sini';
+    const message = error.message;
     const data = error.data;
 
     res.status(status).json({ message : message, data: data});

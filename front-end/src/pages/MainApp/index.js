@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Footer, Header, EventProgress, CreateEventComp, CreateTickets } from '../../components'
 import DetailEvent from '../DetailEvent'
 import Home from '../Home'
 import ListEvents from '../ListEvents';
-import './mainApp.css'
-import Container from 'react-bootstrap/Container';
+import './mainApp.css';
 import Article from '../Article'
 
 const MainApp = () => {
