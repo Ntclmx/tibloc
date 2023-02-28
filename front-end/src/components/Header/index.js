@@ -15,8 +15,8 @@ const Header = () => {
               <Form.Control type="text"/>
             </Form.Group>
         </Form>
-        <CalendarWeek  color='white' className='ms-auto me-4 header-icon'></CalendarWeek>
-        <BookmarkFill color='white' size='30'></BookmarkFill>
+        <CalendarWeek size={20} color='white' className='ms-auto me-4 header-icon'></CalendarWeek>
+        <BookmarkFill color='white' size={20}></BookmarkFill>
       </Container>
     </Navbar>
   )

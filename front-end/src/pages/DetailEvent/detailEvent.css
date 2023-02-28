@@ -1,0 +1,49 @@
+.detailEventImage {
+    color: black;
+    width: 100%;
+    height: 500px;
+    position: absolute;
+}
+
+.detailEventGrey {
+    width: 100%;
+    height: 500px;
+    background-color: black;
+    position: relative;
+    opacity: 0.8;
+}
+
+
+.detailEventImage2 {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.detailImageDivLogo {
+    position: absolute;
+    top: 500px;
+    left: 45%;
+}
+
+.detailEventBreadcrumb {
+    position: absolute;
+    z-index: 1;
+    text-decoration: none;
+}
+
+.detailEventBreadcrumbText:link {
+    text-decoration: none;
+}
+
+.detailEventBreadcrumbText:visited {
+    text-decoration: none;
+}
+
+.detailEventBreadcrumbText:hover {
+    text-decoration: underline;
+}
+
+.detailEventBreadcrumbText:active {
+    text-decoration: underline;
+}
