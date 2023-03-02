@@ -7,7 +7,7 @@ import Image from 'react-bootstrap/Image';
 
 const EventCard = (props) => {
   return (
-    <Col  col='4' className='col-4 pb-3 d-flex justify-content-center align-items-center'>
+    <Col col='4' className='{props.col} pb-3 d-flex justify-content-center align-items-center'>
       <Card className='event-card text-start shadow'>
         <Card.Header className='event-card-header d-flex'>
           <Image src={EventImg} className='event-card-promotor-image rounded-circle me-2' alt='promotor-img'/>

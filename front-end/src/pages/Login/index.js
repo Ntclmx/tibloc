@@ -33,10 +33,10 @@ const Login = () => {
               <p className='register-other-create'>or log in with</p>
               <Row>
                 <Col col='6'>
-                  <Button className="mb-2 w-100 register-other-create-button text-dark" >
+                  <a href="http://127.0.0.1:4000/v1/pages/auth" class="btn btn-outline-primary" role="button" data-bs-toggle="button" >
                     <Google color='#0c0c14' className="mx-2 mb-1"/>
                     Google
-                  </Button>
+                  </a>
                   </Col>
                 <Col col='6'>
                   <Button className="mb-2 w-100 register-other-create-button text-dark" >

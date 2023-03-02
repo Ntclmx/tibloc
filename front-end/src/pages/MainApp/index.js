@@ -35,7 +35,7 @@ const MainApp = () => {
             </div>
         </Container>
         <div className='footer-wrapper'>
-            <Footer/>
+            
         </div>
     </div>
   )

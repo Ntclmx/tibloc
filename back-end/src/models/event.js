@@ -21,6 +21,9 @@ const Event = new Schema({
     eventLogo : {
         type : String,
     },
+    eventCategoryId : {
+        type : String,
+    },
 }, {
     timestamps : true
 });
