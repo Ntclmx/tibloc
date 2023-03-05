@@ -28,7 +28,7 @@ const DetailEvent = (props) => {
   }, [props])
 
   return (
-    <div className="">
+    <div>
       <Breadcrumb className='pt-2 ps-3 detailEventBreadcrumb'>
         <Breadcrumb.Item href="/home" >
           <p className='detailEventBreadcrumbText'>Home</p>
@@ -54,7 +54,7 @@ const DetailEvent = (props) => {
             <DetailEventTabs eventDescription={event.eventDescription} eventTnc={event.eventTnc} />
           </Col>
           <Col className='col-4 detailEventCalendar'>
-            <DetailEventCalendar eventAddress={event.eventAddress} />
+            <DetailEventCalendar eventAddress={event.eventAddress} _id={event._id} />
           </Col>
         </Row>
       </Container>

@@ -1,0 +1,14 @@
+.chooseTicketText {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: small;
+}
+
+.chooseTicketSmallDiv {
+    max-width: 500px;
+}
+
+
+.paymentCard {
+    font-size: large;
+}

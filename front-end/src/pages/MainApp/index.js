@@ -5,7 +5,8 @@ import DetailEvent from '../DetailEvent'
 import Home from '../Home'
 import ListEvents from '../ListEvents';
 import './mainApp.css';
-import Article from '../Article'
+import Article from '../Article';
+import ChooseTicket from '../ChooseTicket'
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
@@ -41,6 +42,13 @@ const MainApp = () => {
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
                                 <Article />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/event/:id/categories'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <ChooseTicket />
                             </div>
                         </div>
                     </Route>

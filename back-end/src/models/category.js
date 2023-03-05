@@ -13,10 +13,10 @@ const Category = new Schema({
         type : String,
     },
     categoryPrice : {
-        type : String,
+        type : Number,
     },
     categoryStock : {
-        type : String,
+        type : Number,
     },
 }, {
     timestamps : true

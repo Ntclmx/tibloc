@@ -1,0 +1,56 @@
+.catCard {
+    border-width: 2px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0);
+    background: linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(to top left, #1767F1, #CA0CF2,  #D74D29, #F8C129) border-box;
+    border: 1px solid transparent;
+}
+
+.catCardTitle {
+    font-size: medium;
+    font-weight: 600;
+}
+
+.event-card-price {
+    font-size: large;
+    font-weight: 600;
+}
+
+.catCardHeader {
+    background-color: white;
+    font-size: medium;
+    font-weight: 600;
+}
+
+.catCardBodyText {
+    font-size: small;
+}
+
+.catCardNum {
+    width: 50px;
+    height: 20px;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.catCardButton {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.catCardButton:hover {
+    background-color: transparent;
+    border-color: transparent;
+}
+.catCardButton:active {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+
+   opacity: 1;
+
+}

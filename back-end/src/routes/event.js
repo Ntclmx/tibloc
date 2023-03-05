@@ -25,4 +25,10 @@ router.delete('/event/:eventId', eventController.deleteEvent);
 // category
 router.post('/categories', categoryController.postCategory);
 
+router.get('/categories', categoryController.getAllCategories);
+
+router.get('/category/:categoryId', categoryController.getCategory);
+
+router.get('/event/:eventId/categories', categoryController.getCategoryFromEvent);
+
 module.exports = router;

@@ -50,7 +50,7 @@ const DetailEventCalendar = (props) => {
                         }
                     }}
                 />
-                <Button variant="primary" size="lg" className='mx-2 px-2 mb-3'>
+                <Button variant="primary" size="lg" className='mx-2 px-2 mb-3' href={`/event/${props._id}/categories`}>
                     Choose Ticket
                 </Button>
             </Card>

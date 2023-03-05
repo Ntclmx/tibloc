@@ -9,6 +9,10 @@ import CreateEventComp from "./CreateEvent/createEvent";
 import CreateTickets from "./CreateTickets/createTickets";
 import DetailEventTabs from "./DetailEventTabs/detailEventTabs";
 import DetailEventCalendar from "./DetailEventCalendar/detailEventCalendar";
+import CategoryCard from "./CategoryCard";
 
-export { DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs };
+
+
+
+export { CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs };
 

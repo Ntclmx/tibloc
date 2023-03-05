@@ -1,61 +1,81 @@
 const { validationResult } = require('express-validator');
 const path = require('path');
-const fs = require('fs');
-const Ticket = require('../models/category');
 const Category = require('../models/category');
 
-// exports.getAllEvents = (req, res, next) => {
-//     const currPage = req.params.page || 1;
-//     const perPage = req.params.perPage || 12;
+exports.getAllCategories = (req, res, next) => {
+    const currPage = req.params.page || 1;
+    const perPage = req.params.perPage || 12;
 
-//     let totalItems;
+    let totalItems;
 
-//     Event.find()
-//     .countDocuments()
-//     .then( result => {
-//         totalItems = result;
+    Category.find()
+    .countDocuments()
+    .then( result => {
+        totalItems = result;
 
-//         return Event.find()
-//         .skip((parseInt(currPage) - 1) * parseInt(perPage))
-//         .limit(parseInt(perPage));
-//     })
-//     .then( result => {
-//         const response = {
-//             message: 'Get All Events Success',
-//             events: result,
-//             total_data: totalItems,
-//             per_page: parseInt(perPage),
-//             current_page: parseInt(currPage)
-//         };
+        return Category.find()
+        .skip((parseInt(currPage) - 1) * parseInt(perPage))
+        .limit(parseInt(perPage));
+    })
+    .then( result => {
+        const response = {
+            message: 'Get All Categories Success',
+            category: result,
+            total_data: totalItems,
+            per_page: parseInt(perPage),
+            current_page: parseInt(currPage)
+        };
     
-//         res.status(200).json(response);
-//     })
-//     .catch(err => {
-//         next(err);
-//     });
+        res.status(200).json(response);
+    })
+    .catch(err => {
+        next(err);
+    });
 
-// }
+}
 
-// exports.getEvent = (req, res, next) => {
-//     const eventId = req.params.eventId;
-//     Event.findById(eventId)
-//     .then( result => {
-//         if (!result) {
-//             const error = new Error('Event not found');
-//             error.errorStatus = 404;
-//             throw error;
-//         }
-//         const response = {
-//             message: 'Get Event Success',
-//             event: result
-//         };
+exports.getCategory = (req, res, next) => {
+    const categoryId = req.params.categoryId;
+    Category.findById(categoryId)
+    .then( result => {
+        if (!result) {
+            const error = new Error('Category not found');
+            error.errorStatus = 404;
+            throw error;
+        }
+        const response = {
+            message: 'Get Category Success',
+            category: result
+        };
     
-//         res.status(200).json(response);
-//     })
-//     .catch(err => {
-//         next(err);
-//     })
-// }
+        res.status(200).json(response);
+    })
+    .catch(err => {
+        next(err);
+    })
+}
+
+exports.getCategoryFromEvent = (req, res, next) => {
+    const eventId = req.params.eventId;
+    console.log(eventId);
+    Category.find({eventId : eventId})
+    .then( result => {
+        if (!result) {
+            const error = new Error('Categories not found');
+            error.errorStatus = 404;
+            throw error;
+        }
+        const response = {
+            message: 'Get Categories Success',
+            categories: result
+        };
+    
+        res.status(200).json(response);
+    })
+    .catch(err => {
+        next(err);
+    })
+}
 
 // exports.updateEvent = (req, res, next) => {
 //     const errors = validationResult(req);

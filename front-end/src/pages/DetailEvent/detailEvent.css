@@ -41,9 +41,9 @@
 }
 
 .detailEventBreadcrumbText:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .detailEventBreadcrumbText:active {
-    text-decoration: underline;
+    text-decoration: none;
 }
