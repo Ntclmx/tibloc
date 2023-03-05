@@ -47,7 +47,7 @@ const DetailEvent = (props) => {
       </div>
 
 
-      <Container className='mt-5 pt-5'>
+      <Container className='my-5 pt-5'>
         <h1>{event.eventTitle}</h1>
         <Row className='pt-3'>
           <Col className='col-8 detailEventDesc'>

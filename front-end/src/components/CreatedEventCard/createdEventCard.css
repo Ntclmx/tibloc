@@ -1,0 +1,26 @@
+.created-event-card {
+    width: 22rem;
+    border: 0px;
+    max-height: 300px;
+}
+
+.created-event-card-image {
+    border-radius: 0px 0px 0px 0px;
+    border: 0px;
+    max-height: 170px;
+}
+
+.edit-event-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.edit-event-card-date {
+    top: 67%;
+    width: 60%;
+    background-color: #1767F1;
+    padding-left: 15%;
+    border-radius: 0px 10px 10px 0px;
+    font-size: small;
+}

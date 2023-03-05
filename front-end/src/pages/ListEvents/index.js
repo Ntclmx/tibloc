@@ -35,6 +35,7 @@ const ListEvents = () => {
                   eventTitle = {event.eventTitle}
                   eventDate = {event.eventDate}
                   _id = {event._id}
+                  eventOrganizer = {event.eventOrganizer}
                 />
               })}
             <div>Pagination</div>
