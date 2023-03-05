@@ -1,7 +1,17 @@
 .footer {
-    background-color: black;
+    background: black;
     color: black;
     width: 100%;
-    height: 100px;
-    bottom: 0;
+}
+
+.footerNavLink {
+    color: white;
+}
+
+.footerRow {
+    width: 100%;
+}
+
+.footerTextButtom {
+    font-size: x-small;
 }
