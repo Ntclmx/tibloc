@@ -34,6 +34,8 @@ const ListEvents = () => {
                   eventLogo = {`http://127.0.0.1:4000/${event.eventLogo}`}
                   eventTitle = {event.eventTitle}
                   eventDate = {event.eventDate}
+                  _id = {event._id}
+                  eventOrganizer = {event.eventOrganizer}
                 />
               })}
             <div>Pagination</div>

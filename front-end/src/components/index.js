@@ -7,6 +7,12 @@ import CarouselTibloc from "./Carousel";
 import EventProgress from "./EventProgress/eventProgress";
 import CreateEventComp from "./CreateEvent/createEvent";
 import CreateTickets from "./CreateTickets/createTickets";
+import DetailEventTabs from "./DetailEventTabs/detailEventTabs";
+import DetailEventCalendar from "./DetailEventCalendar/detailEventCalendar";
+import CategoryCard from "./CategoryCard";
+import CreatedEventCard from "./CreatedEventCard";
 
-export { Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets };
+
+
+export { CreatedEventCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs };
 

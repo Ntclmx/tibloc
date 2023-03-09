@@ -1,16 +1,19 @@
 .event-card {
     width: 15rem;
     border: 0px;
+    max-height: 267px;
 }
 
 .event-card-image {
     border-radius: 0px 0px 0px 0px;
     border: 0px;
+    max-height: 131px;
 }
 
 .event-card-title {
-    font-size: medium;
+    font-size: small;
     font-weight: 600;
+    overflow: hidden;
 }
 
 .event-card-price {
@@ -36,4 +39,8 @@
     padding-left: 15%;
     border-radius: 0px 10px 10px 0px;
     font-size: small;
+}
+
+.event-card-body {
+    padding-top: 11%;
 }

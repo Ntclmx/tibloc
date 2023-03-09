@@ -52,7 +52,7 @@ app.use((req, res) => {
 
 app.use((error, req, res, next) => {
     const status = error.errorStatus || 500;
-    const message = error.message + ' Sempet masuk sini';
+    const message = error.message;
     const data = error.data;
 
     res.status(status).json({ message : message, data: data});

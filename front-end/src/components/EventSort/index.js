@@ -3,7 +3,7 @@ import './eventSort.css';
 import Form from 'react-bootstrap/Form';
 const EventSort = () => {
   return (
-    <div className='event-sort-container ms-2 py-2'>
+    <div className='event-sort-container py-2'>
         <div className='d-flex'>
             <h5 className='filter-card-font-bold '>Sort</h5>
             <a className='ms-auto link-sort' href='/index'><h5 className='sort-font-thin'>Reset</h5></a>
