@@ -4,6 +4,7 @@ const { body } = require('express-validator');
 const router = express.Router();
 const eventController = require('../controllers/event');
 const categoryController = require('../controllers/category');
+const wishlistController = require('../controllers/wishlist');
 
 // event
 router.post('/event', [
@@ -30,5 +31,20 @@ router.get('/categories', categoryController.getAllCategories);
 router.get('/category/:categoryId', categoryController.getCategory);
 
 router.get('/event/:eventId/categories', categoryController.getCategoryFromEvent);
+
+// category
+router.post('/wishlist', wishlistController.postWishlist);
+
+router.get('/wishlists', wishlistController.getAllWishlists);
+
+router.get('/wishlist/:wishlistId', wishlistController.getWishlist);
+
+router.delete('/wishlist/:wishlistId', wishlistController.deleteWishlist);
+
+router.get('/wishlists/event/:eventId', wishlistController.getWishlistFromEvent );
+
+router.get('/wishlists/user/:userId', wishlistController.getWishlistFromUser );
+
+router.get('/wishlists/event/:eventId/user/:userId', wishlistController.getWishlistFromEventUser);
 
 module.exports = router;
