@@ -27,41 +27,45 @@ const DetailEvent = (props) => {
       })
   }, [props])
 
-  return (
-    <div>
-      <Breadcrumb className='pt-2 ps-3 detailEventBreadcrumb'>
-        <Breadcrumb.Item href="/home" >
-          <p className='detailEventBreadcrumbText'>Home</p>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item href="/events" className='detailEventBreadcrumbText'>
-          Events
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active>{event.eventTitle}</Breadcrumb.Item>
-      </Breadcrumb>
-
-      <Image src={`http://localhost:4000/${event.eventLogo}`} className='detailEventImage' alt='test' />
-      <div className="detailEventGrey"></div>
-
-      <div className="d-flex justify-content-center detailImageDivLogo">
-        <Image src={eventImage} className='detailEventImage2 shadow'></Image>
+  if (event._id) {
+    return (
+      <div>
+        <Breadcrumb className='pt-2 ps-3 detailEventBreadcrumb'>
+          <Breadcrumb.Item href="/home" >
+            <p className='detailEventBreadcrumbText'>Home</p>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="/events" className='detailEventBreadcrumbText'>
+            Events
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>{event.eventTitle}</Breadcrumb.Item>
+        </Breadcrumb>
+  
+        <Image src={`http://localhost:4000/${event.eventLogo}`} className='detailEventImage' alt='test' />
+        <div className="detailEventGrey"></div>
+  
+        <div className="d-flex justify-content-center detailImageDivLogo">
+          <Image src={eventImage} className='detailEventImage2 shadow'></Image>
+        </div>
+  
+  
+        <Container className='my-5 pt-5'>
+          <h1>{event.eventTitle}</h1>
+          <Row className='pt-3'>
+            <Col className='col-8 detailEventDesc'>
+              <DetailEventTabs eventDescription={event.eventDescription} eventTnc={event.eventTnc} />
+            </Col>
+            <Col className='col-4 detailEventCalendar'>
+              <DetailEventCalendar eventAddress={event.eventAddress} _id={event._id} />
+            </Col>
+          </Row>
+        </Container>
+  
+  
       </div>
-
-
-      <Container className='my-5 pt-5'>
-        <h1>{event.eventTitle}</h1>
-        <Row className='pt-3'>
-          <Col className='col-8 detailEventDesc'>
-            <DetailEventTabs eventDescription={event.eventDescription} eventTnc={event.eventTnc} />
-          </Col>
-          <Col className='col-4 detailEventCalendar'>
-            <DetailEventCalendar eventAddress={event.eventAddress} _id={event._id} />
-          </Col>
-        </Row>
-      </Container>
-
-
-    </div>
-  );
+    );
+  } else {
+    <p>Loading...</p>
+  }
 }
 
 export default withRouter(DetailEvent)

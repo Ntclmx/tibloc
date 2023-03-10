@@ -63,7 +63,7 @@ const ChooseTicket = (props) => {
     if (categories[0]) {
         return (
             <div>
-                <Row>
+                <Row className='mb-5'>
                     <Col className='col-7'>
 
                         <h1>{event.eventTitle}</h1>
