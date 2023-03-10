@@ -1,12 +1,13 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Footer, Header, EventProgress, CreateEventComp, CreateTickets } from '../../components'
 import DetailEvent from '../DetailEvent'
 import Home from '../Home'
 import ListEvents from '../ListEvents';
-import './mainApp.css'
-import Container from 'react-bootstrap/Container';
-import Faq from '../Faq'
+import './mainApp.css';
+import Faq from '../Faq';
+import ChooseTicket from '../ChooseTicket'
+import ListCreatedEvents from '../ListCreatedEvents'
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
@@ -14,59 +15,88 @@ const MainApp = () => {
     const updateEvent = (data) => {
         setEvent((prevEvent) => {
             return {
-              ...prevEvent,
-              ...data
+                ...prevEvent,
+                ...data
             };
-          });
+        });
 
     };
 
     console.log(event);
 
-  return (
-    <div className='main-app-wrapper '>
-        <div className='header-wrapper'>
-            <Header/>
-        </div>
-        <div className='mx-5' >
-            <div className='content-wrapper justify-content-center align-items-center my-3 pt-3 '>
-                <Router>
-                    <Switch>
-                        <Route path='/home'>
-                            <Home/>
-                        </Route>
-                        <Route path='/faq'>
-                            <Faq/>
-                        </Route>
-                        <Route path='/create-event'>
-                            <EventProgress />
-                            <Route  render={(props) => (
-                                <CreateTickets {...props} event={event} updateEvent={updateEvent} />
+    return (
+        <div className='main-app-wrapper '>
+            <div className='header-wrapper'>
+                <Header />
+            </div>
+
+            <Router>
+                <Switch>
+                    <Route path='/home'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <Home />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/faq'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <Faq />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/event/:id/categories'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <ChooseTicket />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/event/:id'>
+                        <DetailEvent />
+                    </Route>
+                    <Route path='/create-event'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <EventProgress />
+                                <Route render={(props) => (
+                                    <CreateTickets {...props} event={event} updateEvent={updateEvent} />
                                 )}
-                                path="/create-event/tickets" >
-                            </Route>
-                            <Route render={(props) => (
-                                <CreateEventComp {...props} event={event} updateEvent={updateEvent} />
+                                    path="/create-event/tickets" >
+                                </Route>
+                                <Route render={(props) => (
+                                    <CreateEventComp {...props} event={event} updateEvent={updateEvent} />
                                 )}
-                                path="/create-event/events"
+                                    path="/create-event/events"
                                 >
-                            </Route>
-                        </Route>
-                        <Route path='/detail-event'>
-                            <DetailEvent/>
-                        </Route>
-                        <Route path='/events'>
-                            <ListEvents/>
-                        </Route>
-                    </Switch>
-                </Router>
+                                </Route>
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/events'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <ListEvents />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/list-created'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <ListCreatedEvents />
+                            </div>
+                        </div>
+                    </Route>
+                </Switch>
+            </Router>
+            <div className='footer-wrapper'>
+                <Footer />
             </div>
         </div>
-        <div className='footer-wrapper'>
-            <Footer/>
-        </div>
-    </div>
-  )
+    )
 }
+
+//test
 
 export default MainApp
