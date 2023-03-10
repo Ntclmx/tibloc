@@ -8,6 +8,8 @@
         linear-gradient(to top left, #1767F1, #CA0CF2, #D74D29, #F8C129) border-box;
     border-radius: 50em;
     border: 2px solid transparent;
+    /* width: 50px; */
+    
 }
 
 .header-top .form-control {

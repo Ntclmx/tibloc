@@ -39,15 +39,15 @@ const DetailEvent = (props) => {
           </Breadcrumb.Item>
           <Breadcrumb.Item active>{event.eventTitle}</Breadcrumb.Item>
         </Breadcrumb>
-  
+
         <Image src={`http://localhost:4000/${event.eventLogo}`} className='detailEventImage' alt='test' />
         <div className="detailEventGrey"></div>
-  
+
         <div className="d-flex justify-content-center detailImageDivLogo">
           <Image src={eventImage} className='detailEventImage2 shadow'></Image>
         </div>
-  
-  
+
+
         <Container className='my-5 pt-5'>
           <h1>{event.eventTitle}</h1>
           <Row className='pt-3'>
@@ -59,8 +59,8 @@ const DetailEvent = (props) => {
             </Col>
           </Row>
         </Container>
-  
-  
+
+
       </div>
     );
   } else {
