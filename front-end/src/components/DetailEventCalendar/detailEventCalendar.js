@@ -21,8 +21,9 @@ const DetailEventCalendar = (props) => {
 
     useEffect(() => {
         const id = props._id
+        const userId = '123'
 
-        Axios.get(`http://127.0.0.1:4000/v1/wishlists/event/${id}/user/123`)
+        Axios.get(`http://127.0.0.1:4000/v1/wishlists/event/${id}/user/${userId}`)
             .then(result => {
                 console.log(result.data.wishlists);
                 setWishlistId(result.data.wishlists[0]._id);

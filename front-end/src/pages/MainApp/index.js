@@ -8,6 +8,7 @@ import './mainApp.css';
 import Faq from '../Faq';
 import ChooseTicket from '../ChooseTicket'
 import ListCreatedEvents from '../ListCreatedEvents'
+import Wishlist from '../Wishlist'
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
@@ -85,6 +86,13 @@ const MainApp = () => {
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
                                 <ListCreatedEvents />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/wishlist'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <Wishlist />
                             </div>
                         </div>
                     </Route>
