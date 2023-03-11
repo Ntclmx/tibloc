@@ -32,7 +32,9 @@ router.get('/category/:categoryId', categoryController.getCategory);
 
 router.get('/event/:eventId/categories', categoryController.getCategoryFromEvent);
 
-// category
+router.put('/event/:eventId/categories', categoryController.updateCategory);
+
+// wishlist
 router.post('/wishlist', wishlistController.postWishlist);
 
 router.get('/wishlists', wishlistController.getAllWishlists);

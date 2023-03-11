@@ -73,7 +73,9 @@ const DetailEventCalendar = (props) => {
         <div className='ps-5'>
             <div className='d-flex'>
                 {Component}
-                <Image src={Edit} onClick={bookmarkFunc} className='iconDetailEvent ms-auto' ></Image>
+                <a href={`/edit-event/events/${props._id}`} className='ms-auto'>
+                    <Image src={Edit} className='iconDetailEvent ' ></Image>
+                </a>
             </div>
             <Card className='mt-3'>
                 <ListGroup variant="flush">

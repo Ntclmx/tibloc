@@ -5,10 +5,17 @@ import DetailEvent from '../DetailEvent'
 import Home from '../Home'
 import ListEvents from '../ListEvents';
 import './mainApp.css';
+<<<<<<< Updated upstream
 import Article from '../Article';
 import ChooseTicket from '../ChooseTicket';
 import ListCreatedEvents from '../ListCreatedEvents';
 import Wishlist from '../Wishlist'
+=======
+import Faq from '../Faq';
+import ChooseTicket from '../ChooseTicket'
+import ListCreatedEvents from '../ListCreatedEvents'
+import Wishlist from '../Wishlist';
+>>>>>>> Stashed changes
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
@@ -71,6 +78,28 @@ const MainApp = () => {
                                 )}
                                     path="/create-event/events"
                                 >
+                                </Route>
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/edit-event'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <Route render={(props) => (
+                                    <div>
+                                        <EventProgress />
+                                        <CreateTickets {...props} event={event} updateEvent={updateEvent} />
+                                    </div>
+                                )}
+                                    path="/edit-event/tickets/:id?" >
+                                </Route>
+                                <Route render={(props) => (
+                                    <div>
+                                        <EventProgress />
+                                        <CreateEventComp {...props} event={event} updateEvent={updateEvent} />
+                                    </div>
+                                )}
+                                    path="/edit-event/events/:id?" >
                                 </Route>
                             </div>
                         </div>

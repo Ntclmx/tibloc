@@ -47,7 +47,7 @@ const CreatedEventCard = (props) => {
     };
     return (
         <Col col='4' className='col-4 pb-3 d-flex justify-content-start align-items-start'>
-            <Card className='created-event-card text-start shadow' onClick={() => history.push(`/edit/event/${props._id}`)}>
+            <Card className='created-event-card text-start shadow' onClick={() => history.push(`/edit-event/events/${props._id}`)}>
                 <Card.Header className='event-card-header d-flex'>
                     <Image src={EventImg} className='event-card-promotor-image rounded-circle me-2' alt='promotor-img' />
                     <div className=''>

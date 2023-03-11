@@ -110,7 +110,7 @@ exports.getWishlistFromUser = (req, res, next) => {
 
     Wishlist.find({userId : userId})
     .then( result => {
-        if (!result) {
+        if (result.length <= 0) {
             const error = new Error('Wishlists not found');
             error.errorStatus = 404;
             throw error;
@@ -132,7 +132,7 @@ exports.getWishlistFromEvent = (req, res, next) => {
 
     Wishlist.find({eventId : eventId})
     .then( result => {
-        if (!result) {
+        if (result.length <= 0) {
             const error = new Error('Wishlists not found');
             error.errorStatus = 404;
             throw error;

@@ -66,10 +66,9 @@ exports.updateEvent = (req, res, next) => {
         throw err;
     }
     
-    if(!req.file) {
-        const err = new Error('Image Must Be Uploaded');
-        err.errorStatus = 422;
-        throw err;
+    let eventLogo = null;
+    if(req.file) {
+        eventLogo = req.file.path;
     }
     
     const eventTitle = req.body.eventTitle;
@@ -77,11 +76,10 @@ exports.updateEvent = (req, res, next) => {
     const eventTnc = req.body.eventTnc;
     const eventAddress = req.body.eventAddress;
     const eventDate = req.body.eventDate;
-    const eventLogo = req.file.path;
-    const eventId = req.params.eventId;
-    const eventOrganizer = req.params.eventOrganizer;
-    const eventTime = req.params.eventTime;
-    const eventCategory = req.params.eventCategory;
+    const eventId = req.body._id;
+    const eventOrganizer = req.body.eventOrganizer;
+    const eventTime = req.body.eventTime;
+    const eventCategory = req.body.eventCategory;
 
     Event.findById(eventId)
     .then( result => {
@@ -96,7 +94,10 @@ exports.updateEvent = (req, res, next) => {
         result.eventTnc = eventTnc;
         result.eventAddress = eventAddress;
         result.eventDate = eventDate;
-        result.eventLogo = eventLogo;
+        if (eventLogo)
+        {
+            result.eventLogo = eventLogo;
+        }
         result.eventOrganizer = eventOrganizer;
         result.eventTime = eventTime;
         result.eventCategory = eventCategory;
