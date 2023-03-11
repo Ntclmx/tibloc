@@ -5,17 +5,10 @@ import DetailEvent from '../DetailEvent'
 import Home from '../Home'
 import ListEvents from '../ListEvents';
 import './mainApp.css';
-<<<<<<< Updated upstream
-import Article from '../Article';
-import ChooseTicket from '../ChooseTicket';
-import ListCreatedEvents from '../ListCreatedEvents';
-import Wishlist from '../Wishlist'
-=======
 import Faq from '../Faq';
 import ChooseTicket from '../ChooseTicket'
 import ListCreatedEvents from '../ListCreatedEvents'
-import Wishlist from '../Wishlist';
->>>>>>> Stashed changes
+import Wishlist from '../Wishlist'
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
@@ -47,10 +40,10 @@ const MainApp = () => {
                             </div>
                         </div>
                     </Route>
-                    <Route path='/article'>
+                    <Route path='/faq'>
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <Article />
+                                <Faq />
                             </div>
                         </div>
                     </Route>
@@ -133,5 +126,7 @@ const MainApp = () => {
         </div>
     )
 }
+
+//test
 
 export default MainApp

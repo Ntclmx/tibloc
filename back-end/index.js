@@ -7,6 +7,7 @@ const path = require('path');
 const PORT = 4000;
 
 const eventRoutes = require('./src/routes/event');
+const faqRoutes = require('./src/routes/faq');
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use(multer({
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use('/v1/', eventRoutes);
+app.use('/v1/', faqRoutes);
 
 app.use((req, res) => {
     res.status(404);
