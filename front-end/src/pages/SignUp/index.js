@@ -1,6 +1,6 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './register.css'
+import './signup.css'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,9 +8,9 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-import {Facebook, Google} from 'react-bootstrap-icons';
+import { ThirdPartyLogin } from '../../components';
 
-const Register = () => {
+const SignUp = () => {
   return (
     <Container fluid>
 
@@ -38,23 +38,10 @@ const Register = () => {
             </Form>
             <div className='text-center mt-4 justify-content-left'>
               <p className='register-other-create'>or create with</p>
-              <Row>
-                <Col col='6'>
-                  <Button className="mb-2 w-100 register-other-create-button text-dark" >
-                    <Google color='#0c0c14' className="mx-2 mb-1"/>
-                    Google
-                  </Button>
-                  </Col>
-                <Col col='6'>
-                  <Button className="mb-2 w-100 register-other-create-button text-dark" >
-                    <Facebook className="mx-2 mb-1 register-icon"/>
-                    Facebook
-                  </Button>
-                </Col>
-              </Row>
+              <ThirdPartyLogin/>
 
               <p className='register-terms mt-2 text-secondary'>By creating and account you have agreed to tibloc.com's Terms & Condition and Privacy Policy.</p>
-              <p className=' mt-2 register-already'>Already Have an Account? <Link to="/book">Click Here</Link></p>
+              <p className=' mt-2 register-already'>Already Have an Account? <Link to="/sign-in">Click Here</Link></p>
             </div>
 
           </Card.Body>
@@ -67,4 +54,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default SignUp
