@@ -30,6 +30,9 @@ const Event = new Schema({
     eventCategory : {
         type : String,
     },
+    eventCategoryId : {
+        type : String,
+    },
 }, {
     timestamps : true
 });
