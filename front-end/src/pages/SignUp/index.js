@@ -22,7 +22,7 @@ const SignUp = () => {
 
             <h2 className="fw-bold mb-2 text-center">Create Account</h2>
             
-            <Form className='text-center mt-3'>
+            <Form className='text-center mt-3' action='POST'>
               <Form.Group className="mb-1 register-form" controlId="email">
                 <Form.Control type="email" placeholder="Email" />
               </Form.Group>

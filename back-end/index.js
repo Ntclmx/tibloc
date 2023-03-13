@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 4000;
 
 const eventRoutes = require('./src/routes/event');
 const authRoutes = require('./src/routes/auth')
+const userRoutes = require('./src/routes/user');
 
 const app = express();
 
@@ -67,8 +68,8 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use('/v1/user', userRoutes);
 app.use('/v1/', eventRoutes);
-
 app.use('/auth', authRoutes);
 
 app.use((req, res) => {
