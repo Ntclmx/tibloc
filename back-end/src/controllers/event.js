@@ -1,38 +1,7 @@
-const { validationResult } = require("express-validator");
-const path = require("path");
-const fs = require("fs");
-const Event = require("../models/event");
-
-// exports.getAllEvents = (req, res, next) => {
-//   const currPage = req.params.page || 1;
-//   const perPage = req.params.perPage || 12;
-
-//   let totalItems;
-
-//   Event.find()
-//     .countDocuments()
-//     .then((result) => {
-//       totalItems = result;
-
-//       return Event.find()
-//         .skip((parseInt(currPage) - 1) * parseInt(perPage))
-//         .limit(parseInt(perPage));
-//     })
-//     .then((result) => {
-//       const response = {
-//         message: "Get All Events Success",
-//         events: result,
-//         total_data: totalItems,
-//         per_page: parseInt(perPage),
-//         current_page: parseInt(currPage),
-//       };
-
-//       res.status(200).json(response);
-//     })
-//     .catch((err) => {
-//       next(err);
-//     });
-// };
+const { validationResult } = require('express-validator');
+const path = require('path');
+const fs = require('fs');
+const Event = require('../models/event');
 
 exports.getAllEvents = async (req, res, next) => {
   const currPage = req.query.page || 1;
@@ -110,7 +79,6 @@ exports.getEvent = (req, res, next) => {
 };
 
 exports.updateEvent = (req, res, next) => {
-<<<<<<< HEAD
     const errors = validationResult(req);
     
     if(!errors.isEmpty()) {
@@ -120,9 +88,10 @@ exports.updateEvent = (req, res, next) => {
         throw err;
     }
     
-    let eventLogo = null;
-    if(req.file) {
-        eventLogo = req.file.path;
+    if(!req.file) {
+        const err = new Error('Image Must Be Uploaded');
+        err.errorStatus = 422;
+        throw err;
     }
     
     const eventTitle = req.body.eventTitle;
@@ -130,22 +99,17 @@ exports.updateEvent = (req, res, next) => {
     const eventTnc = req.body.eventTnc;
     const eventAddress = req.body.eventAddress;
     const eventDate = req.body.eventDate;
-    const eventId = req.body._id;
-    const eventOrganizer = req.body.eventOrganizer;
-    const eventTime = req.body.eventTime;
-    const eventCategory = req.body.eventCategory;
-=======
-  const errors = validationResult(req);
->>>>>>> kezia
+    const eventLogo = req.file.path;
+    const eventId = req.params.eventId;
 
-  if (!errors.isEmpty()) {
-    const err = new Error("Value Does Not Match");
-    err.errorStatus = 400;
-    err.data = errors.array();
-    throw err;
-  }
+  Event.findById(eventId)
+    .then((result) => {
+      if (!result) {
+        const error = new Error("Event not found");
+        error.errorStatus = 404;
+        throw error;
+      }
 
-<<<<<<< HEAD
         result.eventTitle = eventTitle;
         result.eventDescription = eventDescription;
         result.eventTnc = eventTnc;
@@ -158,36 +122,6 @@ exports.updateEvent = (req, res, next) => {
         result.eventOrganizer = eventOrganizer;
         result.eventTime = eventTime;
         result.eventCategory = eventCategory;
-=======
-  if (!req.file) {
-    const err = new Error("Image Must Be Uploaded");
-    err.errorStatus = 422;
-    throw err;
-  }
->>>>>>> kezia
-
-  const eventTitle = req.body.eventTitle;
-  const eventDescription = req.body.eventDescription;
-  const eventTnc = req.body.eventTnc;
-  const eventAddress = req.body.eventAddress;
-  const eventDate = req.body.eventDate;
-  const eventLogo = req.file.path;
-  const eventId = req.params.eventId;
-
-  Event.findById(eventId)
-    .then((result) => {
-      if (!result) {
-        const error = new Error("Event not found");
-        error.errorStatus = 404;
-        throw error;
-      }
-
-      result.eventTitle = eventTitle;
-      result.eventDescription = eventDescription;
-      result.eventTnc = eventTnc;
-      result.eventAddress = eventAddress;
-      result.eventDate = eventDate;
-      result.eventLogo = eventLogo;
 
       return result.save();
     })
@@ -214,7 +148,12 @@ exports.postEvent = (req, res, next) => {
     throw err;
   }
 
-<<<<<<< HEAD
+  if (!req.file) {
+    const err = new Error("Image Must Be Uploaded");
+    err.errorStatus = 422;
+    throw err;
+  }
+
     const eventTitle = req.body.eventTitle;
     const eventDescription = req.body.eventDescription;
     const eventTnc = req.body.eventTnc;
@@ -236,28 +175,7 @@ exports.postEvent = (req, res, next) => {
         eventOrganizer: eventOrganizer,
         eventTime: eventTime,
         eventCategory: eventCategory
-=======
-  if (!req.file) {
-    const err = new Error("Image Must Be Uploaded");
-    err.errorStatus = 422;
-    throw err;
-  }
-
-  const eventTitle = req.body.eventTitle;
-  const eventDescription = req.body.eventDescription;
-  const eventTnc = req.body.eventTnc;
-  const eventAddress = req.body.eventAddress;
-  const eventDate = req.body.eventDate;
-  const eventLogo = req.file.path;
-
-  const PostEvent = new Event({
-    eventTitle: eventTitle,
-    eventDescription: eventDescription,
-    eventTnc: eventTnc,
-    eventAddress: eventAddress,
-    eventDate: eventDate,
-    eventLogo: eventLogo,
-  });
+    });
 
   PostEvent.save()
     .then((result) => {
@@ -270,7 +188,6 @@ exports.postEvent = (req, res, next) => {
     })
     .catch((err) => {
       console.log("err: ", err);
->>>>>>> kezia
     });
 };
 
