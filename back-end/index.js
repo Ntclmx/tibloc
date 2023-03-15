@@ -75,11 +75,13 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use('/v1/auth', authRoutes);
 app.use('/v1/user', userRoutes);
 app.use('/v1/', eventRoutes);
 app.use('/v1/', faqRoutes);
 
 app.use((req, res) => {
+    console.log("masuk sini");
     res.status(404);
     res.send('404 Not Found');
 });

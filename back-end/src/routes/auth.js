@@ -1,5 +1,18 @@
-const router = require("express").Router();
+const express = require("express");
+const router = express.Router();
 const passport = require("passport");
+const { body } = require('express-validator');
+const authController = require('../controllers/auth');
+const cors = require("cors");
+
+router.use(express.json())
+router.use(express.urlencoded({extended:true}))
+router.use(cors());
+
+router.post("/sign-up", authController.signUp);
+
+router.get("/sign-in", authController.signIn);
+
 
 router.get("/login/success",(req,res) => {
     if(req.user){
@@ -37,6 +50,11 @@ router.get("/google", passport.authenticate("google",["profile","email"]));
 router.get("/logout",(req,res) => {
     req.logout();
     res.redirect(process.env.CLIENT_URL);
+});
+
+router.get("/", (req,res) => {
+    console.log("gak ada di auth")
+    res.status(404).send("hadeh gamasuk");
 });
 
 module.exports = router;

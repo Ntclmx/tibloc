@@ -65,7 +65,7 @@ exports.getUserByIdentifier = (req, res, next) => {
   const identifier = req.query.identifier || "null";
 
   console.log(`${identifier} nih`);
-  
+
   if (identifier === "null") {
   } else {
     User.find()
@@ -89,6 +89,7 @@ exports.getUserByIdentifier = (req, res, next) => {
 };
 
 exports.postUser = (req, res, next) => {
+    console.log("get here");
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -98,20 +99,14 @@ exports.postUser = (req, res, next) => {
     throw err;
   }
 
-  //   if (!req.file) {
-  //     const err = new Error("Image Must Be Uploaded");
-  //     err.errorStatus = 422;
-  //     throw err;
-  //   }
-
-  const userEmail = req.body.userEmail;
-  //   const userPassword = req.body.userPassword;
-  //   const userType = req.body.eventTnc;
+  const userEmail = req.body.email;
+  const userPassword = req.body.password;
+  const userType = "C";
 
   const PostUser = new User({
     userEmail: userEmail,
     userPassword: userPassword,
-    // userType: userType,
+    userType: userType,
   });
 
   PostUser.save()

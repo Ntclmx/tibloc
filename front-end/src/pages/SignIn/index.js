@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -6,11 +6,42 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
 import { ThirdPartyLogin } from "../../components";
+import axios from "axios";
+import {Link} from "react-router-dom";
 
 
 const SignIn = () => {
+  const [email, setEmail]=useState('')
+  const [password, setPassword]=useState('')
+  
+  async function submit(e){
+    e.preventDefault();
+    try {
+      await axios.get("http://localhost:4000/v1/auth/sign-in",{
+        email,password
+      })
+      .then(res => {
+        if(res.data === "user-customer"){
+          window.location = "http://localhost:3000/home";
+        } else if (res.data === "user-admin"){
+          window.location = "http://localhost:3000/home-admin";
+        } else if (res.data === "user-notexists"){
+          alert("User Not Exist. Please Sign Up.");
+        } else if (res.data === "wrong-password"){
+          alert("Wrong Password. Please Try Again");
+        } else {
+          alert("Failed SignIn. Please try again.");
+        }
+      })
+      .catch(e => {
+        alert("Wrong Details.");
+        console.log(e);
+      })
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
     <Container fluid>
       <Row className="d-flex justify-content-center align-items-center h-100">
@@ -22,17 +53,18 @@ const SignIn = () => {
               <Form className="text-center mt-3">
                 <Form.Group
                   className="mb-2 register-form"
-                  controlId="mobile-number"
+                  controlId="email"
                 >
-                  <Form.Control type="text" placeholder="Mobile Number or Email" />
+                  <Form.Control type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}}/>
                 </Form.Group>
                 <Form.Group className="mb-2 register-form" controlId="password">
-                  <Form.Control type="password" placeholder="Password" />
+                  <Form.Control type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}/>
                 </Form.Group>
                 <Button
                   variant="primary register-button"
                   className="mt-5"
                   type="submit"
+                  onClick={submit}
                 >
                   Log in
                 </Button>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './signup.css'
 import Container from 'react-bootstrap/Container';
@@ -7,10 +7,37 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
 import { ThirdPartyLogin } from '../../components';
+import axios from "axios";
+import {useHistory, Link} from "react-router-dom";
 
 const SignUp = () => {
+  const [email, setEmail]=useState('');
+  const [password, setPassword]=useState('');
+  
+  async function submit(e){
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:4000/v1/auth/sign-up",{
+        email,password
+      })
+      .then(res => {
+        if(res.data === "email-exist"){
+          alert("User Already Exists");
+        } else if(res.data === "sucess-signup"){
+          window.location = "http://localhost:3000/home";
+        }else{
+          alert("Failed SignUp. Please try again.");
+        }
+      })
+      .catch(e => {
+        alert("Wrong Details.");
+        console.log(e);
+      })
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
     <Container fluid>
 
@@ -24,15 +51,15 @@ const SignUp = () => {
             
             <Form className='text-center mt-3' action='POST'>
               <Form.Group className="mb-1 register-form" controlId="email">
-                <Form.Control type="email" placeholder="Email" />
+                <Form.Control type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}}/>
               </Form.Group>
               <Form.Group className="mb-1 register-form" controlId="mobile-number">
                 <Form.Control type="text" placeholder="Mobile Number" />
               </Form.Group>
               <Form.Group className="mb-3 register-form" controlId="password">
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}/>
               </Form.Group>
-              <Button variant="primary register-button" type="submit">
+              <Button variant="primary register-button" type="submit" onClick={submit}>
                 Create Account
               </Button>
             </Form>
