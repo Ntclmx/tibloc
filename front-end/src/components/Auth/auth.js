@@ -73,7 +73,7 @@ function Loging(){
 
 async function submit(e){
   e.preventDefault();
-  try{
+  // try{
     
-  }
+  // }
 }

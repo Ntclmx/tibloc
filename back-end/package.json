@@ -28,6 +28,7 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
     "query-string": "^8.1.0",
-    "react-bootstrap": "^2.7.0"
+    "react-bootstrap": "^2.7.0",
+    "react-third-party-login": "^1.0.7"
   }
 }
