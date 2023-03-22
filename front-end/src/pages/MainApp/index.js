@@ -33,13 +33,7 @@ const MainApp = () => {
 
             <Router>
                 <Switch>
-                    <Route path='/home'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <Home />
-                            </div>
-                        </div>
-                    </Route>
+                    
                     <Route path='/faq'>
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
@@ -115,6 +109,13 @@ const MainApp = () => {
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
                                 <Wishlist />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <Home />
                             </div>
                         </div>
                     </Route>
