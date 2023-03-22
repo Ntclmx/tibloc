@@ -39,7 +39,16 @@ app.use(bodyParser.json());
 app.use(multer({
     storage: fileStorage,
     fileFilter: fileFilter
-}).single('eventLogo'));
+}).fields([{
+    name: 'eventLogo',
+    maxCount: 1
+}, {
+    name: 'paymentTypeLogo',
+    maxCount: 1
+}]));
+
+
+
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use('/v1/', eventRoutes);
@@ -55,13 +64,13 @@ app.use((error, req, res, next) => {
     const message = error.message;
     const data = error.data;
 
-    res.status(status).json({ message : message, data: data});
+    res.status(status).json({ message: message, data: data });
 });
 
 mongoose.connect('mongodb+srv://tibloc:MongoDBtibloc@cluster0.vlfqswq.mongodb.net/tibloc?retryWrites=true&w=majority')
-.then( () => {
-    app.listen(PORT, () => {
-        console.log(`Tibloc running on http://localhost:${PORT}`);
-    });
-}).catch( err => console.log(err));
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Tibloc running on http://localhost:${PORT}`);
+        });
+    }).catch(err => console.log(err));
 

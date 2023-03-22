@@ -67,8 +67,8 @@ exports.updateEvent = (req, res, next) => {
     }
     
     let eventLogo = null;
-    if(req.file) {
-        eventLogo = req.file.path;
+    if(req.files) {
+        eventLogo = req.files.eventLogo[0].path;
     }
     
     const eventTitle = req.body.eventTitle;
@@ -130,7 +130,7 @@ exports.postEvent = (req, res, next) => {
         throw err;
     }
     
-    if(!req.file) {
+    if(!req.files) {
         const err = new Error('Image Must Be Uploaded');
         err.errorStatus = 422;
         throw err;
@@ -141,7 +141,7 @@ exports.postEvent = (req, res, next) => {
     const eventTnc = req.body.eventTnc;
     const eventAddress = req.body.eventAddress;
     const eventDate = req.body.eventDate;
-    const eventLogo = req.file.path;
+    const eventLogo = req.files.eventLogo[0].path;
     const eventOrganizer = req.body.eventOrganizer;
     const eventTime = req.body.eventTime;
     const eventCategory = req.body.eventCategory;

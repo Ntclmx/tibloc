@@ -1,10 +1,37 @@
 import React, { useState } from 'react'
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
+import Plus from '../../assets/events/plus.png'
+import Minus from '../../assets/events/minus.png'
+import Image from 'react-bootstrap/Image';
 import './categoryCard.css';
 
 const CategoryCard = (props) => {
-    let [num, setNum] = useState(0);
+    const [choose, setChoose] = useState(false);
+
+    if (choose === true)
+    {
+        if (props.chooseCategory !== props.categoryName)
+        {
+            setChoose(false);
+        }
+         
+    }
+
+    const chooseTicketFunc = () => {
+        if (choose === false) {
+            
+            props.showNum(props.categoryName, props.categoryPrice, props._id)
+            setChoose(true);
+            
+        } else {
+            
+            props.showNum("-", 0)
+            setChoose(false);
+        }
+    };
+
+    const Component = choose ? <Image src={Minus} onClick={chooseTicketFunc} className='chooseTicketIcon'></Image> : <Image src={Plus} onClick={chooseTicketFunc} className='chooseTicketIcon'></Image> ;
+
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -22,30 +49,10 @@ const CategoryCard = (props) => {
                 <Card.Text className='muted catCardBodyText pt-2 mt-1 ms-3'>
                     Tickets Left - {props.categoryStock}
                 </Card.Text>
-                <div className='d-flex ms-auto '>
-                    <Form.Group className="mb-3" controlId={`${props._id}`}>
-                        <Form.Control
-                            type="number"
-                            min={0}
-                            max={props.categoryStock}
-                            defaultValue={num}
-                            size="sm"
-                            className='catCardNum mt-2 pt-1 me-2 text-center'
-                            onChange={e => { 
-                                
-                                const nowChangeValue = parseInt(e.target.value)
-                                let totalTicket = 1;
-
-                                if(num > nowChangeValue)
-                                {
-                                    totalTicket = -1;
-                                }
-                                setNum(nowChangeValue);
-                                props.showNum(totalTicket, props.categoryPrice) 
-                            }}
-                        />
-                    </Form.Group>
-
+                <div className='d-flex ms-auto'>
+                    <div className='d-flex justify-content-center align-items-center me-3'>
+                        {Component}
+                    </div>
                 </div>
             </Card.Body>
         </Card>
