@@ -4,8 +4,10 @@ const FaqCard = (props) => {
 
     const {question} = props;
     return (
-        <a class="nav-link" href="{{question}}">{question}</a>
-    );
+        <nav class="nav nav-pills flex-column">
+            <a class="nav-link" href={'#' + question}>{question}</a>
+        </nav>
+    );       
 }
-  
+
 export default FaqCard

@@ -10,18 +10,6 @@ const Faq = new Schema({
     answer : {
         type : String,
     },
-    // articleTitle : {
-    //     type : String,
-    // },
-    // articleBody : {
-    //     type : String,
-    // },
-    // articleAuthor : {
-    //     type : String,
-    // },
-    // articleImage : {
-    //     type : String,
-    // },
 }, {
     timestamps : true
 });
