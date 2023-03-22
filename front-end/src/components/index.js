@@ -12,8 +12,8 @@ import DetailEventCalendar from "./DetailEventCalendar/detailEventCalendar";
 import CategoryCard from "./CategoryCard";
 import CreatedEventCard from "./CreatedEventCard";
 import WishlistCard from "./WishlistCard";
-
+import PaymentTypeCard from "./PaymentTypeCard";
 import ThirdPartyLogin from "./Auth/auth";
 
-export { WishlistCard, CreatedEventCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs, ThirdPartyLogin };
+export { PaymentTypeCard, WishlistCard, CreatedEventCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs, ThirdPartyLogin };
 

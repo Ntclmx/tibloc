@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Axios from 'axios';
 import './chooseTicket.css';
 import { GeoAltFill, Calendar2Fill, ClockFill } from 'react-bootstrap-icons';
@@ -14,6 +14,8 @@ const ChooseTicket = (props) => {
     const [event, setEvent] = useState({});
 
     const [price, setPrice] = useState(0);
+    const [chooseCategory, setChooseCategory] = useState('-');
+    const [idCategory, setIdCategory] = useState('');
 
     useEffect(() => {
         const id = props.match.params.id;
@@ -45,12 +47,11 @@ const ChooseTicket = (props) => {
     let newFormatDate = new Date(event.eventDate);
     newFormatDate = newFormatDate.toLocaleDateString("en-US", options);
 
-    const showNum = (e, catPrice) => {
-        console.log(e, catPrice);
-        let totalPrice = 0;
-        totalPrice = price + (e * catPrice);
-
-        setPrice(totalPrice);
+    const showNum = (catName, catPrice, catId) => {
+        setChooseCategory(catName);
+        setPrice(catPrice);
+        setIdCategory(catId);
+        
     }
 
     const formatter = new Intl.NumberFormat('en-US', {
@@ -59,6 +60,26 @@ const ChooseTicket = (props) => {
     });
 
     const totalPrice = formatter.format(price);
+
+    let button = ''
+    if (chooseCategory === '-')
+    {
+        button = <div className='mx-1 px-2 mb-3 d-grid'><Button variant="primary" size="lg" disabled >Choose Payment</Button></div>
+    }
+    else {
+        button = <Link to={{
+            pathname: `/event/${props.match.params.id}/categories/${idCategory}/payment`,
+            state: {
+                category: chooseCategory,
+                price: price,
+                id : idCategory
+            }
+        }} className='mx-1 px-2 mb-3 d-grid'>
+            <Button variant="primary" size="lg" >
+                Choose Payment
+            </Button>
+        </Link>
+    }
 
     if (categories[0]) {
         return (
@@ -98,6 +119,7 @@ const ChooseTicket = (props) => {
                                 categoryPrice={category.categoryPrice}
                                 categoryStock={category.categoryStock}
                                 categoryDescription={category.categoryDescription}
+                                chooseCategory={chooseCategory}
                                 _id={category._id}
                                 showNum={showNum}
                             />
@@ -111,13 +133,11 @@ const ChooseTicket = (props) => {
                             </Card.Header>
                             <Card.Body className='p-0'>
                                 <Card.Text className='muted pt-2 mt-1 ms-3'>
-                                    <p className='paymentCard'>Total  :  {totalPrice}</p>
+                                    <p className='paymentCard'>Category  :  {chooseCategory}</p>
+                                    <p className='paymentCard'>Total     :  {totalPrice}</p>
                                 </Card.Text>
-                                <div className='mx-2 d-grid'>
-
-                                    <Button variant="primary" size="lg" className='mx-2 px-2 mb-3' href={`/event/${props.match.params._id}/categories`}>
-                                        Choose Payment
-                                    </Button>
+                                <div className='mx-2'>
+                                    {button}
                                 </div>
                             </Card.Body>
                         </Card>

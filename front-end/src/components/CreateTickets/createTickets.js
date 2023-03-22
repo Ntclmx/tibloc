@@ -9,7 +9,7 @@ const CreateTickets = (props) => {
 
     const history = useHistory();
     const [isUpdate, setIsUpdate] = useState(false);
-    
+
 
     const [tickets, setTicket] = useState([
         {
@@ -31,7 +31,7 @@ const CreateTickets = (props) => {
             Axios.get(`http://127.0.0.1:4000/v1/event/${eventId}/categories`)
                 .then(result => {
 
-                    console.log('TESTT',result.data);
+                    console.log('TESTT', result.data);
                     setTicket(result.data.categories);
                 })
                 .catch(err => {
@@ -60,7 +60,7 @@ const CreateTickets = (props) => {
 
         if (isUpdate) {
             const eventId = props.match.params.id;
-            
+
             Axios.put(`http://127.0.0.1:4000/v1/event/${eventId}`, event, {
                 headers: {
                     'content-type': 'multipart/form-data'

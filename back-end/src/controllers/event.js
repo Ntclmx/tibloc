@@ -88,10 +88,9 @@ exports.updateEvent = (req, res, next) => {
         throw err;
     }
     
-    if(!req.file) {
-        const err = new Error('Image Must Be Uploaded');
-        err.errorStatus = 422;
-        throw err;
+    let eventLogo = null;
+    if(req.files) {
+        eventLogo = req.file.path;
     }
     
     const eventTitle = req.body.eventTitle;
@@ -99,7 +98,6 @@ exports.updateEvent = (req, res, next) => {
     const eventTnc = req.body.eventTnc;
     const eventAddress = req.body.eventAddress;
     const eventDate = req.body.eventDate;
-    const eventLogo = req.file.path;
     const eventId = req.params.eventId;
 
   Event.findById(eventId)
@@ -139,27 +137,28 @@ exports.updateEvent = (req, res, next) => {
 };
 
 exports.postEvent = (req, res, next) => {
-  const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    const err = new Error("Value Does Not Match");
-    err.errorStatus = 400;
-    err.data = errors.array();
-    throw err;
-  }
-
-  if (!req.file) {
-    const err = new Error("Image Must Be Uploaded");
-    err.errorStatus = 422;
-    throw err;
-  }
+    const errors = validationResult(req);
+    
+    if(!errors.isEmpty()) {
+        const err = new Error('Value Does Not Match');
+        err.errorStatus = 400;
+        err.data = errors.array();
+        throw err;
+    }
+    
+    if(!req.file) {
+        const err = new Error('Image Must Be Uploaded');
+        err.errorStatus = 422;
+        throw err;
+    }
 
     const eventTitle = req.body.eventTitle;
     const eventDescription = req.body.eventDescription;
     const eventTnc = req.body.eventTnc;
     const eventAddress = req.body.eventAddress;
     const eventDate = req.body.eventDate;
-    const eventLogo = req.file.path;
+    const eventLogo = req.files.eventLogo[0].path;
     const eventOrganizer = req.body.eventOrganizer;
     const eventTime = req.body.eventTime;
     const eventCategory = req.body.eventCategory;
