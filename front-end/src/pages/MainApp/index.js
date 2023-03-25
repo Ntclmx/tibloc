@@ -10,6 +10,7 @@ import ChooseTicket from '../ChooseTicket'
 import ListCreatedEvents from '../ListCreatedEvents'
 import Wishlist from '../Wishlist'
 import ChoosePayment from '../ChoosePayment'
+import DetailTransaction from '../DetailTransaction'
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
@@ -34,7 +35,13 @@ const MainApp = () => {
 
             <Router>
                 <Switch>
-                    
+                    <Route path='/transaction/:id'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <DetailTransaction />
+                            </div>
+                        </div>
+                    </Route>
                     <Route path='/faq'>
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>

@@ -1,0 +1,67 @@
+.detailTrxHead {
+    background-color: white;
+    font-weight: bold;
+}
+
+.detailTrxImg {
+    border-radius: 15px 15px 15px 15px;
+    border: 0px;
+    height: 300px;
+    width: 100%;
+}
+
+.detailTrxQR {
+    border-radius: 15px 15px 15px 15px;
+    border: 0px;
+    width: 100%;
+}
+
+.detailTrxCol {
+    border-right :1px solid #aaaa;
+}
+
+.detailTrxSmallDiv {
+    border-bottom :1px solid #aaaa;
+
+}
+
+.detailTrxEvent {
+    font-weight: bolder;
+}
+
+.detailTrxCircle {
+    width: 25px;
+    height: 25px;
+}
+
+.detailTrxText {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: bolder;
+    font-size: medium;
+}
+
+.detailTrxTextClick {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: bolder;
+    font-size: medium;
+    cursor: pointer;
+    color: #1767F1;
+}
+
+.detailTrxTextClick:hover {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: bolder;
+    font-size: medium;
+    cursor: pointer;
+    color: #D74D29;
+}
+
+.detailTrxText2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: normal;
+    font-size: medium;
+}
