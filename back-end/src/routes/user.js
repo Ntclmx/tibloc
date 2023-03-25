@@ -1,16 +1,20 @@
-const express = require('express');
-const { body } = require('express-validator');
+const express = require("express");
+const {
+    getAllUsers,
+    getUserById,
+    createUser,
+    updateUser,
+    deleteUser
+} = require("../controllers/user");
+const { verifyUser, adminOnly } = require("../middleware/AuthUser.js");
 
 const router = express.Router();
-const userController = require('../controllers/user');
 
-router.post('/create-user', [
-    body('userEmail').isLength({min:5}).withMessage('Event Title tidak sesuai'),
-    body('userPassword').isLength({min:5}).withMessage('Event TNC tidak sesuai'),
-],
-userController.postUser);
-
-router.get('/users', userController.getAllUsers);
-router.get('/get-by-identifier', userController.getUserByIdentifier);
+// router.get('/users', verifyUser, adminOnly, getAllUsers);
+router.get('/users', getAllUsers);
+router.get('/users/:id', verifyUser, adminOnly, getUserById);
+router.post('/users', createUser);
+router.patch('/users/:id', verifyUser, adminOnly, updateUser);
+router.delete('/users/:id', verifyUser, adminOnly, deleteUser);
 
 module.exports = router;

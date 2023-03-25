@@ -1,33 +1,42 @@
-require("dotenv").config({path: '.env'});
+const dotenv = require("dotenv");
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 const cors = require("cors");
-const passport = require("passport");
-const passportSetup = require("./src/controllers/passport");
-const cookieSession = require("cookie-session");
+const session = require("express-session");
+// const passport = require("passport");
+// const passportSetup = require("./src/controllers/passport");
+// const cookieSession = require("cookie-session");
+dotenv.config();
 
 const PORT = process.env.PORT || 4000;
 
 const eventRoutes = require('./src/routes/event');
 const faqRoutes = require('./src/routes/faq');
-const authRoutes = require('./src/routes/auth')
+const authRoutes = require('./src/routes/auth');
 const userRoutes = require('./src/routes/user');
-
+// const cookieParser = require("cookie-parser");
+// import SequelizeStore from "connect-session-sequelize";
+console.log("Start Routing1");
 const app = express();
 
-app.use(
-    cookieSession({
-        name: "session",
-        keys:["cyberwolve"],
-        maxAge: 24 * 60 * 60 * 100,
-    })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(cookieParser());
+app.use(express.json());
 
+console.log(`Start Routing2, sess secret ${process.env.SESS_SECRET}`);
+app.use(session({
+    secret: process.env.SESS_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    // store: store,
+    cookie: {
+        secure: 'auto'
+    }
+}));
+
+console.log("Start Routing3");
 app.use(
     cors({
         origin: "http://localhost:3000",
@@ -54,6 +63,7 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
+console.log("Start Routing5");
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, PUT');
@@ -75,13 +85,14 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/v1/auth', authRoutes);
-app.use('/v1/user', userRoutes);
+console.log("Start Routing");
+
+app.use('/v1/', authRoutes);
+app.use('/v1/', userRoutes);
 app.use('/v1/', eventRoutes);
 app.use('/v1/', faqRoutes);
 
 app.use((req, res) => {
-    console.log("masuk sini");
     res.status(404);
     res.send('404 Not Found');
 });

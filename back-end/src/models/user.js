@@ -12,6 +12,12 @@ const userSchema = new Schema({
     userType : {
         type : String,
     },
+    userName : {
+        type : String,
+    },
+    refresh_token : {
+        type : String,
+    },
 }, {
     timestamps : false
 });

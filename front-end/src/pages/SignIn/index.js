@@ -7,41 +7,36 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { ThirdPartyLogin } from "../../components";
-import axios from "axios";
 import {Link} from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { signIn, reset } from "../../features/authSlice";
 
 const SignIn = () => {
   const [email, setEmail]=useState('')
   const [password, setPassword]=useState('')
-  
-  async function submit(e){
-    e.preventDefault();
-    try {
-      await axios.get("http://localhost:4000/v1/auth/sign-in",{
-        email,password
-      })
-      .then(res => {
-        if(res.data === "user-customer"){
-          window.location = "http://localhost:3000/home";
-        } else if (res.data === "user-admin"){
-          window.location = "http://localhost:3000/home-admin";
-        } else if (res.data === "user-notexists"){
-          alert("User Not Exist. Please Sign Up.");
-        } else if (res.data === "wrong-password"){
-          alert("Wrong Password. Please Try Again");
-        } else {
-          alert("Failed SignIn. Please try again.");
-        }
-      })
-      .catch(e => {
-        alert("Wrong Details.");
-        console.log(e);
-      })
-    } catch (e) {
-      console.log(e);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (user || isSuccess) {
+      if(user.userType === 'A'){
+        history.push("/dashboard-admin");
+      }else if(user.userType === 'C'){
+        history.push("/dashboard");
+      }
     }
-  }
+    dispatch(reset());
+  }, [user, isSuccess, dispatch, history]);
+
+  const Auth = (e) => {
+    e.preventDefault();
+    dispatch(signIn({ email, password }));
+  };
+
   return (
     <Container fluid>
       <Row className="d-flex justify-content-center align-items-center h-100">
@@ -50,7 +45,8 @@ const SignIn = () => {
             <Card.Body className="p-5 w-100 d-flex flex-column">
               <h2 className="fw-bold mb-2 text-center">Login</h2>
 
-              <Form className="text-center mt-3">
+              <Form className="text-center mt-3" onSubmit={Auth}>
+                {isError && <p className="has-text-centered">{message}</p>}
                 <Form.Group
                   className="mb-2 register-form"
                   controlId="email"
@@ -64,7 +60,7 @@ const SignIn = () => {
                   variant="primary register-button"
                   className="mt-5"
                   type="submit"
-                  onClick={submit}
+                  // onClick={submit}
                 >
                   Log in
                 </Button>

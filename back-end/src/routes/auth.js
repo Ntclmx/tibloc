@@ -1,17 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const { body } = require('express-validator');
 const authController = require('../controllers/auth');
 const cors = require("cors");
 
-router.use(express.json())
-router.use(express.urlencoded({extended:true}))
+router.use(express.json());
+router.use(express.urlencoded({extended:true}));
 router.use(cors());
 
-router.post("/sign-up", authController.signUp);
+// router.post("/sign-up", authController.signUp);
 
 router.get("/sign-in", authController.signIn);
+router.get("/sign-out", authController.signOut);
+router.get("/me", authController.Me);
 
 
 router.get("/login/success",(req,res) => {

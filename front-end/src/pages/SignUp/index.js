@@ -12,30 +12,49 @@ import axios from "axios";
 import {useHistory, Link} from "react-router-dom";
 
 const SignUp = () => {
+  const [name, setName]=useState('');
   const [email, setEmail]=useState('');
   const [password, setPassword]=useState('');
+  const [confPassword, setConfPassword]=useState('');
+  const [msg,setMsg]=useState('');
+  const history = useHistory();
   
+  // async function submit(e){
+  //   e.preventDefault();
+  //   try {
+  //     await axios.post("http://localhost:4000/v1/auth/sign-up",{
+  //       name,email,password,confPassword
+  //     })
+  //     .then(res => {
+  //       if(res.data === "email-exist"){
+  //         alert("User Already Exists");
+  //       } else if(res.data === "sucess-signup"){
+  //         window.location = "http://localhost:3000/home";
+  //       }else{
+  //         alert("Failed SignUp. Please try again.");
+  //       }
+  //     })
+  //     .catch(e => {
+  //       alert("Wrong Details.");
+  //       console.log(e);
+  //     })
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
+
   async function submit(e){
     e.preventDefault();
     try {
-      await axios.post("http://localhost:4000/v1/auth/sign-up",{
-        email,password
-      })
-      .then(res => {
-        if(res.data === "email-exist"){
-          alert("User Already Exists");
-        } else if(res.data === "sucess-signup"){
-          window.location = "http://localhost:3000/home";
-        }else{
-          alert("Failed SignUp. Please try again.");
-        }
-      })
-      .catch(e => {
-        alert("Wrong Details.");
-        console.log(e);
-      })
+      await axios.post("http://localhost:4000/v1/user/users",{
+        name,email,password,confPassword
+      });
+      history.push("/");
     } catch (e) {
       console.log(e);
+      if(e.response){
+        setMsg(e.response.data.msg);
+      }
     }
   }
   return (
@@ -50,14 +69,17 @@ const SignUp = () => {
             <h2 className="fw-bold mb-2 text-center">Create Account</h2>
             
             <Form className='text-center mt-3' action='POST'>
+              <Form.Group className="mb-1 register-form" controlId="name">
+                <Form.Control type="text" placeholder="Name" onChange={(e)=>{setName(e.target.value)}}/>
+              </Form.Group>
               <Form.Group className="mb-1 register-form" controlId="email">
                 <Form.Control type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}}/>
               </Form.Group>
-              <Form.Group className="mb-1 register-form" controlId="mobile-number">
-                <Form.Control type="text" placeholder="Mobile Number" />
-              </Form.Group>
               <Form.Group className="mb-3 register-form" controlId="password">
                 <Form.Control type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}/>
+              </Form.Group>
+              <Form.Group className="mb-3 register-form" controlId="conf-password">
+                <Form.Control type="password" placeholder="Confirm Password" onChange={(e)=>{setConfPassword(e.target.value)}}/>
               </Form.Group>
               <Button variant="primary register-button" type="submit" onClick={submit}>
                 Create Account

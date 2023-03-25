@@ -1,89 +1,42 @@
-const passport = require("passport");
 const User = require("../models/user");
-const userController = require("../controllers/user");
-var GoogleStrategy = require("passport-google-oauth20").Strategy;
+const argon2 = require("argon2");
 
-const GOOGLE_CLIENT_ID =
-  "348334482720-r76gtpogm62h5tkdusv3o4fp38rq2hfp.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/home",
-    },
-    function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate(
-        {
-          googleId: profile.id,
-        },
-        function (err, user) {
-          return cb(err, user);
+exports.signIn = async (req, res) =>{
+    console.log(`Start Sign In Process for ${req.body.email}`);
+    const user = await User.findOne().where({userEmail: req.body.email});
+    console.log(`User Result: ${user}`);
+    if(!user){
+        if(user.userEmail !== req.body.email){
+            console.log(`FAILED! User Not Found`);
+            return res.status(404).json({msg: "User tidak ditemukan"});
         }
-      );
     }
-  )
-);
-
-exports.signUp = async (req, res, next) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    const err = new Error("Request Empty");
-    err.errorStatus = 400;
-    err.data = errors.array();
-    throw err;
-  }
-
-  const { email, password } = req.body;
-  try {
-    const check = await User.findOne({ userEmail: email });
-    if (check) {
-      res.status(200).json("email-exist");
-    } else {
-      userController.postUser(req, res, next);
-      res.status(200).json("sucess-signup");
+    const match = await argon2.verify(user.userPassword, req.body.password);
+    if(!match){
+        console.log(`FAILED! Wrong Password`);
+        return res.status(400).json({msg: "Wrong Password"});
     }
-  } catch (e) {
-    res.status(400).json("exception");
-    console.log(e);
-  }
-};
+    req.session.userId = user.id;
+    const id = user.id;
+    const name = user.userName;
+    const email = user.userEmail;
+    const type = user.userType;
+    res.status(200).json({id, name, email, type});
+}
 
-exports.signIn = async (req, res, next) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    const err = new Error("Value Does Not Match");
-    err.errorStatus = 400;
-    err.data = errors.array();
-    throw err;
-  }
-
-  console.log("Start sign in process");
-  const { email, password } = req.body;
-  console.log(`email : ${email} | password : ${password}`);
-
-  try {
-    const check = await User.findOne({ userEmail: email });
-    if (check) {
-      console.log("User exists");
-      if (password === check.userPassword) {
-        if (check.userType === "C") {
-          res.status(200).json("user-customer");
-        } else if (check.userType === "A") {
-          res.status(200).json("user-admin");
-        }
-      } else {
-        res.status(200).json("wrong-password");
-      }
-    } else {
-      res.status(200).json("user-notexists");
+exports.Me = async (req, res) =>{
+    if(!req.session.userId){
+        return res.status(401).json({msg: "Mohon login ke akun Anda!"});
     }
-  } catch (e) {
-    res.status(400).json("exception");
-    console.log(e);
-  }
-};
+    const user = await User.findOne().where({id: req.session.userId});
+    console.log(`User Result: ${user}`);
+    if(!user) return res.status(404).json({msg: "User tidak ditemukan"});
+    res.status(200).json(user);
+}
+
+exports.signOut = (req, res) =>{
+    req.session.destroy((err)=>{
+        if(err) return res.status(400).json({msg: "Tidak dapat logout"});
+        res.status(200).json({msg: "Anda telah logout"});
+    });
+}

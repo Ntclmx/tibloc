@@ -60,6 +60,10 @@ const ThirdPartyLogin = () => {
 //   console.log(`The code is: ${urlParams.code}`);
 // }
 
+// const SignIn = () => {
+//   const [email,]
+// }
+
 export default ThirdPartyLogin;
 
 

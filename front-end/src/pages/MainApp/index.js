@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Footer, Header, EventProgress, CreateEventComp, CreateTickets } from '../../components'
 import DetailEvent from '../DetailEvent'
-import Home from '../Home'
+import DashboardAdmin from '../Dashboard/DashboardAdmin';
+import DashboardCustomer from '../Dashboard/DashboardCustomer';
+import DashboardGuest from '../Dashboard/DashboardGuest';
 import ListEvents from '../ListEvents';
 import './mainApp.css';
 import Faq from '../Faq';
 import ChooseTicket from '../ChooseTicket'
 import ListCreatedEvents from '../ListCreatedEvents'
 import Wishlist from '../Wishlist'
+
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
@@ -33,10 +36,24 @@ const MainApp = () => {
 
             <Router>
                 <Switch>
-                    <Route path='/home'>
+                <Route path='/dashboard-guest'>
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <Home />
+                                <DashboardGuest />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/dashboard'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <DashboardCustomer />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/dashboard-admin'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <DashboardAdmin />
                             </div>
                         </div>
                     </Route>
