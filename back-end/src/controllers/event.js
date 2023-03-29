@@ -3,21 +3,30 @@ const path = require('path');
 const fs = require('fs');
 const Event = require('../models/event');
 
-exports.getAllEvents = async (req, res, next) => {
-  const currPage = req.query.page || 1;
-  const perPage = req.query.perPage || 12;
-  const paramKey = req.query.paramKey || "null";
-  const paramValue = req.query.paramValue || "null";
+exports.getAllEvents = (req, res, next) => {
+    const currPage = req.query.page || 1;
+    const perPage = req.query.perPage || 12;
 
-  let totalItems;
+    const query = req.query.events;
 
-  if(paramKey === "null" || paramValue === "null"){
-    Event.find()
+    let queryAll = {};
+
+    if(query)
+    {
+        queryAll = {$or: [{eventTitle: { $regex: query, $options: 'i' }}, {eventDescription: { $regex: query, $options: 'i' }}] };
+    }
+    else {
+        queryAll = {};
+    }
+
+    let totalItems;
+    
+    Event.find(queryAll)
     .countDocuments()
     .then((result) => {
       totalItems = result;
 
-      return Event.find()
+        return Event.find(queryAll)
         .skip((parseInt(currPage) - 1) * parseInt(perPage))
         .limit(parseInt(perPage));
     })
@@ -36,25 +45,7 @@ exports.getAllEvents = async (req, res, next) => {
       next(err);
     });
 
-  } else {
-    Event.find()
-    .where(paramKey, paramValue)
-    .skip((parseInt(currPage) - 1) * parseInt(perPage))
-    .limit(parseInt(perPage))
-    .then((result) => {
-      const response = {
-        message: "Get Events by Parameter Success",
-        events: result,
-        per_page: parseInt(perPage),
-        current_page: parseInt(currPage),
-      };
-
-      res.status(200).json(response);
-    })
-    .catch((err) => {
-      next(err);
-    });
-  }  
+ 
 };
 
 exports.getEvent = (req, res, next) => {

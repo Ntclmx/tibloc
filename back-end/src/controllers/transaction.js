@@ -1,5 +1,6 @@
 const Transaction = require('../models/transaction');
 const midtransClient = require('midtrans-client');
+const Category = require('../models/category');
 
 let coreApi = new midtransClient.CoreApi({
     isProduction: false,
@@ -14,50 +15,87 @@ exports.getAllTransactions = (req, res, next) => {
     let totalItems;
 
     Transaction.find()
-    .countDocuments()
-    .then( result => {
-        totalItems = result;
+        .countDocuments()
+        .then(result => {
+            totalItems = result;
 
-        return Transaction.find()
-        .skip((parseInt(currPage) - 1) * parseInt(perPage))
-        .limit(parseInt(perPage));
-    })
-    .then( result => {
-        const response = {
-            message: 'Get All Transaction Success',
-            transaction: result,
-            total_data: totalItems,
-            per_page: parseInt(perPage),
-            current_page: parseInt(currPage)
-        };
-    
-        res.status(200).json(response);
-    })
-    .catch(err => {
-        next(err);
-    });
+            return Transaction.find()
+                .skip((parseInt(currPage) - 1) * parseInt(perPage))
+                .limit(parseInt(perPage));
+        })
+        .then(result => {
+            const response = {
+                message: 'Get All Transaction Success',
+                transaction: result,
+                total_data: totalItems,
+                per_page: parseInt(perPage),
+                current_page: parseInt(currPage)
+            };
+
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            next(err);
+        });
 
 }
 
 exports.getTransaction = (req, res, next) => {
     const transactionId = req.params.transactionId;
     Transaction.findById(transactionId)
-    .then( result => {
-        if (!result) {
-            const error = new Error('Transaction not found');
-            error.errorStatus = 404;
-            throw error;
-        }
-        const response = {
-            message: 'Get Transaction Success',
-            transaction: result
-        };
-    
-        res.status(200).json(response);
-    })
-    .catch(err => {
-        next(err);
-    })
+        .then(result => {
+            if (!result) {
+                const error = new Error('Transaction not found');
+                error.errorStatus = 404;
+                throw error;
+            }
+            const response = {
+                message: 'Get Transaction Success',
+                transaction: result
+            };
+
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            next(err);
+        })
+}
+
+exports.getTransactionFromUser = (req, res, next) => {
+    const currPage = req.query.page || 1;
+    const perPage = req.query.perPage || 12;
+
+    const userId = req.params.userId;
+
+    Transaction.find({ userId: userId })
+        .countDocuments()
+        .then(result => {
+            if (result <= 0) {
+                const error = new Error('Transactions not found');
+                error.errorStatus = 404;
+                throw error;
+            }
+            totalItems = result;
+
+            return Transaction.find({ userId: userId })
+                .skip((parseInt(currPage) - 1) * parseInt(perPage))
+                .limit(parseInt(perPage));
+        })
+        .then(result => {
+
+            const response = {
+                message: 'Get Transactions Success',
+                transactions: result,
+                total_data: totalItems,
+                per_page: parseInt(perPage),
+                current_page: parseInt(currPage)
+            };
+
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            next(err);
+        })
 }
 
 exports.postTransaction = (req, res, next) => {
@@ -177,17 +215,37 @@ exports.updateTransaction = (req, res, next) => {
             Transaction.findById(orderId)
                 .then(result => {
                     if (!result) {
-                        const error = new Error('Event not found');
+                        const error = new Error('Transaction not found');
                         error.errorStatus = 404;
                         throw error;
                     }
 
                     console.log(statusResponse);
+                    console.log(result);
 
                     if (transactionStatus == 'settlement') {
                         result.paymentStatus = transactionStatus;
                         result.ticketStatus = 'issued';
                         result.ticketQRPath = 'https://www.jqueryscript.net/images/Random-Pixel-Avatar-Image-Generator-With-jQuery-and-Canvas-gixi.jpg';
+                        const catId = result.categoryId
+
+                        Category.findById(catId)
+                            .then(result => {
+                                if (!result) {
+                                    const error = new Error('Category not found');
+                                    error.errorStatus = 404;
+                                    throw error;
+                                }
+                                
+                                const minStock = result.categoryStock - 1
+                                result.categoryStock = minStock;
+
+                                return result.save();
+                            })
+                            .catch(err => {
+                                console.log('err: ', err);
+                            })
+
                     } else if (transactionStatus == 'cancel' || transactionStatus == 'expire') {
                         result.paymentStatus = transactionStatus;
                     }

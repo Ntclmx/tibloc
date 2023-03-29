@@ -1,8 +1,8 @@
 const PaymentType = require('../models/PaymentType');
 
 exports.getAllPaymentTypes = (req, res, next) => {
-    const currPage = req.params.page || 1;
-    const perPage = req.params.perPage || 12;
+    const currPage = req.query.page || 1;
+    const perPage = req.query.perPage || 12;
 
     let totalItems;
 

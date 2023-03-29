@@ -52,9 +52,11 @@ router.get('/wishlists/user/:userId', wishlistController.getWishlistFromUser );
 router.get('/wishlists/event/:eventId/user/:userId', wishlistController.getWishlistFromEventUser);
 
 // transaction
-router.get('/transaction', transactionController.getAllTransactions);
+router.get('/transactions', transactionController.getAllTransactions);
 
 router.get('/transaction/:transactionId', transactionController.getTransaction);
+
+router.get('/transactions/user/:userId', transactionController.getTransactionFromUser);
 
 router.post('/transaction', transactionController.postTransaction);
 

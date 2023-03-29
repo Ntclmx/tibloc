@@ -1,0 +1,29 @@
+.trxCardImage {
+    width: 170px;
+    height: 120px;
+    border-radius: 7px;
+    object-fit: cover;
+    object-position: 50% 0;
+}
+
+.trxCardP {
+    padding: 0;
+    margin: 0;
+    font-size: small;
+}
+
+.trxCardGradText-settlement {
+    text-transform: uppercase;
+    background: linear-gradient(to top left, #1767F1, #CA0CF2, #D74D29, #F8C129);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+
+.trxCardDiv1 {
+    border-left :1px solid #aaaa;
+}
+
+.trxCard {
+    cursor: pointer;
+}

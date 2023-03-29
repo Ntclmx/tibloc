@@ -44,7 +44,7 @@ const Wishlist = () => {
         return (
             <Row>
                 <Col className='col-12 mb-3'>
-                    <h2>Your Wishlist</h2>
+                    <h4>YOUR WISHLIST</h4>
                 </Col>
                 <Col className='col-12 mb-4'>
                     <Row>

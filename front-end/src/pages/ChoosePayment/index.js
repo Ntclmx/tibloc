@@ -71,12 +71,12 @@ const ChoosePayment = (props) => {
             .then(res => {
 
                 console.log(res);
+                history.push(`/transaction/${res.data.transaction._id}`);
             })
             .catch(err => {
                 console.log(err.response.data);
             })
 
-        history.push('/events');
     }
 
     const totalPrice = formatter.format(price);
