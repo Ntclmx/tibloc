@@ -11,20 +11,27 @@ exports.signIn = async (req, res) =>{
             return res.status(404).json({msg: "User tidak ditemukan"});
         }
     }
+    console.log(`Check Password`);
     const match = await argon2.verify(user.userPassword, req.body.password);
     if(!match){
         console.log(`FAILED! Wrong Password`);
         return res.status(400).json({msg: "Wrong Password"});
     }
+    console.log(`Password Match`);
+
     req.session.userId = user.id;
     const id = user.id;
-    const name = user.userName;
-    const email = user.userEmail;
-    const type = user.userType;
-    res.status(200).json({id, name, email, type});
+    const userName = user.userName;
+    const userEmail = user.userEmail;
+    const userType = user.userType;
+    req.session.save();
+    console.log(req.session);
+    res.status(200).json({id, userName, userEmail, userType});
 }
 
 exports.Me = async (req, res) =>{
+    console.log(req.session);
+    console.log(`Start get User info with id ` + req.session.userId);
     if(!req.session.userId){
         return res.status(401).json({msg: "Mohon login ke akun Anda!"});
     }

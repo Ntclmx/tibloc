@@ -13,8 +13,8 @@ import { useHistory } from "react-router-dom";
 import { signIn, reset } from "../../features/authSlice";
 
 const SignIn = () => {
-  const [email, setEmail]=useState('')
-  const [password, setPassword]=useState('')
+  const [email, setEmail]=useState('');
+  const [password, setPassword]=useState('');
   const dispatch = useDispatch();
   const history = useHistory();
   const { user, isError, isSuccess, isLoading, message } = useSelector(
@@ -22,9 +22,10 @@ const SignIn = () => {
   );
 
   useEffect(() => {
+    console.log(`User1: ` + JSON.stringify(user));
     if (user || isSuccess) {
       if(user.userType === 'A'){
-        history.push("/dashboard-admin");
+        history.push("/dashboard");
       }else if(user.userType === 'C'){
         history.push("/dashboard");
       }
@@ -34,7 +35,9 @@ const SignIn = () => {
 
   const Auth = (e) => {
     e.preventDefault();
+    console.log(`Mulai proses sign in`);
     dispatch(signIn({ email, password }));
+    console.log(`Selesai proses sign in, lanjut kmeana`);
   };
 
   return (
@@ -62,7 +65,7 @@ const SignIn = () => {
                   type="submit"
                   // onClick={submit}
                 >
-                  Log in
+                  {isLoading ? "Loading..." : "Login"}
                 </Button>
               </Form>
               <div className="text-center mt-4 justify-content-left">

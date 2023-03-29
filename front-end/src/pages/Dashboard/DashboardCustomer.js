@@ -9,12 +9,13 @@ import { getMe } from "../../features/authSlice";
 
 const DashboardCustomer = () => {
   console.log(`Start Dashboard...`);
-  
+
   const dispatch = useDispatch();
   const history = useHistory();
-  const {isError} = useSelector((state) => state.auth);
+  const {user, isError} = useSelector((state) => state.auth);
 
   useEffect(() => {
+    console.log(`Start getMe`);
     dispatch(getMe());
   }, [dispatch]);
 
@@ -26,7 +27,7 @@ const DashboardCustomer = () => {
 
   return (
     <div >
-      <h1>Wellcomeeee <strong>{isError}</strong></h1>
+      <h1>Wellcome <strong>{user}</strong></h1>
       <CarouselTibloc/>
       <h1 className="my-5 d-flex justify-content-center align-items-center">CATEGORY</h1>
       <ListCategory/>

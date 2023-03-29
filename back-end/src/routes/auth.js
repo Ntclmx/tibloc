@@ -10,7 +10,7 @@ router.use(cors());
 
 // router.post("/sign-up", authController.signUp);
 
-router.get("/sign-in", authController.signIn);
+router.post("/sign-in", authController.signIn);
 router.get("/sign-out", authController.signOut);
 router.get("/me", authController.Me);
 

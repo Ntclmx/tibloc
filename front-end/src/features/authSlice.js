@@ -6,12 +6,12 @@ const initialState = {
     isError: false,
     isSuccess: false,
     isLoading: false,
-    messaage: ""
+    message: ""
 }
 
 export const signIn = createAsyncThunk("user/signIn", async(req, thunkAPI) => {
     try {
-        const response = await axios.get('http://localhost:4000/v1/sign-in', {
+        const response = await axios.post('http://localhost:4000/v1/sign-in', {
             "email": req.email,
             "password": req.password,
         });
@@ -25,7 +25,9 @@ export const signIn = createAsyncThunk("user/signIn", async(req, thunkAPI) => {
 });
 
 export const getMe = createAsyncThunk("user/getMe", async(_, thunkAPI) => {
+    console.log(`Start Process getMe1, Calling backend...`);
     try {
+        console.log(`Start Process getMe2, Calling backend...`);
         const response = await axios.get('http://localhost:4000/v1/me');
         return response.data;
     } catch (error) {
