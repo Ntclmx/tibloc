@@ -8,6 +8,7 @@
     border: 0px;
     height: 300px;
     width: 100%;
+    object-fit: fill;
 }
 
 .detailTrxQR {
@@ -56,7 +57,9 @@
     font-weight: bolder;
     font-size: medium;
     cursor: pointer;
-    color: #D74D29;
+    background: linear-gradient(to top left, #1767F1, #CA0CF2, #D74D29, #F8C129);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .detailTrxText2 {

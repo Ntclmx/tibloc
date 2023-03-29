@@ -21,7 +21,7 @@ const ListCreatedEvents = () => {
     return (
         <Row>
             <Col className='col-12 mb-3'>
-                <h2>Created Events</h2>
+                <h4>CREATED EVENTS</h4>
             </Col>
             <Col className='col-12 mb-3'>
                 <Row>

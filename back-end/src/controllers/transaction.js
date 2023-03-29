@@ -10,7 +10,7 @@ let coreApi = new midtransClient.CoreApi({
 
 exports.getAllTransactions = (req, res, next) => {
     const currPage = req.params.page || 1;
-    const perPage = req.params.perPage || 50;
+    const perPage = req.params.perPage || 12;
 
     let totalItems;
 
@@ -52,6 +52,43 @@ exports.getTransaction = (req, res, next) => {
             const response = {
                 message: 'Get Transaction Success',
                 transaction: result
+            };
+
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            next(err);
+        })
+}
+
+exports.getTransactionFromUser = (req, res, next) => {
+    const currPage = req.query.page || 1;
+    const perPage = req.query.perPage || 12;
+
+    const userId = req.params.userId;
+
+    Transaction.find({ userId: userId })
+        .countDocuments()
+        .then(result => {
+            if (result <= 0) {
+                const error = new Error('Transactions not found');
+                error.errorStatus = 404;
+                throw error;
+            }
+            totalItems = result;
+
+            return Transaction.find({ userId: userId })
+                .skip((parseInt(currPage) - 1) * parseInt(perPage))
+                .limit(parseInt(perPage));
+        })
+        .then(result => {
+
+            const response = {
+                message: 'Get Transactions Success',
+                transactions: result,
+                total_data: totalItems,
+                per_page: parseInt(perPage),
+                current_page: parseInt(currPage)
             };
 
             res.status(200).json(response);
@@ -199,8 +236,7 @@ exports.updateTransaction = (req, res, next) => {
                                     error.errorStatus = 404;
                                     throw error;
                                 }
-
-                                console.log('testttttttttttttt',result.categoryStock);
+                                
                                 const minStock = result.categoryStock - 1
                                 result.categoryStock = minStock;
 

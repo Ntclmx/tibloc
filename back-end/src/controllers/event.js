@@ -4,17 +4,29 @@ const fs = require('fs');
 const Event = require('../models/event');
 
 exports.getAllEvents = (req, res, next) => {
-    const currPage = req.params.page || 1;
-    const perPage = req.params.perPage || 12;
+    const currPage = req.query.page || 1;
+    const perPage = req.query.perPage || 12;
+
+    const query = req.query.events;
+
+    let queryAll = {};
+
+    if(query)
+    {
+        queryAll = {$or: [{eventTitle: { $regex: query, $options: 'i' }}, {eventDescription: { $regex: query, $options: 'i' }}] };
+    }
+    else {
+        queryAll = {};
+    }
 
     let totalItems;
-
-    Event.find()
+    
+    Event.find(queryAll)
     .countDocuments()
     .then( result => {
         totalItems = result;
 
-        return Event.find()
+        return Event.find(queryAll)
         .skip((parseInt(currPage) - 1) * parseInt(perPage))
         .limit(parseInt(perPage));
     })

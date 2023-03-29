@@ -54,3 +54,19 @@
 .headerSearchText:focus {
     color: white;
 }
+
+.headerSearchButton {
+    background-color: rgba(0, 0, 0, 0.0);
+    border-color: rgba(0, 0, 0, 0.0);
+}
+
+.headerSearchButton:hover {
+    background-color: rgba(0, 0, 0, 0.0);
+    border-color: rgba(0, 0, 0, 0.0);
+}
+
+.headerSearchButton:active:focus {
+    background-color: rgba(0, 0, 0, 0.0);
+    border-color: rgba(0, 0, 0, 0.0);
+}
+

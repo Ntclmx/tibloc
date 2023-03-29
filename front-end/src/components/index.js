@@ -13,7 +13,7 @@ import CategoryCard from "./CategoryCard";
 import CreatedEventCard from "./CreatedEventCard";
 import WishlistCard from "./WishlistCard";
 import PaymentTypeCard from "./PaymentTypeCard";
+import TransactionCard from "./TransactionCard";
 
-
-export { PaymentTypeCard, WishlistCard, CreatedEventCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs };
+export { TransactionCard ,PaymentTypeCard, WishlistCard, CreatedEventCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs };
 

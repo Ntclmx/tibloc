@@ -11,6 +11,7 @@ import ListCreatedEvents from '../ListCreatedEvents'
 import Wishlist from '../Wishlist'
 import ChoosePayment from '../ChoosePayment'
 import DetailTransaction from '../DetailTransaction'
+import ListTransactions from '../ListTransactions'
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
@@ -35,10 +36,24 @@ const MainApp = () => {
 
             <Router>
                 <Switch>
+                    <Route path='/events'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <ListEvents />
+                            </div>
+                        </div>
+                    </Route>
                     <Route path='/transaction/:id'>
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
                                 <DetailTransaction />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/transactions'>
+                        <div className='mx-5' >
+                            <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                <ListTransactions />
                             </div>
                         </div>
                     </Route>
@@ -106,13 +121,7 @@ const MainApp = () => {
                             </div>
                         </div>
                     </Route>
-                    <Route path='/events'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <ListEvents />
-                            </div>
-                        </div>
-                    </Route>
+                    
                     <Route path='/list-created'>
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
