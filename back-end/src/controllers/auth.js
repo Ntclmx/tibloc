@@ -1,6 +1,19 @@
 const User = require("../models/user");
 const argon2 = require("argon2");
 
+exports.signUp = async (req, res) => {
+    console.log(`Start Sign Up Process for ${req.body.email}`);
+    const user = await User.findOne().where({userEmail: req.body.email});
+    console.log(`User Result: ${user}`);
+    if(user){
+        console.log(`FAILED! User Already Exist. Please Login`);
+        return res.status(404).json({msg: "User Already Exist. Please Login"});
+    }
+
+    encryptedPassword
+}
+
+
 exports.signIn = async (req, res) =>{
     console.log(`Start Sign In Process for ${req.body.email}`);
     const user = await User.findOne().where({userEmail: req.body.email});

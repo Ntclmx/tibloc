@@ -6,6 +6,7 @@
 // const fs = require("fs");
 const argon2 = require("argon2");
 const User = require("../models/user");
+const jwt = require('jsonwebtoken');
 
 exports.getAllUsers = async (req, res, next) => {
   const currPage = req.query.page || 1;
@@ -64,33 +65,43 @@ exports.getUserById = (req, res, next) => {
 };
 
 exports.createUser = async (req, res, next) => {
-    console.log(`Start Process Create User ${req.body.email}`);
+  console.log(`Start Process Create User ${req.body.email}`);
   const { name, email, password, confPassword, type } = req.body;
-  const user = await User.findOne().where({userEmail: req.body.email});
+  const user = await User.findOne().where({ userEmail: req.body.email });
   console.log(`User Result: ${user}`);
-  
+
   if (!user) {
     console.log("User Not Found, continue to next step...");
-    if (password !== confPassword){
-        console.log("FAILED Password Not Match...");
-        return res
+    if (password !== confPassword) {
+      console.log("FAILED Password Not Match...");
+      return res
         .status(400)
         .json({ msg: "Password dan Confirm Password tidak cocok" });
     }
     console.log("Success Password Match...");
     const hashPassword = await argon2.hash(password);
     try {
-        console.log("Creating User...");
+      console.log("Creating User...");
       await User.create({
         userName: name,
         userEmail: email,
         userPassword: hashPassword,
         userType: type,
       });
+      const token = jwt.sign(
+        { userid: user.id, userEmail: user.userEmail, userName: user.userName, userType: user.userType },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "2h",
+        }
+      );
+      // save user token
+      user.token = token;
+
       console.log("SUCCESS Create User");
       res.status(201).json({ msg: "Register Berhasil" });
     } catch (error) {
-        console.log("FAILED Create User");
+      console.log("FAILED Create User");
       res.status(400).json({ msg: error.message });
     }
   } else {
