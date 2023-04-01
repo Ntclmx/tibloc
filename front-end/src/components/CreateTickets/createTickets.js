@@ -24,8 +24,8 @@ const CreateTickets = (props) => {
     useEffect(() => {
 
         const eventId = props.match.params.id;
-        const { event } = props;
-        console.log(event);
+        // const { event } = props;
+        // console.log(event);
         if (eventId) {
             setIsUpdate(true);
             Axios.get(`http://127.0.0.1:4000/v1/event/${eventId}/categories`)
