@@ -1,7 +1,7 @@
 .event-card {
     width: 15rem;
     border: 0px;
-    max-height: 267px;
+    max-height: 300px;
 }
 
 .event-card-image {
@@ -33,7 +33,7 @@
 }
 
 .event-card-date {
-    top: 64%;
+    top: 162px;
     width: 60%;
     background-color: #1767F1;
     padding-left: 15%;
@@ -43,4 +43,8 @@
 
 .event-card-body {
     padding-top: 11%;
+}
+
+.event-card-promotor-text {
+    font-size: small;
 }

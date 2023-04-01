@@ -6,7 +6,7 @@ const Event = require('../models/event');
 exports.getAllEvents = (req, res, next) => {
     const currPage = req.query.page || 1;
     const perPage = req.query.perPage || 12;
-
+    const sort = req.query.sort || 'asc'
     const query = req.query.events;
 
     let queryAll = {};
@@ -27,6 +27,7 @@ exports.getAllEvents = (req, res, next) => {
       totalItems = result;
 
         return Event.find(queryAll)
+        .sort({ eventTitle: sort })
         .skip((parseInt(currPage) - 1) * parseInt(perPage))
         .limit(parseInt(perPage));
     })

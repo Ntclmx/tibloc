@@ -70,24 +70,8 @@ const CreateEventComp = (props) => {
     }
   };
 
-  // const resetButton = () => {
-  //   setEvent({
-  //     eventTitle: '',
-  //     eventOrganizer: '',
-  //     eventDate: '',
-  //     eventTime: '',
-  //     eventDescription: '',
-  //     eventAddress: '',
-  //     eventTnc: '',
-  //     eventCategory: '',
-  //     eventLogo: '',
-  //   });
-  // }
-
-  const eventOrganizers = ['Org1', 'Org2', 'Org3'];
-  const eventCategories = ['Cat1', 'Cat2', 'Cat3'];
-
-  // console.log(event);
+  const eventOrganizers = ['Groovy Event Organizer', 'The BIG Organizer', 'Dream Flavours Celebration'];
+  const eventCategories = ['Comedy', 'Music', 'Sport','Fun&Games'];
 
   return (
     <div className='mb-5'>

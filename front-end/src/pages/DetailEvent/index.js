@@ -9,6 +9,7 @@ import { DetailEventCalendar, DetailEventTabs } from '../../components';
 import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Circle from '../../assets/events/circle.png';
 
 const DetailEvent = (props) => {
   const [event, setEvent] = useState({});
@@ -44,7 +45,8 @@ const DetailEvent = (props) => {
         <div className="detailEventGrey"></div>
 
         <div className="d-flex justify-content-center detailImageDivLogo">
-          <Image src={eventImage} className='detailEventImage2 shadow'></Image>
+          <Image src={Circle} className='detailEventImage2 shadow'></Image>
+          {/* <Image src={eventImage} className='detailEventImage2 shadow'></Image> */}
         </div>
 
 
