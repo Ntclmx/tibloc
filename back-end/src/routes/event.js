@@ -7,6 +7,7 @@ const categoryController = require('../controllers/category');
 const wishlistController = require('../controllers/wishlist');
 const transactionController = require('../controllers/transaction');
 const paymentTypeController = require('../controllers/paymentType');
+const nftController = require('../controllers/nft');
 
 // event
 router.post('/event', [
@@ -66,5 +67,14 @@ router.get('/paymentType', paymentTypeController.getAllPaymentTypes);
 router.get('/paymentType/:paymentTypeId', paymentTypeController.getPaymentType);
 
 router.post('/paymentType', paymentTypeController.postPaymentType);
+
+// nft
+router.get('/nfts', nftController.getAllNfts);
+
+router.get('/nft/:nftId', nftController.getNft);
+
+router.post('/nfts', nftController.postNft);
+
+router.get('/nfts/category/:categoryId', nftController.getNftFromEvent);
 
 module.exports = router;

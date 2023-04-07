@@ -2,19 +2,18 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const nftSchema = new Schema({
-    categoryId : {
-        type : String,
-    },
-    nftPath : {
+const NFT = new Schema({
+    nftImage : {
         type : String,
     },
     nftProbability : {
+        type : Number,
+    },
+    categoryId : {
         type : String,
     },
 }, {
-    timestamps : false
+    timestamps : true
 });
 
-const NFT = mongoose.model("NFT", nftSchema, "NFT");
-module.exports = NFT;
+module.exports = mongoose.model('NFT', NFT)
