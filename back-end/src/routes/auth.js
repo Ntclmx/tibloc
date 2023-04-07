@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const authController = require('../controllers/auth');
 const cors = require("cors");
+const {verifyToken} = require("../middleware/AuthUser");
 
 router.use(express.json());
 router.use(express.urlencoded({extended:true}));
@@ -12,7 +13,10 @@ router.use(cors());
 
 router.post("/sign-in", authController.signIn);
 router.get("/sign-out", authController.signOut);
-router.get("/me", authController.Me);
+router.post("/welcome", verifyToken, (req, res) => {
+    res.status(200).send("Welcome 🙌 ");
+  });
+// router.get("/me", auth, authController.Me);
 
 
 router.get("/login/success",(req,res) => {

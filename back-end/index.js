@@ -5,9 +5,9 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 const cors = require("cors");
-const session = require("express-session");
+// const session = require("express-session");
 // const MongoStore = require('connect-mongo');
-const sessionStore = require("connect-mongoose-session-store")(express);
+// const sessionStore = require("connect-mongoose-session-store")(express);
 // const passport = require("passport");
 // const passportSetup = require("./src/controllers/passport");
 // const cookieSession = require("cookie-session");
@@ -26,32 +26,32 @@ const app = express();
 
 console.log(`Start Routing2, sess secret ${process.env.SESS_SECRET}`);
 
-sessionStore = new sessionStore({
-    host: 'localhost',
-    port: 4000,
-    db: 'mydb',
-    stringify: false,
-    maxAge: 60 * 60 * 1000,
-    autoRemoveExpiredSession: true,
-    sessionSchema: 'any_mongoose_schema',        // optional
-    sessionHistorySchema: 'any_mongoose_schema'  // optional
-});
+// sessionStore = new sessionStore({
+//     host: 'localhost',
+//     port: 4000,
+//     db: 'mydb',
+//     stringify: false,
+//     maxAge: 60 * 60 * 1000,
+//     autoRemoveExpiredSession: true,
+//     sessionSchema: 'any_mongoose_schema',        // optional
+//     sessionHistorySchema: 'any_mongoose_schema'  // optional
+// });
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
-app.use(session({
-    secret: process.env.SESS_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    store: sessionStore,
-    // store: MongoStore.create({
-    //     mongoUrl: 'mongodb+srv://tibloc:MongoDBtibloc@cluster0.vlfqswq.mongodb.net/tibloc?retryWrites=true&w=majority'
-    // }),
-    cookie: {
-        maxAge : 8400000,
-        httpOnly: false
-    }
-}));
+// app.use(session({
+//     secret: process.env.SESS_SECRET,
+//     resave: false,
+//     saveUninitialized: true,
+//     store: sessionStore,
+//     // store: MongoStore.create({
+//     //     mongoUrl: 'mongodb+srv://tibloc:MongoDBtibloc@cluster0.vlfqswq.mongodb.net/tibloc?retryWrites=true&w=majority'
+//     // }),
+//     cookie: {
+//         maxAge : 8400000,
+//         httpOnly: false
+//     }
+// }));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));

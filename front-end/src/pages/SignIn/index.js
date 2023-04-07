@@ -25,9 +25,9 @@ const SignIn = () => {
     console.log(`User1: ` + JSON.stringify(user));
     if (user || isSuccess) {
       if(user.userType === 'A'){
-        history.push("/dashboard");
+        history.push("/dashboard-guest");
       }else if(user.userType === 'C'){
-        history.push("/dashboard");
+        history.push("/dashboard-guest");
       }
     }
     dispatch(reset());

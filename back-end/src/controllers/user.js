@@ -6,7 +6,7 @@
 // const fs = require("fs");
 const argon2 = require("argon2");
 const User = require("../models/user");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 exports.getAllUsers = async (req, res, next) => {
   const currPage = req.query.page || 1;
@@ -44,8 +44,8 @@ exports.getAllUsers = async (req, res, next) => {
 };
 
 exports.getUserById = (req, res, next) => {
-  const userId = req.params.userId;
-  User.findById(userId)
+    console.log(`Start Get User by ID`);
+  User.findById(req.user.userId)
     .then((result) => {
       if (!result) {
         const error = new Error("Event not found");
@@ -67,10 +67,10 @@ exports.getUserById = (req, res, next) => {
 exports.createUser = async (req, res, next) => {
   console.log(`Start Process Create User ${req.body.email}`);
   const { name, email, password, confPassword, type } = req.body;
-  const user = await User.findOne().where({ userEmail: req.body.email });
-  console.log(`User Result: ${user}`);
+  const checkUser = await User.findOne().where({ userEmail: req.body.email });
+  console.log(`User Result: ${checkUser}`);
 
-  if (!user) {
+  if (!checkUser) {
     console.log("User Not Found, continue to next step...");
     if (password !== confPassword) {
       console.log("FAILED Password Not Match...");
@@ -82,14 +82,19 @@ exports.createUser = async (req, res, next) => {
     const hashPassword = await argon2.hash(password);
     try {
       console.log("Creating User...");
-      await User.create({
+      const user = await User.create({
         userName: name,
         userEmail: email,
         userPassword: hashPassword,
         userType: type,
       });
       const token = jwt.sign(
-        { userid: user.id, userEmail: user.userEmail, userName: user.userName, userType: user.userType },
+        {
+          userId: user.id,
+          userEmail: user.userEmail,
+          userName: user.userName,
+          userType: user.userType,
+        },
         process.env.TOKEN_KEY,
         {
           expiresIn: "2h",
@@ -98,14 +103,14 @@ exports.createUser = async (req, res, next) => {
       // save user token
       user.token = token;
 
-      console.log("SUCCESS Create User");
+      console.log("SUCCESS Create User, token: " + token);
       res.status(201).json({ msg: "Register Berhasil" });
     } catch (error) {
       console.log("FAILED Create User");
       res.status(400).json({ msg: error.message });
     }
   } else {
-    console.log(`Email Already Exist, user ${user}`);
+    console.log(`Email Already Exist, user ${checkUser}`);
     console.log("FAILED Create User");
     return res.status(400).json({ msg: "Email Already Exist" });
   }

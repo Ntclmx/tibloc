@@ -1,18 +1,6 @@
 const User = require("../models/user");
 const argon2 = require("argon2");
-
-exports.signUp = async (req, res) => {
-    console.log(`Start Sign Up Process for ${req.body.email}`);
-    const user = await User.findOne().where({userEmail: req.body.email});
-    console.log(`User Result: ${user}`);
-    if(user){
-        console.log(`FAILED! User Already Exist. Please Login`);
-        return res.status(404).json({msg: "User Already Exist. Please Login"});
-    }
-
-    encryptedPassword
-}
-
+const jwt = require("jsonwebtoken");
 
 exports.signIn = async (req, res) =>{
     console.log(`Start Sign In Process for ${req.body.email}`);
@@ -31,19 +19,21 @@ exports.signIn = async (req, res) =>{
         return res.status(400).json({msg: "Wrong Password"});
     }
     console.log(`Password Match`);
+    const token = jwt.sign(
+        { userId: user.id, userEmail: user.userEmail, userName: user.userName, userType: user.userType },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "2h",
+        }
+      );
 
-    req.session.userId = user.id;
-    const id = user.id;
-    const userName = user.userName;
-    const userEmail = user.userEmail;
-    const userType = user.userType;
-    req.session.save();
-    console.log(req.session);
-    res.status(200).json({id, userName, userEmail, userType});
+      // save user token
+      user.token = token;
+    console.log(token);
+    res.status(200).json(user);
 }
 
 exports.Me = async (req, res) =>{
-    console.log(req.session);
     console.log(`Start get User info with id ` + req.session.userId);
     if(!req.session.userId){
         return res.status(401).json({msg: "Mohon login ke akun Anda!"});

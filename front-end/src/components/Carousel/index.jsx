@@ -1,6 +1,8 @@
 import React from "react";
 import Carousel from 'react-bootstrap/Carousel';
-import CarouselImage from '../../assets/events/event1.jpg'
+import CarouselImage1 from '../../assets/carousel/Home1.png';
+import CarouselImage2 from '../../assets/carousel/Home2.png';
+import CarouselImage3 from '../../assets/carousel/Home3.png';
 import './carousel.css'
 // function checkIndex(banner){
 //   if(banner.index === 1){
@@ -25,7 +27,7 @@ const CarouselTibloc = () => {
       <Carousel.Item>
         <img
           className="d-block carousel-image"
-          src={CarouselImage}
+          src={CarouselImage1}
           alt="First slide"
         />
         <Carousel.Caption>
@@ -36,7 +38,7 @@ const CarouselTibloc = () => {
       <Carousel.Item>
         <img
           className="d-block carousel-image"
-          src={CarouselImage}
+          src={CarouselImage1}
           alt="Second slide"
         />
 
@@ -48,7 +50,7 @@ const CarouselTibloc = () => {
       <Carousel.Item>
         <img
           className="d-block carousel-image"
-          src={CarouselImage}
+          src={CarouselImage1}
           alt="Third slide"
         />
 

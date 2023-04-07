@@ -46,10 +46,10 @@ const SignUp = () => {
   async function submit(e){
     e.preventDefault();
     try {
-      await axios.post("http://localhost:4000/v1/user/users",{
+      await axios.post("http://localhost:4000/v1/users",{
         name,email,password,confPassword
       });
-      history.push("/");
+      history.push("/dashboard-guest");
     } catch (e) {
       console.log(e);
       if(e.response){
