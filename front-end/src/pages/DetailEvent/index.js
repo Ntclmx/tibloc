@@ -3,7 +3,7 @@ import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import eventImage from '../../assets/carousel/036907800_1608786362-WhatsApp_Image_2020-12-24_at_07.58.39.jpeg'
+import eventImage from '../../assets/carousel/Home1.png'
 import './detailEvent.css'
 import { DetailEventCalendar, DetailEventTabs } from '../../components';
 import { withRouter } from 'react-router-dom';

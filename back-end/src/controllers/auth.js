@@ -1,72 +1,52 @@
+const User = require("../models/user");
+const argon2 = require("argon2");
+const jwt = require("jsonwebtoken");
 
+exports.signIn = async (req, res) =>{
+    console.log(`Start Sign In Process for ${req.body.email}`);
+    const user = await User.findOne().where({userEmail: req.body.email});
+    console.log(`User Result: ${user}`);
+    if(!user){
+        if(user.userEmail !== req.body.email){
+            console.log(`FAILED! User Not Found`);
+            return res.status(404).json({msg: "User tidak ditemukan"});
+        }
+    }
+    console.log(`Check Password`);
+    const match = await argon2.verify(user.userPassword, req.body.password);
+    if(!match){
+        console.log(`FAILED! Wrong Password`);
+        return res.status(400).json({msg: "Wrong Password"});
+    }
+    console.log(`Password Match`);
+    const token = jwt.sign(
+        { userId: user.id, userEmail: user.userEmail, userName: user.userName, userType: user.userType },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "2h",
+        }
+      );
 
-// // const stringifiedParams = queryString.stringify({
-// //   client_id: process.env.CLIENT_ID_GOES_HERE,
-// //   redirect_uri: 'localhost:3000/home',
-// //   scope: [
-// //     'https://www.googleapis.com/auth/userinfo.email',
-// //     'https://www.googleapis.com/auth/userinfo.profile',
-// //   ].join(' '), // space seperated string
-// //   response_type: 'code',
-// //   access_type: 'offline',
-// //   prompt: 'consent',
-// // });
+      // save user token
+      user.token = token;
+    console.log(token);
+    res.status(200).json(user);
+}
 
-// // exports.googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`;
-// const express = require('express');
-// const app = express();
-// const passport = require('passport');
-// const cookieSession = require('cookie-session');
-// require('./passport');
-// // import * as queryString from 'query-string';
+exports.Me = async (req, res) =>{
+    console.log(`Start get User info with id ` + req.session.userId);
+    if(!req.session.userId){
+        return res.status(401).json({msg: "Mohon login ke akun Anda!"});
+    }
+    const user = await User.findOne().where({id: req.session.userId});
+    console.log(`User Result: ${user}`);
+    if(!user) return res.status(404).json({msg: "User tidak ditemukan"});
+    res.status(200).json(user);
+}
 
-// // exports.authenticate = (req, res, next) => {
-// //   const passport = require('passport')
-// //   var userProfile
-// //   app.use(passport.initialize())
-// //   app.use(passport.session())
-
-// //   app.set('view engine', 'ejs')
-
-// //   app.get('/success', (req, res) => res.send(userProfile))
-// //   app.get('/error', (req, res) => res.send('error logging in'))
-
-// //   passport.serializeUser(function (user, cb) {
-// //     cb(null, user)
-// //   })
-
-// //   passport.deserializeUser(function (obj, cb) {
-// //     cb(null, obj)
-// //   })
-
-// //   const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
-// //   const GOOGLE_CLIENT_ID = '348334482720-r76gtpogm62h5tkdusv3o4fp38rq2hfp.apps.googleusercontent.com'
-// //   const GOOGLE_CLIENT_SECRET = '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'
-// //   passport.use(
-// //     new GoogleStrategy(
-// //       {
-// //         clientID: GOOGLE_CLIENT_ID,
-// //         clientSecret: GOOGLE_CLIENT_SECRET,
-// //         callbackURL: 'http://localhost:4000/auth/google/callback',
-// //       },
-// //       function (accessToken, refreshToken, profile, done) {
-// //         userProfile = profile
-// //         return done(null, userProfile)
-// //       },
-// //     ),
-// //   )
-
-// //   app.get(
-// //     '/auth/google',
-// //     passport.authenticate('google', { scope: ['profile', 'email'] }),
-// //   )
-
-// //   app.get(
-// //     '/auth/google/callback',
-// //     passport.authenticate('google', { failureRedirect: '/error' }),
-// //     function (req, res) {
-// //       // Successful authentication, redirect success.
-// //       res.redirect('/success')
-// //     },
-// //   )
-// // }
+exports.signOut = (req, res) =>{
+    req.session.destroy((err)=>{
+        if(err) return res.status(400).json({msg: "Tidak dapat logout"});
+        res.status(200).json({msg: "Anda telah logout"});
+    });
+}

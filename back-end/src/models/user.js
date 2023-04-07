@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
 
-// mongoose.connect("mongodb://localhost:27017/tibloc", {
-//    useNewUrlParser: true,
-//    useUnifiedTopology: true
-// });
-
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -17,8 +12,14 @@ const userSchema = new Schema({
     userType : {
         type : String,
     },
+    userName : {
+        type : String,
+    },
+    refresh_token : {
+        type : String,
+    },
 }, {
-    timestamps : true
+    timestamps : false
 });
 
 const User = mongoose.model("User", userSchema, "User");

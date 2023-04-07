@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -6,11 +6,40 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
 import { ThirdPartyLogin } from "../../components";
-
+import {Link} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { signIn, reset } from "../../features/authSlice";
 
 const SignIn = () => {
+  const [email, setEmail]=useState('');
+  const [password, setPassword]=useState('');
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    console.log(`User1: ` + JSON.stringify(user));
+    if (user || isSuccess) {
+      if(user.userType === 'A'){
+        history.push("/dashboard-guest");
+      }else if(user.userType === 'C'){
+        history.push("/dashboard-guest");
+      }
+    }
+    dispatch(reset());
+  }, [user, isSuccess, dispatch, history]);
+
+  const Auth = (e) => {
+    e.preventDefault();
+    console.log(`Mulai proses sign in`);
+    dispatch(signIn({ email, password }));
+    console.log(`Selesai proses sign in, lanjut kmeana`);
+  };
+
   return (
     <Container fluid>
       <Row className="d-flex justify-content-center align-items-center h-100">
@@ -19,22 +48,24 @@ const SignIn = () => {
             <Card.Body className="p-5 w-100 d-flex flex-column">
               <h2 className="fw-bold mb-2 text-center">Login</h2>
 
-              <Form className="text-center mt-3">
+              <Form className="text-center mt-3" onSubmit={Auth}>
+                {isError && <p className="has-text-centered">{message}</p>}
                 <Form.Group
                   className="mb-2 register-form"
-                  controlId="mobile-number"
+                  controlId="email"
                 >
-                  <Form.Control type="text" placeholder="Mobile Number or Email" />
+                  <Form.Control type="email" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}}/>
                 </Form.Group>
                 <Form.Group className="mb-2 register-form" controlId="password">
-                  <Form.Control type="password" placeholder="Password" />
+                  <Form.Control type="password" placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}}/>
                 </Form.Group>
                 <Button
                   variant="primary register-button"
                   className="mt-5"
                   type="submit"
+                  // onClick={submit}
                 >
-                  Log in
+                  {isLoading ? "Loading..." : "Login"}
                 </Button>
               </Form>
               <div className="text-center mt-4 justify-content-left">

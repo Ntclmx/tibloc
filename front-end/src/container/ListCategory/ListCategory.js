@@ -20,7 +20,7 @@ const ComponentEvents = () => {
   }, []);
 
   return (
-    <Row>
+    <Row d-flex justify-content-center align-items-center>
       {events.map((event) => {
         console.log(typeof event);
         return (
@@ -41,8 +41,9 @@ function HomeTabs() {
     <Tabs
       defaultActiveKey="recommendation"
       id="fill-tab-example"
-      className="mb-3"
+      className="mb-3 my-5"
       fill
+      d-flex justify-content-center align-items-center
     >
       <Tab eventKey="recommendation" title="RECOMMENDATION">
         <ComponentEvents />
