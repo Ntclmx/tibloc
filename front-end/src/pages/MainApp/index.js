@@ -14,7 +14,7 @@ import Wishlist from '../Wishlist'
 import ChoosePayment from '../ChoosePayment'
 import DetailTransaction from '../DetailTransaction'
 import ListTransactions from '../ListTransactions'
-
+import Home from '.'
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
@@ -163,7 +163,7 @@ const MainApp = () => {
                     <Route path='/'>
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <Home />
+                                <p>404 NOT FOUND</p>
                             </div>
                         </div>
                     </Route>
