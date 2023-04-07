@@ -39,13 +39,7 @@ app.use(bodyParser.json());
 app.use(multer({
     storage: fileStorage,
     fileFilter: fileFilter
-}).fields([{
-    name: 'eventLogo',
-    maxCount: 1
-}, {
-    name: 'paymentTypeLogo',
-    maxCount: 1
-}]));
+}).any());
 
 
 

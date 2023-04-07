@@ -2,3 +2,15 @@
     background-color: transparent !important;
     border-color: transparent !important;;
 }
+
+.createTicketSmallText {
+    font-size: smaller;
+}
+
+.createTicketNFT {
+    border-radius: 15px 15px 15px 15px;
+    height: 180px;
+    max-width: 260px;
+    position: absolute;
+    z-index: 0;
+}

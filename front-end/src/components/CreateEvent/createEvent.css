@@ -9,7 +9,7 @@
 .create-event-image {
     border-radius: 15px 15px 15px 15px;
     height: 300px;
-    position: absolute;;
+    position: absolute;
     z-index: 0;
 }
 

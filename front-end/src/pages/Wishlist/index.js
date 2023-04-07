@@ -49,7 +49,6 @@ const Wishlist = () => {
                 <Col className='col-12 mb-4'>
                     <Row>
                         {events.map(event => {
-                            console.log(typeof (event));
                             return <WishlistCard
                                 key={event._id}
                                 eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}

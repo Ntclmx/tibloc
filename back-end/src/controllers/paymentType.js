@@ -62,7 +62,7 @@ exports.postPaymentType = (req, res, next) => {
     }
 
     const paymentTypeName = req.body.paymentTypeName;
-    const paymentTypeLogo = req.files.paymentTypeLogo[0].path;
+    const paymentTypeLogo = req.files[0].path;
     const paymentTypeKind = req.body.paymentTypeKind;
     
     const PostPaymentType = new PaymentType({
