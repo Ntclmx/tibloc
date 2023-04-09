@@ -9,12 +9,14 @@ const transactionController = require('../controllers/transaction');
 const paymentTypeController = require('../controllers/paymentType');
 const nftController = require('../controllers/nft');
 
+const {verifyToken} = require("../middleware/AuthUser");
+
 // event
 router.post('/event', [
         body('eventTitle').isLength({min:5}).withMessage('Event Title tidak sesuai'),
 ],eventController.postEvent);
 
-router.get('/events', eventController.getAllEvents);
+router.get('/events',  eventController.getAllEvents);
 
 router.get('/event/:eventId', eventController.getEvent);
 
@@ -36,7 +38,7 @@ router.get('/event/:eventId/categories', categoryController.getCategoryFromEvent
 router.put('/event/:eventId/categories', categoryController.updateCategory);
 
 // wishlist
-router.post('/wishlist', wishlistController.postWishlist);
+router.post('/wishlist', verifyToken, wishlistController.postWishlist);
 
 router.get('/wishlists', wishlistController.getAllWishlists);
 
@@ -46,16 +48,16 @@ router.delete('/wishlist/:wishlistId', wishlistController.deleteWishlist);
 
 router.get('/wishlists/event/:eventId', wishlistController.getWishlistFromEvent );
 
-router.get('/wishlists/user/:userId', wishlistController.getWishlistFromUser );
+router.get('/wishlists/user', verifyToken, wishlistController.getWishlistFromUser );
 
-router.get('/wishlists/event/:eventId/user/:userId', wishlistController.getWishlistFromEventUser);
+router.get('/wishlists/event/:eventId/user', verifyToken, wishlistController.getWishlistFromEventUser);
 
 // transaction
 router.get('/transactions', transactionController.getAllTransactions);
 
 router.get('/transaction/:transactionId', transactionController.getTransaction);
 
-router.get('/transactions/user/:userId', transactionController.getTransactionFromUser);
+router.get('/transactions/user', verifyToken, transactionController.getTransactionFromUser);
 
 router.post('/transaction', transactionController.postTransaction);
 

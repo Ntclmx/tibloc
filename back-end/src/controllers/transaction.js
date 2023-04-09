@@ -65,7 +65,8 @@ exports.getTransactionFromUser = (req, res, next) => {
     const currPage = req.query.page || 1;
     const perPage = req.query.perPage || 12;
 
-    const userId = req.params.userId;
+    const user = req.user;
+    const userId = user.userId
 
     Transaction.find({ userId: userId })
         .countDocuments()
@@ -101,7 +102,8 @@ exports.getTransactionFromUser = (req, res, next) => {
 exports.postTransaction = (req, res, next) => {
 
     const categoryId = req.body.categoryId;
-    const userId = req.body.userId;
+    const user = req.user;
+    const userId = user.userId
     const transactionAmount = req.body.transactionAmount;
     const paymentWith = req.body.paymentWith;
 

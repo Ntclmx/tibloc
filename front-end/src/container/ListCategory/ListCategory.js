@@ -20,17 +20,20 @@ const ComponentEvents = () => {
   }, []);
 
   return (
-    <Row d-flex justify-content-center align-items-center>
-      {events.map((event) => {
-        console.log(typeof event);
-        return (
-          <EventCard col="col-3"
-            key={event._id}
-            eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}
-            eventTitle={event.eventTitle}
-            eventDate={event.eventDate}
-          />
-        );
+    <Row className="">
+      {events.map(event => {
+        console.log(typeof (event));
+        return <EventCard
+          key={event._id}
+          eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}
+          eventTitle={event.eventTitle}
+          eventDate={event.eventDate}
+          _id={event._id}
+          eventOrganizer={event.eventOrganizer}
+          eventAddress={event.eventAddress}
+          eventCategory={event.eventCategory}
+          dashboard={true}
+        />
       })}
     </Row>
   );
@@ -38,29 +41,32 @@ const ComponentEvents = () => {
 
 function HomeTabs() {
   return (
-    <Tabs
-      defaultActiveKey="recommendation"
-      id="fill-tab-example"
-      className="mb-3 my-5"
-      fill
-      d-flex justify-content-center align-items-center
-    >
-      <Tab eventKey="recommendation" title="RECOMMENDATION">
-        <ComponentEvents />
-      </Tab>
-      <Tab eventKey="comedy" title="Comedy">
-        <ComponentEvents/>
-      </Tab>
-      <Tab eventKey="music" title="Music">
-        <ComponentEvents/>
-      </Tab>
-      <Tab eventKey="sport" title="Sport">
-        <ComponentEvents/>
-      </Tab>
-      <Tab eventKey="fng" title="Fun & Games">
-        <ComponentEvents/>
-      </Tab>
-    </Tabs>
+    <div className='px-5'>
+
+      <Tabs
+        defaultActiveKey="recommendation"
+        id="fill-tab-example"
+        className="mb-3 my-5 d-flex justify-content-center align-items-center"
+        fill
+
+      >
+        <Tab eventKey="recommendation" title="RECOMMENDATION">
+          <ComponentEvents />
+        </Tab>
+        <Tab eventKey="comedy" title="Comedy">
+          <ComponentEvents />
+        </Tab>
+        <Tab eventKey="music" title="Music">
+          <ComponentEvents />
+        </Tab>
+        <Tab eventKey="sport" title="Sport">
+          <ComponentEvents />
+        </Tab>
+        <Tab eventKey="fng" title="Fun & Games">
+          <ComponentEvents />
+        </Tab>
+      </Tabs>
+    </div>
   );
 }
 

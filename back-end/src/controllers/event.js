@@ -4,6 +4,8 @@ const fs = require('fs');
 const Event = require('../models/event');
 
 exports.getAllEvents = (req, res, next) => {
+
+  console.log(req.user);
   const currPage = req.query.page || 1;
   const perPage = req.query.perPage || 12;
   const sort = req.query.sort || 'asc'

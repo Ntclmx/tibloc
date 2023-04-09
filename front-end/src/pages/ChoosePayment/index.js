@@ -62,7 +62,6 @@ const ChoosePayment = (props) => {
     const pay = () => {
         const transaction = {
             "categoryId": categoryId,
-            "userId": "u123",
             "transactionAmount": price,
             "paymentWith": payment
         };

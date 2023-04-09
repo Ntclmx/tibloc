@@ -13,11 +13,9 @@ const ListTransactions = (props) => {
 
     useEffect(() => {
 
-        const userId = 'u123';
-
         const search = props.location.search;
 
-        Axios.get(`http://127.0.0.1:4000/v1/transactions/user/${userId}${search}`)
+        Axios.get(`http://127.0.0.1:4000/v1/transactions/user${search}`)
             .then(result => {
 
                 setTransactions(result.data.transactions);

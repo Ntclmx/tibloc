@@ -34,7 +34,7 @@ const Header = () => {
   return (
     <Navbar expand="lg" className='header-top'>
       <Container fluid className='my-2 justify-content-start'>
-        <Navbar.Brand href="/home" className="navbar-brand text-light fw-bold text-uppercase px-2 header-logo">TIBLOC.</Navbar.Brand>
+        <Navbar.Brand href="/dashboard-guest" className="navbar-brand text-light fw-bold text-uppercase px-2 header-logo">TIBLOC.</Navbar.Brand>
         <Form className='text-center header-search m-0 p-0 d-flex'>
           <a href={url}><Button className='position-absolute headerSearchButton ms-2' ><Search></Search></Button></a>
           <Form.Control type="text" className='headerSearchText ps-5' placeholder='Search Here' onChange={e => handleChange(e)}></Form.Control>

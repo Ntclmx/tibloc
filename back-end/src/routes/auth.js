@@ -14,7 +14,8 @@ router.use(cors());
 router.post("/sign-in", authController.signIn);
 router.get("/sign-out", authController.signOut);
 router.post("/welcome", verifyToken, (req, res) => {
-    res.status(200).send("Welcome 🙌 ");
+    const welcomeUser = `Welcome ${req.user.name}`
+    res.status(200).send(welcomeUser);
   });
 // router.get("/me", auth, authController.Me);
 

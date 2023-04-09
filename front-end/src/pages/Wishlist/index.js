@@ -8,23 +8,14 @@ import { getMe } from "../../features/authSlice";
 
 const Wishlist = () => {
   const [events, setEvents] = useState([]);
+  const [ifExist, setIfExist] = useState(true);
 
-  const dispatch = useDispatch();
   const history = useHistory();
-  const { isError, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getMe());
-  }, [dispatch]);
 
-  useEffect(() => {
-    if (isError) {
-        history.push("/sign-in");
-    }
 
-    const userId = user.id;
-
-    Axios.get(`http://127.0.0.1:4000/v1/wishlists/user/${userId}`)
+    Axios.get(`http://127.0.0.1:4000/v1/wishlists/user`)
       .then(async (result) => {
         const wishlists = result.data.wishlists;
         let arrEvents = [];
@@ -39,7 +30,7 @@ const Wishlist = () => {
             console.log(event.data.event);
 
             arrEvents.push(event.data.event);
-          } catch {
+          } catch (e) {
             continue;
           }
         }
@@ -47,35 +38,44 @@ const Wishlist = () => {
         setEvents(arrEvents);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err)
       });
-  }, [isError, history]);
+  }, []);
 
-    if(events)
-    {
-        console.log(events);
-        return (
-            <Row>
-                <Col className='col-12 mb-3'>
-                    <h4>YOUR WISHLIST</h4>
-                </Col>
-                <Col className='col-12 mb-4'>
-                    <Row>
-                        {events.map(event => {
-                            return <WishlistCard
-                                key={event._id}
-                                eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}
-                                eventTitle={event.eventTitle}
-                                eventDate={event.eventDate}
-                                _id={event._id}
-                                eventOrganizer={event.eventOrganizer}
-                            />
-                        })}
-                    </Row>
-                </Col>
-            </Row>
-        )
-    }
+  if (events.length !== 0) {
+    return (
+      <Row>
+        <Col className='col-12 mb-3'>
+          <h4>YOUR WISHLIST</h4>
+        </Col>
+        <Col className='col-12 mb-4'>
+          <Row>
+            {events.map(event => {
+              return <WishlistCard
+                key={event._id}
+                eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}
+                eventTitle={event.eventTitle}
+                eventDate={event.eventDate}
+                _id={event._id}
+                eventOrganizer={event.eventOrganizer}
+              />
+            })}
+          </Row>
+        </Col>
+      </Row>
+    )
+  } else {
+    return (
+      <Row>
+        <Col className='col-12 mb-3'>
+          <h4>YOUR WISHLIST</h4>
+        </Col>
+        <Col className='col-12 mb-4'>
+          <div className="emptyDiv"></div>
+        </Col>
+      </Row>
+    )
+  }
 }
 
 export default Wishlist;

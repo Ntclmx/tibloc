@@ -4,7 +4,8 @@ const Wishlist = require('../models/Wishlist');
 
 exports.postWishlist = (req, res, next) => {
 
-    const userId = req.body.userId;
+    const user = req.user;
+    const userId = user.userId
     const eventId = req.body.eventId;
 
     const PostWishlist = new Wishlist({
@@ -109,7 +110,8 @@ exports.getWishlistFromUser = (req, res, next) => {
     const currPage = req.query.page || 1;
     const perPage = req.query.perPage || 12;
 
-    const userId = req.params.userId;
+    const user = req.user;
+    const userId = user.userId
 
     Wishlist.find({ userId: userId })
         .countDocuments()
@@ -184,7 +186,8 @@ exports.getWishlistFromEventUser = (req, res, next) => {
     const currPage = req.query.page || 1;
     const perPage = req.query.perPage || 12;
     const eventId = req.params.eventId;
-    const userId = req.params.userId;
+    const user = req.user;
+    const userId = user.userId
 
     Wishlist.find({ $and: [{ eventId: eventId }, { userId: userId }] })
         .countDocuments()

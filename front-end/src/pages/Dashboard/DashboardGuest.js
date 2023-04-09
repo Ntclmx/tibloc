@@ -11,6 +11,9 @@ import CarouselImage1 from '../../assets/carousel/Home1.png';
 const DashboardGuest = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+
+  console.log(localStorage);
   // const {isError} = useSelector((state) => state.auth);
 
   // useEffect(() => {
@@ -25,7 +28,7 @@ const DashboardGuest = () => {
 
   return (
     <div >
-      <h1>Wellcome User1</h1>
+      <h1>{`Welcome `}</h1>
       <CarouselTibloc/>
       <h1 className="my-5 d-flex justify-content-center align-items-center">CATEGORY</h1>
       <ListCategory/>

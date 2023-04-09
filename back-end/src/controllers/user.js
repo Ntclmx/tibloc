@@ -44,7 +44,7 @@ exports.getAllUsers = async (req, res, next) => {
 };
 
 exports.getUserById = (req, res, next) => {
-    console.log(`Start Get User by ID`);
+  console.log(`Start Get User by ID`);
   User.findById(req.user.userId)
     .then((result) => {
       if (!result) {
@@ -89,19 +89,15 @@ exports.createUser = async (req, res, next) => {
         userType: type,
       });
       const token = jwt.sign(
-        {
-          userId: user.id,
-          userEmail: user.userEmail,
-          userName: user.userName,
-          userType: user.userType,
-        },
+        { userId: user.id, userEmail: user.userEmail, userName: user.userName, userType: user.userType },
         process.env.TOKEN_KEY,
         {
-          expiresIn: "2h",
+          expiresIn: "1h",
         }
       );
       // save user token
-      user.token = token;
+      user.refresh_token = token;
+      user.save();
 
       console.log("SUCCESS Create User, token: " + token);
       res.status(201).json({ msg: "Register Berhasil" });

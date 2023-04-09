@@ -138,7 +138,7 @@ const ListEvents = (props) => {
       </Col>
       <Col className='col-9'>
         <EventSort sortFunc={sortFunc}></EventSort>
-        <Row>
+        <Row className='justify-content-start'>
           {events.map(event => {
             console.log(typeof (event));
             return <EventCard
@@ -155,6 +155,7 @@ const ListEvents = (props) => {
               catsQuery={catsQuery}
               cats={cats}
               filter={filter}
+              dashboard={false}
             />
           })}
         </Row>

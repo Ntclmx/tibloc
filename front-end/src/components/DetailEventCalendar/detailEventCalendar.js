@@ -23,7 +23,7 @@ const DetailEventCalendar = (props) => {
         const id = props._id
         const userId = '123'
 
-        Axios.get(`http://127.0.0.1:4000/v1/wishlists/event/${id}/user/${userId}`)
+        Axios.get(`http://127.0.0.1:4000/v1/wishlists/event/${id}/user`)
             .then(result => {
                 console.log(result.data.wishlists);
                 setWishlistId(result.data.wishlists[0]._id);
@@ -40,7 +40,6 @@ const DetailEventCalendar = (props) => {
         if (bookmark === false) {
             const wishlist = {
                 eventId: props._id,
-                userId: '123'
             };
 
             Axios.post(`http://127.0.0.1:4000/v1/wishlist`, wishlist)

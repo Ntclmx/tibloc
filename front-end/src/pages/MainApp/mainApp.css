@@ -3,3 +3,8 @@
     width: 100%; */
     /* background-color: seagreen; */
 }
+
+.emptyDiv {
+    height: 420px;
+    width: max-content;
+}

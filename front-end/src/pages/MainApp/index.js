@@ -57,10 +57,10 @@ const MainApp = () => {
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
                                 <ListTransactions />
-                                </div>
-                                </div>
-                                </Route>
-                <Route path='/dashboard-guest'>
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path='/dashboard-guest'>
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
                                 <DashboardGuest />
@@ -145,7 +145,7 @@ const MainApp = () => {
                             </div>
                         </div>
                     </Route>
-                    
+
                     <Route path='/list-created'>
                         <div className='mx-5' >
                             <div className='justify-content-center align-items-center my-3 pt-3 '>
@@ -167,12 +167,12 @@ const MainApp = () => {
                             </div>
                         </div>
                     </Route>
-                
+
+                </Switch>
+            </Router>
             <div className='footer-wrapper'>
                 <Footer />
             </div>
-                </Switch>
-            </Router>
         </div>
     )
 }
