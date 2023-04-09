@@ -13,11 +13,12 @@ import ListCreatedEvents from '../ListCreatedEvents'
 import Wishlist from '../Wishlist'
 import ChoosePayment from '../ChoosePayment'
 import DetailTransaction from '../DetailTransaction'
-import ListTransactions from '../ListTransactions'
-import Home from '.'
+import ListTransactions from '../ListTransactions';
+
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
+    const [web3User, setWeb3User] = useState('test123');
 
     const updateEvent = (data) => {
         setEvent((prevEvent) => {
@@ -29,146 +30,149 @@ const MainApp = () => {
 
     };
 
-    console.log(event);
-
     return (
         <div className='main-app-wrapper '>
-            <div className='header-wrapper'>
-                <Header />
-            </div>
+            <UserContext.Provider value={{ web3User, setWeb3User }}>
+                <div className='header-wrapper'>
+                    <Header />
+                </div>
+
+            </UserContext.Provider>
 
             <Router>
-                <Switch>
-                    <Route path='/events'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <ListEvents />
+                <UserContext.Provider value={{ web3User, setWeb3User }}>
+                    <Switch>
+                        <Route path='/events'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <ListEvents />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/transaction/:id'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <DetailTransaction />
+                        </Route>
+                        <Route path='/transaction/:id'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <DetailTransaction />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/transactions'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <ListTransactions />
+                        </Route>
+                        <Route path='/transactions'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <ListTransactions />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/dashboard-guest'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <DashboardGuest />
+                        </Route>
+                        <Route path='/dashboard-guest'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <DashboardGuest />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/dashboard'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <DashboardCustomer />
+                        </Route>
+                        <Route path='/dashboard'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <DashboardCustomer />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/dashboard-admin'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <DashboardAdmin />
+                        </Route>
+                        <Route path='/dashboard-admin'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <DashboardAdmin />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/faq'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <Faq />
+                        </Route>
+                        <Route path='/faq'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <Faq />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/event/:id/categories/:catId/payment'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <ChoosePayment />
+                        </Route>
+                        <Route path='/event/:id/categories/:catId/payment'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <ChoosePayment />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/event/:id/categories'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <ChooseTicket />
+                        </Route>
+                        <Route path='/event/:id/categories'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <ChooseTicket />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/event/:id'>
-                        <DetailEvent />
-                    </Route>
-                    <Route path='/create-event'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <EventProgress />
-                                <Route render={(props) => (
-                                    <CreateTickets {...props} event={event} updateEvent={updateEvent} />
-                                )}
-                                    path="/create-event/tickets" >
-                                </Route>
-                                <Route render={(props) => (
-                                    <CreateEventComp {...props} event={event} updateEvent={updateEvent} />
-                                )}
-                                    path="/create-event/events"
-                                >
-                                </Route>
-                            </div>
-                        </div>
-                    </Route>
-                    <Route path='/edit-event'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <Route render={(props) => (
-                                    <div>
-                                        <EventProgress />
+                        </Route>
+                        <Route path='/event/:id'>
+                            <DetailEvent />
+                        </Route>
+                        <Route path='/create-event'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <EventProgress />
+                                    <Route render={(props) => (
                                         <CreateTickets {...props} event={event} updateEvent={updateEvent} />
-                                    </div>
-                                )}
-                                    path="/edit-event/tickets/:id?" >
-                                </Route>
-                                <Route render={(props) => (
-                                    <div>
-                                        <EventProgress />
+                                    )}
+                                        path="/create-event/tickets" >
+                                    </Route>
+                                    <Route render={(props) => (
                                         <CreateEventComp {...props} event={event} updateEvent={updateEvent} />
-                                    </div>
-                                )}
-                                    path="/edit-event/events/:id?" >
-                                </Route>
+                                    )}
+                                        path="/create-event/events"
+                                    >
+                                    </Route>
+                                </div>
                             </div>
-                        </div>
-                    </Route>
+                        </Route>
+                        <Route path='/edit-event'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <Route render={(props) => (
+                                        <div>
+                                            <EventProgress />
+                                            <CreateTickets {...props} event={event} updateEvent={updateEvent} />
+                                        </div>
+                                    )}
+                                        path="/edit-event/tickets/:id?" >
+                                    </Route>
+                                    <Route render={(props) => (
+                                        <div>
+                                            <EventProgress />
+                                            <CreateEventComp {...props} event={event} updateEvent={updateEvent} />
+                                        </div>
+                                    )}
+                                        path="/edit-event/events/:id?" >
+                                    </Route>
+                                </div>
+                            </div>
+                        </Route>
 
-                    <Route path='/list-created'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <ListCreatedEvents />
+                        <Route path='/list-created'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <ListCreatedEvents />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/wishlist'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <Wishlist />
+                        </Route>
+                        <Route path='/wishlist'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <Wishlist />
+                                </div>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path='/'>
-                        <div className='mx-5' >
-                            <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                <p>404 NOT FOUND</p>
+                        </Route>
+                        <Route path='/'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <p>404 NOT FOUND</p>
+                                </div>
                             </div>
-                        </div>
-                    </Route>
+                        </Route>
 
-                </Switch>
+                    </Switch>
+                </UserContext.Provider>
             </Router>
             <div className='footer-wrapper'>
                 <Footer />
@@ -178,5 +182,5 @@ const MainApp = () => {
 }
 
 //test
-
+export const UserContext = React.createContext(null);
 export default MainApp

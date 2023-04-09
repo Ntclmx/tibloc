@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useContext  } from "react";
 import CarouselTibloc from "../../components/Carousel";
 import ListCategory from "../../container/ListCategory/ListCategory";
 import Button from 'react-bootstrap/Button';
@@ -7,13 +7,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getMe } from "../../features/authSlice";
 import CarouselImage1 from '../../assets/carousel/Home1.png';
+import { UserContext } from '../MainApp/index'
 
 const DashboardGuest = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // const { web3User } = useContext(UserContext);
+  // console.log('aaaa',web3User);
 
-  console.log(localStorage);
+  // const {ethereum} = window;
+  // console.log('aaaa',ethereum);
   // const {isError} = useSelector((state) => state.auth);
 
   // useEffect(() => {

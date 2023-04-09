@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 // import { Bookmark, PencilSquare, MapFill } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
@@ -13,17 +13,19 @@ import Edit from '../../assets/events/edit.png';
 import Maps from '../../assets/events/maps.png';
 import BookmarksFill from '../../assets/events/bookmark-fill.png';
 import Axios from 'axios';
+import { UserContext } from '../../pages/MainApp/index'
 
 const DetailEventCalendar = (props) => {
     const [value, onChange] = useState(new Date());
     const [bookmark, setBookmark] = useState(false);
     const [wishlistId, setWishlistId] = useState('');
+    const { web3User } = useContext(UserContext);
 
     useEffect(() => {
         const id = props._id
-        const userId = '123'
+        const userId = web3User
 
-        Axios.get(`http://127.0.0.1:4000/v1/wishlists/event/${id}/user`)
+        Axios.get(`http://127.0.0.1:4000/v1/wishlists/event/${id}/user/${userId}`)
             .then(result => {
                 console.log(result.data.wishlists);
                 setWishlistId(result.data.wishlists[0]._id);
@@ -32,7 +34,7 @@ const DetailEventCalendar = (props) => {
             .catch(err => {
                 console.log('B');
             })
-    }, [props])
+    }, [props, web3User])
 
     const disableDates = new Date('February 23, 2023');
 
@@ -40,6 +42,7 @@ const DetailEventCalendar = (props) => {
         if (bookmark === false) {
             const wishlist = {
                 eventId: props._id,
+                userId: web3User,
             };
 
             Axios.post(`http://127.0.0.1:4000/v1/wishlist`, wishlist)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './header.css'
 import Navbar from 'react-bootstrap/Navbar';
@@ -11,8 +11,33 @@ import Bookmark from '../../assets/header/bookmark.png';
 import Wallet from '../../assets/header/wallet.png';
 import Profile from '../../assets/header/profile.png';
 import { Search } from 'react-bootstrap-icons';
+import Web3 from "web3";
+import { UserContext } from '../../pages/MainApp/index'
 
 const Header = () => {
+  const { ethereum } = window;
+  window.web3 = new Web3(ethereum);
+
+  console.log('web3', window.web3)
+
+  const { web3User, setWeb3User } = useContext(UserContext);
+
+  useEffect(() => {
+    async function connectWallet() {
+      console.log('Connecting');
+      try {
+        if (!ethereum) console.log('please install metamask')
+  
+        const account = await ethereum.request({ method: 'eth_requestAccounts' })
+        setWeb3User(account[0])
+  
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    connectWallet()
+  }, [ethereum, setWeb3User]);
 
   const [url, setUrl] = useState('/events');
 
@@ -20,7 +45,7 @@ const Header = () => {
 
     if (e.target.value !== '') {
       setUrl(`/events?events=${e.target.value}`)
-      
+
     } else {
       setUrl(`/events`)
     }
@@ -54,10 +79,8 @@ const Header = () => {
         </div>
         <Button className='ms-2 profileButton '>
           <Image src={Profile} className=" header-icon-profile mb-1 me-3"></Image>
-          Profile
+          {`${web3User.substr(0,5)}...${web3User.substr(-5)}`}
         </Button>
-        {/* size={20} color='white' className='ms-auto me-4 header-icon' */}
-        {/* <BookmarkFill color='white' size={20}></BookmarkFill> */}
       </Container>
     </Navbar>
   )

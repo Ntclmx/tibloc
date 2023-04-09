@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Axios from 'axios';
 import { Form, Row } from 'react-bootstrap';
 import { TransactionCard } from '../../components';
 import './listTransaction.css';
 import Pagination from 'react-bootstrap/Pagination';
 import { withRouter } from 'react-router-dom';
+import { UserContext } from '../MainApp/index'
 
 const ListTransactions = (props) => {
     const [transactions, setTransactions] = useState([]);
     const [query, setQuery] = useState('');
     const [page, setPage] = useState('');
+    const { web3User } = useContext(UserContext);
 
     useEffect(() => {
 
         const search = props.location.search;
-
-        Axios.get(`http://127.0.0.1:4000/v1/transactions/user${search}`)
+        const userId = web3User;
+        
+        Axios.get(`http://127.0.0.1:4000/v1/transactions/user/${userId}${search}`)
             .then(result => {
 
                 setTransactions(result.data.transactions);
@@ -37,7 +40,7 @@ const ListTransactions = (props) => {
             .catch(err => {
                 console.log(err);
             })
-    }, []);
+    }, [props.location.search, web3User]);
 
     const queryFunc = (e) => {
         setQuery(e.currentTarget.value);

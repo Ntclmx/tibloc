@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Row, Col } from "react-bootstrap";
 import Axios from "axios";
 import { WishlistCard } from "../../components";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { getMe } from "../../features/authSlice";
+import { UserContext } from '../MainApp/index'
 
 const Wishlist = () => {
   const [events, setEvents] = useState([]);
-  const [ifExist, setIfExist] = useState(true);
-
-  const history = useHistory();
+  const { web3User } = useContext(UserContext);
 
   useEffect(() => {
 
+    const userId = web3User;
 
-    Axios.get(`http://127.0.0.1:4000/v1/wishlists/user`)
+    Axios.get(`http://127.0.0.1:4000/v1/wishlists/user/${userId}`)
       .then(async (result) => {
         const wishlists = result.data.wishlists;
         let arrEvents = [];
@@ -40,7 +37,7 @@ const Wishlist = () => {
       .catch((err) => {
         console.log(err)
       });
-  }, []);
+  }, [web3User]);
 
   if (events.length !== 0) {
     return (
