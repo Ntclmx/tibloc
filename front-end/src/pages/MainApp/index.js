@@ -14,11 +14,12 @@ import Wishlist from '../Wishlist'
 import ChoosePayment from '../ChoosePayment'
 import DetailTransaction from '../DetailTransaction'
 import ListTransactions from '../ListTransactions';
+import QrScan from '../QrScan';
 
 
 const MainApp = () => {
     const [event, setEvent] = useState({});
-    const [web3User, setWeb3User] = useState('test123');
+    const [web3User, setWeb3User] = useState('');
 
     const updateEvent = (data) => {
         setEvent((prevEvent) => {
@@ -60,13 +61,6 @@ const MainApp = () => {
                             <div className='mx-5' >
                                 <div className='justify-content-center align-items-center my-3 pt-3 '>
                                     <ListTransactions />
-                                </div>
-                            </div>
-                        </Route>
-                        <Route path='/dashboard-guest'>
-                            <div className='mx-5' >
-                                <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                    <DashboardGuest />
                                 </div>
                             </div>
                         </Route>
@@ -163,13 +157,27 @@ const MainApp = () => {
                                 </div>
                             </div>
                         </Route>
+                        <Route path='/qr'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <QrScan />
+                                </div>
+                            </div>
+                        </Route>
                         <Route path='/'>
+                            <div className='mx-5' >
+                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                                    <DashboardGuest />
+                                </div>
+                            </div>
+                        </Route>
+                        {/* <Route path='/'>
                             <div className='mx-5' >
                                 <div className='justify-content-center align-items-center my-3 pt-3 '>
                                     <p>404 NOT FOUND</p>
                                 </div>
                             </div>
-                        </Route>
+                        </Route> */}
 
                     </Switch>
                 </UserContext.Provider>

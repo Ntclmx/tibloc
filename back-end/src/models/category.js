@@ -15,6 +15,9 @@ const Category = new Schema({
     categoryPrice : {
         type : Number,
     },
+    qrPath : {
+        type : String,
+    },
     categoryStock : {
         type : Number,
     },

@@ -37,6 +37,8 @@ router.get('/event/:eventId/categories', categoryController.getCategoryFromEvent
 
 router.put('/event/:eventId/categories', categoryController.updateCategory);
 
+router.get('/qr', categoryController.generateQrTemp);
+
 // wishlist
 router.post('/wishlist', wishlistController.postWishlist);
 
@@ -58,6 +60,8 @@ router.get('/transactions', transactionController.getAllTransactions);
 router.get('/transaction/:transactionId', transactionController.getTransaction);
 
 router.get('/transactions/user/:userId', transactionController.getTransactionFromUser);
+
+router.get('/random', transactionController.randomFunction);
 
 router.post('/transaction', transactionController.postTransaction);
 

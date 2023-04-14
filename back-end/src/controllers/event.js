@@ -185,7 +185,7 @@ exports.postEvent = (req, res, next) => {
             console.log('err: ', err);
         })
 
-      res.status(201).json(response);
+      // res.status(201).json(response);
 }
 
 exports.deleteEvent = (req, res, next) => {

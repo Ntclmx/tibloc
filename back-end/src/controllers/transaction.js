@@ -1,6 +1,7 @@
 const Transaction = require('../models/transaction');
 const midtransClient = require('midtrans-client');
 const Category = require('../models/category');
+const Nft = require('../models/nft');
 
 let coreApi = new midtransClient.CoreApi({
     isProduction: false,
@@ -236,7 +237,7 @@ exports.updateTransaction = (req, res, next) => {
                                     error.errorStatus = 404;
                                     throw error;
                                 }
-                                
+
                                 const minStock = result.categoryStock - 1
                                 result.categoryStock = minStock;
 
@@ -268,4 +269,42 @@ exports.updateTransaction = (req, res, next) => {
 
         });
 
+}
+
+exports.randomFunction = (req, res, next) => {
+
+    randomNFT('6428fb4c2ad44fcd7539bf5c')
+
+    const result = {
+        message: 'done',
+    }
+    res.status(200).json(result)
+}
+
+const randomNFT = async (categoryId) => {
+    const randomNum = Math.floor(Math.random() * 100) + 1;
+    console.log('random',randomNum);
+
+    await Nft.find({ categoryId: categoryId })
+        .then(results => {
+
+            let minNum = 0;
+            let selectedID = '';
+            for (const result of results) {
+
+                if (randomNum > minNum && randomNum <= result.nftProbability) {
+                    selectedID = result._id;
+                    break;
+                }
+                else {
+                    minNum = result.nftProbability;
+                }
+            }
+
+            console.log('selected', selectedID)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    return
 }
