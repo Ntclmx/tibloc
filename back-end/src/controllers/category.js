@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const path = require('path');
 const Category = require('../models/category');
+const qr = require('qrcode');
 
 exports.getAllCategories = (req, res, next) => {
     const currPage = req.query.page || 1;
@@ -76,7 +77,7 @@ exports.getCategoryFromEvent = (req, res, next) => {
                 .limit(parseInt(perPage));
         })
         .then(result => {
-            
+
             const response = {
                 message: 'Get Categories Success',
                 categories: result,
@@ -173,8 +174,9 @@ exports.postCategory = async (req, res, next) => {
         const categoryDescription = ticket.categoryDescription;
         const categoryPrice = ticket.categoryPrice;
         const categoryStock = ticket.categoryStock;
-    
-    
+        let idNow = '';
+
+
         const PostCategory = new Category({
             eventId: eventId,
             categoryName: categoryName,
@@ -182,22 +184,51 @@ exports.postCategory = async (req, res, next) => {
             categoryPrice: categoryPrice,
             categoryStock: categoryStock,
         });
-    
+
         await PostCategory.save()
             .then(result => {
                 response = {
                     category: result
                 };
-    
+
                 arrResult.push(response);
-                const categoryId = result._id;
-    
-                
+                idNow = result._id;
+                idNow = idNow.toString();
+
+                let dirFile = generateQr(idNow);
+
+                Category.findById(idNow)
+                .then(result => {
+                    if (!result) {
+                        const error = new Error('Category not found');
+                        error.errorStatus = 404;
+                        throw error;
+                    }
+
+                    result.qrPath = dirFile;
+
+                    return result.save();
+                })
+                .then(result => {
+
+                    const responseQr = {
+                        message: 'Update Category Success',
+                        event: result
+                    };
+
+                })
+                .catch(err => {
+                    console.log('err: ', err);
+                })
+
+
             })
             .catch(err => {
                 console.log('err: ', err);
             })
-        
+
+
+
         index = index + 1;
     }
     const finalResponse = {
@@ -208,3 +239,23 @@ exports.postCategory = async (req, res, next) => {
     res.status(201).json(finalResponse);
 
 }
+
+exports.generateQrTemp = (req, res, next) => {
+
+    generateQr('0192019')
+
+    const result = {
+        message: 'done',
+    }
+    res.status(200).json(result)
+}
+
+const generateQr = (idCategory) => {
+    
+    const dirFile = `public/qr/${idCategory}.png`
+    qr.toFile(dirFile, idCategory, function (err) {
+        if(err) return console.error(err);
+    })
+
+    return dirFile
+};

@@ -76,7 +76,7 @@ exports.getNftFromEvent = (req, res, next) => {
                 .limit(parseInt(perPage));
         })
         .then(result => {
-            
+
             const response = {
                 message: 'Get Nft Success',
                 Nft: result,
@@ -90,76 +90,6 @@ exports.getNftFromEvent = (req, res, next) => {
         .catch(err => {
             next(err);
         })
-}
-
-exports.updateCategory = (req, res, next) => {
-
-    const eventId = req.params.eventId;
-    tickets = req.body.tickets;
-
-    tickets.forEach(ticket => {
-        const categoryName = ticket.categoryName;
-        const categoryDescription = ticket.categoryDescription;
-        const categoryPrice = ticket.categoryPrice;
-        const categoryStock = ticket.categoryStock;
-
-        if (ticket._id) {
-            const categoryId = ticket._id;
-
-            Category.findById(categoryId)
-                .then(result => {
-                    if (!result) {
-                        const error = new Error('Category not found');
-                        error.errorStatus = 404;
-                        throw error;
-                    }
-
-                    result.eventId = eventId;
-                    result.categoryName = categoryName;
-                    result.categoryDescription = categoryDescription;
-                    result.categoryPrice = categoryPrice;
-                    result.categoryStock = categoryStock;
-                    result.categoryId = categoryId;
-
-                    return result.save();
-                })
-                .then(result => {
-
-                    const response = {
-                        message: 'Update Category Success',
-                        event: result
-                    };
-
-                    res.status(200).json(response);
-                })
-                .catch(err => {
-                    console.log('err: ', err);
-                })
-
-        } else {
-
-            const PostCategory = new Category({
-                eventId: eventId,
-                categoryName: categoryName,
-                categoryDescription: categoryDescription,
-                categoryPrice: categoryPrice,
-                categoryStock: categoryStock,
-            });
-
-            PostCategory.save()
-                .then(result => {
-                    response = {
-                        category: result
-                    };
-
-                    console.log(response);
-                })
-                .catch(err => {
-                    console.log('err: ', err);
-                })
-        }
-    });
-
 }
 
 exports.postNft = async (req, res, next) => {
@@ -177,18 +107,14 @@ exports.postNft = async (req, res, next) => {
         let nft1 = '';
         let nft2 = '';
         let nft3 = '';
-        for(const file of req.files)
-        {
-            if (file.fieldname === `nft1[${index}][nftImage]`)
-            {
+        for (const file of req.files) {
+            if (file.fieldname === `nft1[${index}][nftImage]`) {
                 nft1 = file.path;
             }
-            else if (file.fieldname === `nft2[${index}][nftImage]`)
-            {
+            else if (file.fieldname === `nft2[${index}][nftImage]`) {
                 nft2 = file.path;
             }
-            else if (file.fieldname === `nft3[${index}][nftImage]`)
-            {
+            else if (file.fieldname === `nft3[${index}][nftImage]`) {
                 nft3 = file.path;
             }
         }
@@ -196,64 +122,75 @@ exports.postNft = async (req, res, next) => {
         const nft1prob = req.body.nft1[index].nftProbability
         const nft2prob = req.body.nft2[index].nftProbability
         const nft3prob = req.body.nft3[index].nftProbability
-        
-    
-        const Nft1 = new Nft({
-            categoryId: categoryId,
-            nftImage: nft1,
-            nftProbability: nft1prob
-        });
-        const Nft2 = new Nft({
-            categoryId: categoryId,
-            nftImage: nft2,
-            nftProbability: nft2prob
-        });
-        const Nft3 = new Nft({
-            categoryId: categoryId,
-            nftImage: nft3,
-            nftProbability: nft3prob
-        });
-    
-        await Nft1.save()
-            .then(result => {
-                response = {
-                    nft: result
-                };
 
-                arrResult.push(response);
-    
-             
-            })
-            .catch(err => {
-                console.log('err: ', err);
-            })
-        await Nft2.save()
-            .then(result => {
-                response = {
-                    nft: result
-                };
 
-                arrResult.push(response);
-    
-             
-            })
-            .catch(err => {
-                console.log('err: ', err);
-            })
-        await Nft3.save()
-            .then(result => {
-                response = {
-                    nft: result
-                };
+        if (nft1 !== '' && nft1prob !== null) {
+            const Nft1 = new Nft({
+                categoryId: categoryId,
+                nftImage: nft1,
+                nftProbability: nft1prob
+            });
+            await Nft1.save()
+                .then(result => {
+                    response = {
+                        nft: result
+                    };
 
-                arrResult.push(response);
+                    arrResult.push(response);
+
+
+                })
+                .catch(err => {
+                    console.log('err: ', err);
+                })
+
+        }
+
+        if (nft2 !== '' && nft2prob !== null) {
+            const Nft2 = new Nft({
+                categoryId: categoryId,
+                nftImage: nft2,
+                nftProbability: nft2prob
+            });
+            await Nft2.save()
+                .then(result => {
+                    response = {
+                        nft: result
+                    };
+
+                    arrResult.push(response);
+
+
+                })
+                .catch(err => {
+                    console.log('err: ', err);
+                })
+        }
+
+
+        if (nft3 !== '' && nft3prob !== null) {
+
+            const Nft3 = new Nft({
+                categoryId: categoryId,
+                nftImage: nft3,
+                nftProbability: nft3prob
+            });
+            
+            await Nft3.save()
+                .then(result => {
+                    response = {
+                        nft: result
+                    };
     
-             
-            })
-            .catch(err => {
-                console.log('err: ', err);
-            })
-        
+                    arrResult.push(response);
+    
+    
+                })
+                .catch(err => {
+                    console.log('err: ', err);
+                })
+        }
+
         index = index + 1;
     }
     const finalResponse = {
