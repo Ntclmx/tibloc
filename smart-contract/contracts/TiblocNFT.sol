@@ -16,14 +16,14 @@ error PriceMustBeAboveZero();
 
 //tibloc is not an NFT marketplace, so users are free to choose what platform to list or sell their NFT
 //our contract is only to mint the NFT
-contract TiblocNFT is Ownable {
+contract TiblocNFT is ERC721, Ownable {
     using Strings for uint256;
-    mapping(string -> uint8) existingURIs;
-    mapping(uint256 -> address) public ownerOf;
+    mapping(string => uint8) existingURIs;
+    mapping(uint256 => address) public holderOf;
 
     address public artist;
     uint256 public royaltyFee;
-    uint256 public tokenId = 0;
+    uint256 public i_tokenId = 0;
     uint256 public totalTx = 0;
     uint256 public cost = 0.01 ether;
     
@@ -61,16 +61,14 @@ contract TiblocNFT is Ownable {
         artist = _artist;
     }
 
-    function payToMint{
-        string memory title,
+    function payToMint(string memory title,
         string memory description,
         string memory metadataURI,
         uint256 salesPrice,
         string memory eventCategoryId,
-        uint256 eventDate
-    } external payable{
+        uint256 eventDate) external payable{
         require(msg.value >= cost, "Ether too low for minting!");
-        require(existingsURIs[metadataURI] == 0, "This NFT is already minted!");
+        require(existingURIs[metadataURI] == 0, "This NFT is already minted!");
         require(msg.sender != owner(), "Sales not allowed!");
 
         uint256 royalty = (msg.value * royaltyFee) / 100;
@@ -79,11 +77,11 @@ contract TiblocNFT is Ownable {
         payTo(artist, royalty);
         payTo(owner(), (msg.value - royalty));
 
-        tokenId++;
+        i_tokenId++;
 
         minted.push(
             TransactionStruct(
-                tokenId,
+                i_tokenId,
                 msg.sender,
                 salesPrice,
                 title,
@@ -97,22 +95,22 @@ contract TiblocNFT is Ownable {
         );
 
         emit NFTMinted(
-            tokenId,
+            i_tokenId,
             msg.sender,
             msg.value,
             metadataURI,
             block.timestamp
         );
 
-        _safeMint(msg.sender, tokenId);
+        _safeMint(msg.sender, i_tokenId);
         existingURIs[metadataURI] = 1;
-        ownerOf[tokenId] = msg.sender;
+        holderOf[i_tokenId] = msg.sender;
     }
 
     function changePrice(uint256 id, uint256 newPrice) external returns (bool){
         require(newPrice > 0 ether, "Ether too low!");
         require(msg.sender == minted[id-1].owner, "Operations Not Allowed");
-        require(now <= minted[id-1].eventDate, "Operations Not Allowed");
+        require(block.timestamp <= minted[id-1].eventDate, "Operations Not Allowed");
 
         minted[id-1].cost = newPrice;
         return true;
@@ -123,7 +121,8 @@ contract TiblocNFT is Ownable {
         require(msg.sender == minted[tokenId - 1].owner, "Operations Not Allowed");
 
         minted[tokenId - 1].isUsed = true;
-        return transferNft(tokenId, nftAddress);
+        return minted[tokenId - 1].isUsed;
+        // return transferNft(tokenId, nftAddress);
     }
 
     // function transferNft(uint256 tokenId, address nftAddress) internal returns(bool){

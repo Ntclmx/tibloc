@@ -17,7 +17,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY || ""
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ""
 
 module.exports = {
-    defaultNetwork: "hardhat",
+    defaultNetwork: "sepolia",
     networks: {
         hardhat: {
             chainId: 31337,
