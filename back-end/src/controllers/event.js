@@ -172,46 +172,46 @@ exports.postEvent = (req, res, next) => {
     eventCategory: eventCategory
   });
 
-    PostEvent.save()
-        .then(result => {
-            const response = {
-                message: 'Create Event Success',
-                event: result
-            };
+  PostEvent.save()
+    .then(result => {
+      const response = {
+        message: 'Create Event Success',
+        event: result
+      };
 
-            res.status(201).json(response);
-        })
-        .catch(err => {
-            console.log('err: ', err);
-        })
+      res.status(201).json(response);
+    })
+    .catch(err => {
+      console.log('err: ', err);
+    })
 
-      // res.status(201).json(response);
+  // res.status(201).json(response);
 }
 
 exports.deleteEvent = (req, res, next) => {
-    const eventId = req.params.eventId;
-    Event.findById(eventId)
-        .then(result => {
-            if (!result) {
-                const error = new Error('Event not found');
-                error.errorStatus = 404;
-                throw error;
-            }
+  const eventId = req.params.eventId;
+  Event.findById(eventId)
+    .then(result => {
+      if (!result) {
+        const error = new Error('Event not found');
+        error.errorStatus = 404;
+        throw error;
+      }
 
-            removeImage(result.eventLogo);
-            return Event.findByIdAndRemove(eventId);
-        })
-        .then(result => {
-            const response = {
-                message: 'Delete Event Success',
-                event: result
-            };
+      removeImage(result.eventLogo);
+      return Event.findByIdAndRemove(eventId);
+    })
+    .then(result => {
+      const response = {
+        message: 'Delete Event Success',
+        event: result
+      };
 
-            res.status(200).json(response);
-        })
-        .catch(err => {
-            next(err);
-        })
+      res.status(200).json(response);
+    })
+    .catch(err => {
+      next(err);
+    })
 }
 
 const removeImage = (filePath) => {

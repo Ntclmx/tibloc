@@ -46,7 +46,7 @@ const ListTransactions = (props) => {
         setQuery(e.currentTarget.value);
     };
     return (
-        <div>
+        <div className='minDiv'>
             <div className='d-flex align-items-center'>
                 <h4 className='pt-2'>LIST TRANSACTION</h4>
                 <Form className='ms-auto me-0'>

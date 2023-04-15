@@ -39,9 +39,9 @@ const Wishlist = () => {
       });
   }, [web3User]);
 
-  if (events.length !== 0) {
+
     return (
-      <Row>
+      <Row className="minDiv">
         <Col className='col-12 mb-3'>
           <h4>YOUR WISHLIST</h4>
         </Col>
@@ -61,18 +61,7 @@ const Wishlist = () => {
         </Col>
       </Row>
     )
-  } else {
-    return (
-      <Row>
-        <Col className='col-12 mb-3'>
-          <h4>YOUR WISHLIST</h4>
-        </Col>
-        <Col className='col-12 mb-4'>
-          <div className="emptyDiv"></div>
-        </Col>
-      </Row>
-    )
-  }
+  
 }
 
 export default Wishlist;

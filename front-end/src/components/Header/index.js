@@ -9,15 +9,17 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import CalendarWeek from '../../assets/header/cal1.png';
 import Bookmark from '../../assets/header/bookmark.png';
-import Wallet from '../../assets/header/wallet.png';
+import Plus from '../../assets/events/plus.png';
 import Scan from '../../assets/header/scan.png';
 import Profile from '../../assets/header/profile.png';
 import { Search } from 'react-bootstrap-icons';
 import Web3 from "web3";
 import { UserContext } from '../../pages/MainApp/index';
 import { QrReader } from 'react-qr-reader';
+import Axios from 'axios';
 
 const Header = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
   const { ethereum } = window;
   const [showQR, setShowQR] = useState(false);
   const [scanResult, setScanResult] = useState(false);
@@ -39,6 +41,19 @@ const Header = () => {
 
         const account = await ethereum.request({ method: 'eth_requestAccounts' })
         setWeb3User(account[0])
+
+        Axios.get(`http://127.0.0.1:4000/v1/admin/address/${account[0]}`)
+          .then(result => {
+
+            if (result.status === 200) {
+              setIsAdmin(true);
+            }
+
+
+          })
+          .catch(err => {
+            console.log(err);
+          })
 
       } catch (error) {
         console.log(error);
@@ -66,8 +81,7 @@ const Header = () => {
   }
 
   const handleScan = (result) => {
-    if(result)
-    {
+    if (result) {
       console.log('result', result);
       setScanResult(result);
 
@@ -75,6 +89,10 @@ const Header = () => {
   }
 
   const textProfile = web3User === '' ? 'Connect Wallet' : `${web3User.substr(0, 5)}...${web3User.substr(-5)}`
+
+  const buttonPlus = isAdmin ? <><a href="/create-event/events" className="ms-auto"><div ><Image src={Plus} className=" header-icon"></Image></div></a><a href="/transactions"><div className="ms-3"><Image src={CalendarWeek} className=" header-icon"></Image></div></a></> : <a href="/transactions" className="ms-auto"><div className="ms-3"><Image src={CalendarWeek} className=" header-icon"></Image></div></a>
+
+
   return (
     <>
       <Modal show={showQR} onHide={handleHideQr}>
@@ -96,25 +114,25 @@ const Header = () => {
             <a href={url}><Button className='position-absolute headerSearchButton ms-2' ><Search></Search></Button></a>
             <Form.Control type="text" className='headerSearchText ps-5' placeholder='Search Here' onChange={e => handleChange(e)}></Form.Control>
           </Form>
-          <a href="/transactions" className="ms-auto">
-            <div >
-              <Image src={CalendarWeek} className=" header-icon"></Image>
-            </div>
-          </a>
+
+          {buttonPlus}
           <a href="/wishlist">
             <div className="mx-3">
               <Image src={Bookmark} className=" header-icon"></Image>
             </div>
           </a>
 
-          <div className="me-3" onClick={handleShowQr}>
+          <div className="" onClick={handleShowQr}>
             <Image src={Scan} className=" header-icon"></Image>
           </div>
 
-          <Button className='ms-2 profileButton '>
+
+
+          <Button className='ms-4 profileButton '>
             <Image src={Profile} className=" header-icon-profile mb-1 me-3"></Image>
             {textProfile}
           </Button>
+
         </Container>
       </Navbar>
     </>
