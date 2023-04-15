@@ -8,3 +8,7 @@
     height: 420px;
     width: max-content;
 }
+
+.minDiv {
+    min-height: 480px;
+}
