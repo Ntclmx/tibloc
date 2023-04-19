@@ -37,4 +37,4 @@ const Event = new Schema({
     timestamps : true
 });
 
-module.exports = mongoose.model('Event', Event)
+module.exports = mongoose.model('Event', Event, 'Event')

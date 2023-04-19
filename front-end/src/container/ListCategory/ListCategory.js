@@ -12,6 +12,7 @@ const ComponentEvents = () => {
     Axios.get("http://127.0.0.1:4000/v1/events")
       .then((result) => {
         const responseAPI = result.data;
+        console.log(responseAPI)
         setEvents(responseAPI.events);
       })
       .catch((err) => {

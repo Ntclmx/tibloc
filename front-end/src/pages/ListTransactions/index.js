@@ -17,7 +17,7 @@ const ListTransactions = (props) => {
 
         const search = props.location.search;
         const userId = web3User;
-        
+
         Axios.get(`http://127.0.0.1:4000/v1/transactions/user/${userId}${search}`)
             .then(result => {
 
@@ -55,18 +55,27 @@ const ListTransactions = (props) => {
                     </Form.Group>
                 </Form>
             </div>
-            <Row className='mt-3'>
-                {transactions.map(transaction => {
-                    return <TransactionCard
-                        key={transaction._id}
-                        _id={transaction._id}
-                        catId={transaction.categoryId}
-                        trxAmount={transaction.transactionAmount}
-                        paymentStatus={transaction.paymentStatus}
-                        query={query}
-                    />
-                })}
-            </Row>
+
+            {
+                transactions.length > 0 ? (
+                    <Row className='mt-3'>
+                        {transactions.map(transaction => {
+                            return <TransactionCard
+                                key={transaction._id}
+                                _id={transaction._id}
+                                catId={transaction.categoryId}
+                                trxAmount={transaction.transactionAmount}
+                                paymentStatus={transaction.paymentStatus}
+                                query={query}
+                            />
+                        })}
+                    </Row>
+                ) : (
+                    <div className='text-center mt-5 pt-5'>
+                        <p className='text-muted mt-5 pt-4'>No Transaction</p>
+                    </div>
+                )
+            }
             <Pagination size="sm">{page}</Pagination>
         </div>
     )
