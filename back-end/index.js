@@ -13,7 +13,7 @@ const cors = require("cors");
 // const cookieSession = require("cookie-session");
 dotenv.config();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 80;
 
 const eventRoutes = require('./src/routes/event');
 const faqRoutes = require('./src/routes/faq');
