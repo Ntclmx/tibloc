@@ -83,7 +83,7 @@ const ChooseTicket = (props) => {
 
     if (categories[0]) {
         return (
-            <div>
+            <div className='minDiv'>
                 <Row className='mb-5'>
                     <Col className='col-7'>
 

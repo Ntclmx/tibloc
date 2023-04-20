@@ -90,7 +90,7 @@ const Header = () => {
 
   const textProfile = web3User === '' ? 'Connect Wallet' : `${web3User.substr(0, 5)}...${web3User.substr(-5)}`
 
-  const buttonPlus = isAdmin ? <><a href="/create-event/events" className="ms-auto"><div ><Image src={Plus} className=" header-icon"></Image></div></a><a href="/transactions"><div className="ms-3"><Image src={CalendarWeek} className=" header-icon"></Image></div></a></> : <a href="/transactions" className="ms-auto"><div className="ms-3"><Image src={CalendarWeek} className=" header-icon"></Image></div></a>
+  const buttonPlus = isAdmin ? <><a href="http://tibloc-nft.com/create-event/events" className="ms-auto"><div ><Image src={Plus} className=" header-icon"></Image></div></a><a href="/transactions"><div className="ms-3"><Image src={CalendarWeek} className=" header-icon"></Image></div></a></> : <a href="/transactions" className="ms-auto"><div className="ms-3"><Image src={CalendarWeek} className=" header-icon"></Image></div></a>
 
 
   return (
@@ -109,14 +109,14 @@ const Header = () => {
       </Modal>
       <Navbar expand="lg" className='header-top'>
         <Container fluid className='my-2 justify-content-start'>
-          <Navbar.Brand href="/" className="navbar-brand text-light fw-bold text-uppercase px-2 header-logo">TIBLOC.</Navbar.Brand>
+          <Navbar.Brand href="http://tibloc-nft.com" className="navbar-brand text-light fw-bold text-uppercase px-2 header-logo">TIBLOC.</Navbar.Brand>
           <Form className='text-center header-search m-0 p-0 d-flex'>
             <a href={url}><Button className='position-absolute headerSearchButton ms-2' ><Search></Search></Button></a>
             <Form.Control type="text" className='headerSearchText ps-5' placeholder='Search Here' onChange={e => handleChange(e)}></Form.Control>
           </Form>
 
           {buttonPlus}
-          <a href="/wishlist">
+          <a href="http://tibloc-nft.com/wishlist">
             <div className="mx-3">
               <Image src={Bookmark} className=" header-icon"></Image>
             </div>

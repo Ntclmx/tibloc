@@ -37,7 +37,7 @@ const Footer = () => {
             </Nav>
           </Col>
           <Col className='col-12 justify-content-center text-center text-white footerTextButtom'>
-            Copyright © 2023 PT. Tiket Jaya Indonesia
+            Copyright © 2023 Tibloc Indonesia
           </Col>
         </Row>
       </Container>
