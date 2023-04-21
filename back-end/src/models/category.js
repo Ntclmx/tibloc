@@ -15,6 +15,9 @@ const Category = new Schema({
     categoryPrice : {
         type : Number,
     },
+    qrPath : {
+        type : String,
+    },
     categoryStock : {
         type : Number,
     },
@@ -22,4 +25,4 @@ const Category = new Schema({
     timestamps : true
 });
 
-module.exports = mongoose.model('Category', Category)
+module.exports = mongoose.model('Category', Category, 'Category')

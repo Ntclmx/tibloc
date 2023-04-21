@@ -1,10 +1,16 @@
-.content-wrapper {
-    /* max-width: 1200px;
-    width: 100%; */
-    /* background-color: seagreen; */
-}
-
 .emptyDiv {
     height: 420px;
+    width: max-content;
+}
+
+.minDiv {
+    min-height: 480px;
+}
+
+.dashboardTextBold {
+    font-weight: bold;
+}
+
+.dashboardImageBanner {
     width: max-content;
 }

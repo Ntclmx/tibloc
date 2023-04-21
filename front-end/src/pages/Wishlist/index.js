@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import Axios from "axios";
 import { WishlistCard } from "../../components";
 import { UserContext } from '../MainApp/index'
@@ -39,40 +39,36 @@ const Wishlist = () => {
       });
   }, [web3User]);
 
-  if (events.length !== 0) {
-    return (
-      <Row>
-        <Col className='col-12 mb-3'>
-          <h4>YOUR WISHLIST</h4>
-        </Col>
-        <Col className='col-12 mb-4'>
-          <Row>
-            {events.map(event => {
-              return <WishlistCard
-                key={event._id}
-                eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}
-                eventTitle={event.eventTitle}
-                eventDate={event.eventDate}
-                _id={event._id}
-                eventOrganizer={event.eventOrganizer}
-              />
-            })}
-          </Row>
-        </Col>
-      </Row>
-    )
-  } else {
-    return (
-      <Row>
-        <Col className='col-12 mb-3'>
-          <h4>YOUR WISHLIST</h4>
-        </Col>
-        <Col className='col-12 mb-4'>
-          <div className="emptyDiv"></div>
-        </Col>
-      </Row>
-    )
-  }
+
+  return (
+      <div className='minDiv'>
+            <div className='d-flex align-items-center'>
+            <h4>YOUR WISHLIST</h4>
+                
+            </div>
+            {
+                events.length > 0 ? (
+                  <Row>
+                  {events.map(event => {
+                    return <WishlistCard
+                      key={event._id}
+                      eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}
+                      eventTitle={event.eventTitle}
+                      eventDate={event.eventDate}
+                      _id={event._id}
+                      eventOrganizer={event.eventOrganizer}
+                    />
+                  })}
+                </Row>
+                ) : (
+                    <div className='text-center mt-5 pt-5'>
+                        <p className='text-muted mt-5 pt-4'>No Wishlist</p>
+                    </div>
+                )
+            }
+      </div>
+  )
+
 }
 
 export default Wishlist;

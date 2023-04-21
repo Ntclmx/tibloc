@@ -20,6 +20,7 @@ const DetailEventCalendar = (props) => {
     const [bookmark, setBookmark] = useState(false);
     const [wishlistId, setWishlistId] = useState('');
     const { web3User } = useContext(UserContext);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const id = props._id
@@ -33,6 +34,19 @@ const DetailEventCalendar = (props) => {
             })
             .catch(err => {
                 console.log('B');
+            })
+
+        Axios.get(`http://127.0.0.1:4000/v1/admin/address/${userId}`)
+            .then(result => {
+
+                if (result.status === 200) {
+                    setIsAdmin(true);
+                }
+
+
+            })
+            .catch(err => {
+                console.log(err);
             })
     }, [props, web3User])
 
@@ -71,26 +85,25 @@ const DetailEventCalendar = (props) => {
 
     const Component = bookmark ? <Image src={BookmarksFill} onClick={bookmarkFunc} className='iconDetailEvent'></Image> : <Image src={Bookmark} onClick={bookmarkFunc} className='iconDetailEvent'></Image>;
 
+    const editButton = isAdmin ? <a href={`/edit-event/events/${props._id}`} className='ms-auto'><Image src={Edit} className='iconDetailEvent ' ></Image></a> : <></>
     return (
         <div className='ps-5'>
             <div className='d-flex'>
                 {Component}
-                <a href={`/edit-event/events/${props._id}`} className='ms-auto'>
-                    <Image src={Edit} className='iconDetailEvent ' ></Image>
-                </a>
+                {editButton}
             </div>
             <Card className='mt-3'>
                 <ListGroup variant="flush">
                     <ListGroup.Item>
                         <Row>
-                            <Col className='col-9 d-flex align-items-center '>
+                            <Col className='col-12 d-flex align-items-center '>
                                 <Card.Text style={{ color: "gray" }}>
                                     {props.eventAddress}
                                 </Card.Text>
                             </Col>
-                            <Col className='col-3 d-flex align-items-center justify-content-center'>
+                            {/* <Col className='col-3 d-flex align-items-center justify-content-center'>
                                 <Image src={Maps} className='iconDetailEvent ' ></Image>
-                            </Col>
+                            </Col> */}
                         </Row>
 
                     </ListGroup.Item>

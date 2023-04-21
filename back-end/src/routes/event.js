@@ -8,6 +8,7 @@ const wishlistController = require('../controllers/wishlist');
 const transactionController = require('../controllers/transaction');
 const paymentTypeController = require('../controllers/paymentType');
 const nftController = require('../controllers/nft');
+const adminController = require('../controllers/admin');
 
 const {verifyToken} = require("../middleware/AuthUser");
 
@@ -37,6 +38,8 @@ router.get('/event/:eventId/categories', categoryController.getCategoryFromEvent
 
 router.put('/event/:eventId/categories', categoryController.updateCategory);
 
+router.get('/qr', categoryController.generateQrTemp);
+
 // wishlist
 router.post('/wishlist', wishlistController.postWishlist);
 
@@ -48,7 +51,7 @@ router.delete('/wishlist/:wishlistId', wishlistController.deleteWishlist);
 
 router.get('/wishlists/event/:eventId', wishlistController.getWishlistFromEvent );
 
-router.get('/wishlists/user:userId', wishlistController.getWishlistFromUser );
+router.get('/wishlists/user/:userId', wishlistController.getWishlistFromUser );
 
 router.get('/wishlists/event/:eventId/user/:userId', wishlistController.getWishlistFromEventUser);
 
@@ -58,6 +61,8 @@ router.get('/transactions', transactionController.getAllTransactions);
 router.get('/transaction/:transactionId', transactionController.getTransaction);
 
 router.get('/transactions/user/:userId', transactionController.getTransactionFromUser);
+
+router.get('/random', transactionController.randomFunction);
 
 router.post('/transaction', transactionController.postTransaction);
 
@@ -78,5 +83,14 @@ router.get('/nft/:nftId', nftController.getNft);
 router.post('/nfts', nftController.postNft);
 
 router.get('/nfts/category/:categoryId', nftController.getNftFromEvent);
+
+// admin
+router.post('/admin', adminController.postAdmin);
+
+router.get('/admins', adminController.getAllAdmins);
+
+router.get('/admin/:adminId', adminController.getAdmin);
+
+router.get('/admin/address/:publicAddress', adminController.getAdminFromAddress);
 
 module.exports = router;

@@ -64,7 +64,7 @@ const ChooseTicket = (props) => {
     let button = ''
     if (chooseCategory === '-')
     {
-        button = <div className='mx-1 px-2 mb-3 d-grid'><Button variant="primary" size="lg" disabled >Choose Payment</Button></div>
+        button = <div className='mx-1 px-2 mb-3 d-grid'><Button variant="primary" size="lg" disabled >Pay</Button></div>
     }
     else {
         button = <Link to={{
@@ -76,14 +76,14 @@ const ChooseTicket = (props) => {
             }
         }} className='mx-1 px-2 mb-3 d-grid'>
             <Button variant="primary" size="lg" >
-                Choose Payment
+                Pay
             </Button>
         </Link>
     }
 
     if (categories[0]) {
         return (
-            <div>
+            <div className='minDiv'>
                 <Row className='mb-5'>
                     <Col className='col-7'>
 

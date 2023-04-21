@@ -6,8 +6,6 @@ import Pagination from 'react-bootstrap/Pagination';
 import Axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
-
-
 const ListEvents = (props) => {
   const allLocation = [
     { name: "Jakarta", checked: false },
@@ -31,9 +29,6 @@ const ListEvents = (props) => {
   const [catsQuery, setCatQuery] = useState('');
   const [events, setEvents] = useState([]);
   const [page, setPage] = useState('');
-
-
-
 
   useEffect(() => {
     const search = props.location.search

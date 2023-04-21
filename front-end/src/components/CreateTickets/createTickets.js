@@ -54,8 +54,6 @@ const CreateTickets = (props) => {
             setIsUpdate(true);
             Axios.get(`http://127.0.0.1:4000/v1/event/${eventId}/categories`)
                 .then(result => {
-
-                    console.log('TESTT', result.data);
                     setTicket(result.data.categories);
                 })
                 .catch(err => {
@@ -238,7 +236,6 @@ const CreateTickets = (props) => {
         allImageNFT3[index] = URL.createObjectURL(e.target.files[0])
         setImageNFT3(allImageNFT3);
     }
-
     const removeCategory = (index) => {
         const values = [...tickets];
         values.splice(index, 1);
@@ -335,106 +332,115 @@ const CreateTickets = (props) => {
                                     />
                                 </Col>
                             </Form.Group>
-                            <Form.Label column sm={2}>NFT</Form.Label>
-                            <Row className='ms-1'>
-                                <Col md={3} className='me-2'>
-                                    <Form.Group as={Row} className="form-group files color pb-3 pt-3" controlId='nftImage1'>
-                                        <Card className='justify-content-center align-items-center'>
-                                            <Form.Control
-                                                type="file"
-                                                className="form-control create-event-upload-image"
-                                                name="nftImage"
-                                                onChange={e => imageChange1(index, e)}
+                            {
+                                isUpdate ? (
+                                    <></>
+                                ) : (
+                                    <>
+                                        <Form.Label column sm={2}>NFT</Form.Label>
+                                        <Row className='ms-1'>
+                                            <Col md={3} className='me-2'>
+                                                <Form.Group as={Row} className="form-group files color pb-3 pt-3" controlId='nftImage1'>
+                                                    <Card className='justify-content-center align-items-center'>
+                                                        <Form.Control
+                                                            type="file"
+                                                            className="form-control create-event-upload-image"
+                                                            name="nftImage"
+                                                            onChange={e => imageChange1(index, e)}
 
-                                            />
+                                                        />
 
-                                            {imageNFT1[index] ? (
-                                                <img src={imageNFT1[index]} className="createTicketNFT p-2" alt='event_logo'></img>
-                                            ) : (
-                                                <div>
-                                                    <Image color='grey' className='position-absolute top-50 start-50 translate-middle header-icon'></Image>
-                                                </div>
-                                            )}
-                                        </Card>
-                                    </Form.Group>
-                                    <Form.Group as={Row} className="mb-3" controlId="nftProbability1">
-                                        <Form.Label column sm={4} className='createTicketSmallText'>Probability</Form.Label>
-                                        <Col sm={8}>
-                                            <Form.Control
-                                                type="text"
-                                                name="nftProbability"
-                                                autoComplete="off"
-                                                onChange={e => handleChangeNFT1(index, e)}
-                                            />
-                                        </Col>
-                                    </Form.Group>
-                                </Col>
-                                <Col md={3} className='me-2'>
-                                    <Form.Group as={Row} className="form-group files color pb-3 pt-3" controlId='nftImage2'>
-                                        <Card className='justify-content-center align-items-center'>
-                                            <Form.Control
-                                                type="file"
-                                                className="form-control create-event-upload-image"
-                                                name="nftImage"
-                                                onChange={e => imageChange2(index, e)}
+                                                        {imageNFT1[index] ? (
+                                                            <img src={imageNFT1[index]} className="createTicketNFT p-2" alt='event_logo'></img>
+                                                        ) : (
+                                                            <div>
+                                                                <Image color='grey' className='position-absolute top-50 start-50 translate-middle header-icon'></Image>
+                                                            </div>
+                                                        )}
+                                                    </Card>
+                                                </Form.Group>
+                                                <Form.Group as={Row} className="mb-3" controlId="nftProbability1">
+                                                    <Form.Label column sm={4} className='createTicketSmallText'>Probability</Form.Label>
+                                                    <Col sm={8}>
+                                                        <Form.Control
+                                                            type="text"
+                                                            name="nftProbability"
+                                                            autoComplete="off"
+                                                            onChange={e => handleChangeNFT1(index, e)}
+                                                        />
+                                                    </Col>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col md={3} className='me-2'>
+                                                <Form.Group as={Row} className="form-group files color pb-3 pt-3" controlId='nftImage2'>
+                                                    <Card className='justify-content-center align-items-center'>
+                                                        <Form.Control
+                                                            type="file"
+                                                            className="form-control create-event-upload-image"
+                                                            name="nftImage"
+                                                            onChange={e => imageChange2(index, e)}
 
-                                            />
+                                                        />
 
-                                            {imageNFT2[index] ? (
-                                                <img src={imageNFT2[index]} className="createTicketNFT p-2" alt='event_logo'></img>
-                                            ) : (
-                                                <div>
-                                                    <Image color='grey' className='position-absolute top-50 start-50 translate-middle header-icon'></Image>
-                                                </div>
-                                            )}
-                                        </Card>
-                                    </Form.Group>
-                                    <Form.Group as={Row} className="mb-3" controlId="nftProbability1">
-                                        <Form.Label column sm={4} className='createTicketSmallText'>Probability</Form.Label>
-                                        <Col sm={8}>
-                                            <Form.Control
-                                                type="text"
-                                                name="nftProbability"
-                                                autoComplete="off"
-                                                onChange={e => handleChangeNFT2(index, e)}
-                                            />
-                                        </Col>
-                                    </Form.Group>
-                                </Col>
-                                <Col md={3} className='me-2'>
-                                    <Form.Group as={Row} className="form-group files color pb-3 pt-3" controlId='nftImage3'>
-                                        <Card className='justify-content-center align-items-center'>
-                                            <Form.Control
-                                                type="file"
-                                                className="form-control create-event-upload-image"
-                                                name="nftImage"
-                                                onChange={e => imageChange3(index, e)}
+                                                        {imageNFT2[index] ? (
+                                                            <img src={imageNFT2[index]} className="createTicketNFT p-2" alt='event_logo'></img>
+                                                        ) : (
+                                                            <div>
+                                                                <Image color='grey' className='position-absolute top-50 start-50 translate-middle header-icon'></Image>
+                                                            </div>
+                                                        )}
+                                                    </Card>
+                                                </Form.Group>
+                                                <Form.Group as={Row} className="mb-3" controlId="nftProbability1">
+                                                    <Form.Label column sm={4} className='createTicketSmallText'>Probability</Form.Label>
+                                                    <Col sm={8}>
+                                                        <Form.Control
+                                                            type="text"
+                                                            name="nftProbability"
+                                                            autoComplete="off"
+                                                            onChange={e => handleChangeNFT2(index, e)}
+                                                        />
+                                                    </Col>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col md={3} className='me-2'>
+                                                <Form.Group as={Row} className="form-group files color pb-3 pt-3" controlId='nftImage3'>
+                                                    <Card className='justify-content-center align-items-center'>
+                                                        <Form.Control
+                                                            type="file"
+                                                            className="form-control create-event-upload-image"
+                                                            name="nftImage"
+                                                            onChange={e => imageChange3(index, e)}
 
-                                            />
+                                                        />
 
-                                            {imageNFT3[index] ? (
-                                                <img src={imageNFT3[index]} className="createTicketNFT p-2" alt='event_logo'></img>
-                                            ) : (
-                                                <div>
-                                                    <Image color='grey' className='position-absolute top-50 start-50 translate-middle header-icon'></Image>
-                                                </div>
-                                            )}
-                                        </Card>
-                                    </Form.Group>
-                                    <Form.Group as={Row} className="mb-3" controlId="nftProbability1">
-                                        <Form.Label column sm={4} className='createTicketSmallText'>Probability</Form.Label>
-                                        <Col sm={8}>
-                                            <Form.Control
-                                                type="text"
-                                                name="nftProbability"
-                                                autoComplete="off"
-                                                onChange={e => handleChangeNFT3(index, e)}
-                                            />
-                                        </Col>
-                                    </Form.Group>
-                                </Col>
+                                                        {imageNFT3[index] ? (
+                                                            <img src={imageNFT3[index]} className="createTicketNFT p-2" alt='event_logo'></img>
+                                                        ) : (
+                                                            <div>
+                                                                <Image color='grey' className='position-absolute top-50 start-50 translate-middle header-icon'></Image>
+                                                            </div>
+                                                        )}
+                                                    </Card>
+                                                </Form.Group>
+                                                <Form.Group as={Row} className="mb-3" controlId="nftProbability1">
+                                                    <Form.Label column sm={4} className='createTicketSmallText'>Probability</Form.Label>
+                                                    <Col sm={8}>
+                                                        <Form.Control
+                                                            type="text"
+                                                            name="nftProbability"
+                                                            autoComplete="off"
+                                                            onChange={e => handleChangeNFT3(index, e)}
+                                                        />
+                                                    </Col>
+                                                </Form.Group>
+                                            </Col>
 
-                            </Row>
+                                        </Row>
+                                    </>
+
+                                )
+                            }
                             <div className="d-flex flex-row-reverse mt-3">
                                 <Button className='ms-2 create-ticket-button' onClick={addCategory}><PlusLg color='secondary'></PlusLg></Button>
                                 {index !== 0 ? (<Button className='me-3 create-ticket-button' onClick={() => removeCategory(index)}><DashLg color='secondary'></DashLg></Button>) : <div></div>}
