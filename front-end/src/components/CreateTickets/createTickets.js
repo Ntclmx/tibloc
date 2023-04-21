@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import { DashLg, PlusLg, Image } from 'react-bootstrap-icons';
 import './createTicket.css';
+import { storeNFT } from '../NFTs/UploadNFT.mjs'
 import { useHistory } from 'react-router-dom';
 
 const CreateTickets = (props) => {
@@ -93,6 +94,21 @@ const CreateTickets = (props) => {
         setNFT3(values);
     }
 
+    const ipfsNFT = (values, nftIdx) => {
+        console.log(`Start upload to IPFS`)
+        const NFTs = values;
+        NFTs.map((NFT, index) => {
+            if(!NFT.nftImage == ''){
+                console.log(`Uploading NFT Category ${tickets[index].categoryName} Index ${nftIdx}`)
+                const metadata = storeNFT(NFT.nftImage, tickets[index].categoryName, tickets[index].categoryDescription)
+                NFT.nftImage = metadata.url
+                console.log(`Upload Success with IPFS URL ${metadata.url}`)
+            }
+            console.log(`Image not available, skip upload...`)
+        })
+        console.log(`===== Done! =====`)
+        return NFTs
+    }
 
     const submitButton = (e) => {
         e.preventDefault();
@@ -143,16 +159,10 @@ const CreateTickets = (props) => {
 
                             const allNft = {
                                 categories: res.data.categories,
-                                nft1: NFT1,
-                                nft2: NFT2,
-                                nft3: NFT3,
+                                nfts: [ipfsNFT(NFT1), ipfsNFT(NFT2), ipfsNFT(NFT3)],
                             }
 
-                            Axios.post('http://127.0.0.1:4000/v1/nfts', allNft, {
-                                headers: {
-                                    'content-type': 'multipart/form-data'
-                                }
-                            })
+                            Axios.post('http://127.0.0.1:4000/v1/nfts', allNft)
                                 .then(res => {
 
                                     console.log(res.data);

@@ -21,11 +21,10 @@ contract TiblocNFT is ERC721, Ownable {
     mapping(string => uint8) existingURIs;
     mapping(uint256 => address) public holderOf;
 
-    address public artist;
-    uint256 public royaltyFee;
+    address public contractOwner;
     uint256 public i_tokenId = 0;
     uint256 public totalTx = 0;
-    uint256 public cost = 0.01 ether;
+    uint256 public adminCost = 0.001 ether;
     
     event NFTMinted(
         uint256 tokenId,
@@ -37,11 +36,11 @@ contract TiblocNFT is ERC721, Ownable {
 
     struct TransactionStruct{
         uint256 tokenId;
-        address owner;
-        uint256 cost;
+        address holderOf;
+        uint256 salesPrice;
         string title;
         string description;
-        string metadataURI;
+        string tokenURI;
         uint256 timestamp;
         bool isUsed;
         string eventCategoryId;
@@ -54,28 +53,25 @@ contract TiblocNFT is ERC721, Ownable {
     constructor(
         string memory _name,
         string memory _symbol,
-        uint256 _royaltyFee,
-        address _artist
+        uint256 _adminCost,
+        address _owner
     ) ERC721(_name, _symbol){
-        royaltyFee = _royaltyFee;
-        artist = _artist;
+        adminCost = _adminCost;
+        contractOwner = _owner;
     }
 
     function payToMint(string memory title,
         string memory description,
-        string memory metadataURI,
+        string memory tokenURI,
         uint256 salesPrice,
         string memory eventCategoryId,
         uint256 eventDate) external payable{
-        require(msg.value >= cost, "Ether too low for minting!");
-        require(existingURIs[metadataURI] == 0, "This NFT is already minted!");
+        require(msg.value >= adminCost, "Ether too low for minting!");
+        require(msg.value >= adminCost + salesPrice, "Ether too low to buy NFT!");
+        require(existingURIs[tokenURI] == 0, "This NFT is already minted!");
         require(msg.sender != owner(), "Sales not allowed!");
 
-        uint256 royalty = (msg.value * royaltyFee) / 100;
-
-        //What is the difference between artist and owner?
-        payTo(artist, royalty);
-        payTo(owner(), (msg.value - royalty));
+        payTo(contractOwner, msg.value);
 
         i_tokenId++;
 
@@ -86,7 +82,7 @@ contract TiblocNFT is ERC721, Ownable {
                 salesPrice,
                 title,
                 description,
-                metadataURI,
+                tokenURI,
                 block.timestamp,
                 false,
                 eventCategoryId,
@@ -98,38 +94,31 @@ contract TiblocNFT is ERC721, Ownable {
             i_tokenId,
             msg.sender,
             msg.value,
-            metadataURI,
+            tokenURI,
             block.timestamp
         );
 
         _safeMint(msg.sender, i_tokenId);
-        existingURIs[metadataURI] = 1;
+        existingURIs[tokenURI] = 1;
         holderOf[i_tokenId] = msg.sender;
     }
 
     function changePrice(uint256 id, uint256 newPrice) external returns (bool){
         require(newPrice > 0 ether, "Ether too low!");
-        require(msg.sender == minted[id-1].owner, "Operations Not Allowed");
+        require(msg.sender == minted[id-1].holderOf, "Operations Not Allowed");
         require(block.timestamp <= minted[id-1].eventDate, "Operations Not Allowed");
 
-        minted[id-1].cost = newPrice;
+        minted[id-1].salesPrice = newPrice;
         return true;
     }
 
     function flagUsed(uint256 tokenId) external returns(bool){
         require(minted[tokenId - 1].isUsed == false, "Tickets already used!");
-        require(msg.sender == minted[tokenId - 1].owner, "Operations Not Allowed");
+        require(msg.sender == minted[tokenId - 1].holderOf, "Operations Not Allowed");
 
         minted[tokenId - 1].isUsed = true;
         return minted[tokenId - 1].isUsed;
-        // return transferNft(tokenId, nftAddress);
     }
-
-    // function transferNft(uint256 tokenId, address nftAddress) internal returns(bool){
-    //     require(msg.sender != minted[tokenId - 1].owner, "Can not transfer to self");
-    //     IERC721(nftAddress).safeTransferFrom(listedItem.seller, msg.sender, tokenId);
-    //     return true;
-    // }
 
     function payTo(address to, uint256 amount) internal {
         (bool success, ) = payable(to).call{value: amount}("");
@@ -142,9 +131,5 @@ contract TiblocNFT is ERC721, Ownable {
 
     function getNFT(uint256 tokenId) external view returns(TransactionStruct memory){
         return minted[tokenId - 1];
-    }
-
-    function getAllTransactions() external view returns(TransactionStruct[] memory){
-        return transactions;
     }
 }
