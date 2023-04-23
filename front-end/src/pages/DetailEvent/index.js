@@ -57,7 +57,7 @@ const DetailEvent = (props) => {
               <DetailEventTabs eventDescription={event.eventDescription} eventTnc={event.eventTnc} />
             </Col>
             <Col className='col-4 detailEventCalendar'>
-              <DetailEventCalendar eventAddress={event.eventAddress} _id={event._id} />
+              <DetailEventCalendar eventAddress={event.eventAddress} eventTitle={event.eventTitle} eventDate={event.eventDate} _id={event._id} />
             </Col>
           </Row>
         </Container>

@@ -125,6 +125,9 @@ const ListEvents = (props) => {
       })
   }
 
+
+  console.log('1',locs,'2',locsQuery,'3',catsQuery,'4',cats,'5',filter)
+
   return (
 
     <Row>

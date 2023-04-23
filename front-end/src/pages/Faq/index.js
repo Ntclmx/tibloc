@@ -20,7 +20,7 @@ const Faq = () => {
     
     return (
         <div class="row"> 
-            <nav id="navbar-example3" class="col-sm-3 navbar-light bg-light flex-column align-items-stretch p-3 position-fixed">
+            <nav id="navbar-example3" class="col-sm-3 navbar-light bg-light flex-column align-items-stretch p-3 ">
                 <a class="navbar-brand" href="/Faq">FAQ & Article</a>
                 {
                     dataFaq.map(faq => {

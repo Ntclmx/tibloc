@@ -10,17 +10,80 @@ import Calendar from 'react-calendar';
 import './calendar.css';
 import Bookmark from '../../assets/header/bookmark.png';
 import Edit from '../../assets/events/edit.png';
-import Maps from '../../assets/events/maps.png';
+import Download from '../../assets/events/downloadQR.png';
+// import Maps from '../../assets/events/maps.png';
 import BookmarksFill from '../../assets/events/bookmark-fill.png';
 import Axios from 'axios';
-import { UserContext } from '../../pages/MainApp/index'
+import { UserContext } from '../../pages/MainApp/index';
+import Delete from '../../assets/events/trash.png';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import { useHistory } from 'react-router-dom';
+import FileDownload from 'js-file-download';
+
+
+function DeleteModal(props) {
+    const history = useHistory();
+    const [isSame, setIsSame] = useState(false);
+
+    const fillDelete = (e) => {
+        // console.log(e.target.value);
+
+        if (e.target.value === props.eventTitle) {
+            setIsSame(true)
+        }
+    }
+
+    const submitButton = (e) => {
+
+        Axios.delete(`${process.env.REACT_APP_API_URL}/v1/event/${props._id}`)
+            .then(result => {
+                console.log(result.data);
+                history.push('/events');
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+
+    const ButtonDelete = isSame ? <Button onClick={submitButton}>Delete</Button> : <Button onClick={submitButton} disabled>Delete</Button>
+
+    return (
+        <Modal
+            {...props}
+            aria-labelledby="contained-modal-title-vcenter"
+            scrollable={false}
+        >
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    Delete Event
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <small className='pb-3'>To delete the event, type the name to confirm.</small>
+                <Form.Group className="my-3" controlId="deleteName" onChange={(e) => fillDelete(e)}>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter Event Name"
+                        autoFocus
+                    />
+                </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+                {ButtonDelete}
+            </Modal.Footer>
+        </Modal>
+    );
+}
 
 const DetailEventCalendar = (props) => {
-    const [value, onChange] = useState(new Date(2017, 0, 1));
+    const [value, onChange] = useState(new Date(props.eventDate));
     const [bookmark, setBookmark] = useState(false);
     const [wishlistId, setWishlistId] = useState('');
     const { web3User } = useContext(UserContext);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [modalShow, setModalShow] = useState(false);
 
     useEffect(() => {
         const id = props._id
@@ -83,14 +146,53 @@ const DetailEventCalendar = (props) => {
         }
     };
 
+    const downloadQRFunc = () => {
+
+
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${props._id}/categories`)
+            .then(result => {
+                const categories = result.data.categories;
+
+                for (const category of categories) {
+                    console.log(category, props.eventTitle);
+
+                    Axios.get(`${process.env.REACT_APP_API_URL}/v1/category/${category._id}/qr`, {
+                        responseType: 'blob'
+                    })
+                        .then(result => {
+                            console.log(result);
+
+                            FileDownload(result.data, `${props.eventTitle}-${category.categoryName}.png`)
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+
+                }
+
+            })
+            .catch(err => {
+                console.log('B');
+            })
+
+    }
+
     const Component = bookmark ? <Image src={BookmarksFill} onClick={bookmarkFunc} className='iconDetailEvent'></Image> : <Image src={Bookmark} onClick={bookmarkFunc} className='iconDetailEvent'></Image>;
 
     const editButton = isAdmin ? <a href={`/edit-event/events/${props._id}`} className='ms-auto'><Image src={Edit} className='iconDetailEvent ' ></Image></a> : <></>
     return (
         <div className='ps-5'>
+            <DeleteModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                eventTitle={props.eventTitle}
+                _id={props._id}
+            />
             <div className='d-flex'>
                 {Component}
                 {editButton}
+                <Image src={Delete} className='iconDetailEvent ms-auto' onClick={() => setModalShow(true)}></Image>
+                <Image src={Download} className='iconDetailEvent ms-auto' onClick={downloadQRFunc}></Image>
             </div>
             <Card className='mt-3'>
                 <ListGroup variant="flush">
@@ -111,11 +213,11 @@ const DetailEventCalendar = (props) => {
                 <Calendar
                     className='my-1 px-2 pt-2 pb-3'
                     value={value}
-                    defaultActiveStartDate={new Date(2017, 0, 1)}
-                    activeStartDate={new Date(2017, 0, 1)}
-                    defaultValue={new Date(2017, 0, 1)}
-                    maxDate={new Date(2017, 0, 1)}
-                    minDate={new Date(2017, 0, 1)}
+                    defaultActiveStartDate={value}
+                    activeStartDate={value}
+                    defaultValue={value}
+                    maxDate={value}
+                    minDate={value}
 
 
                     tileDisabled={({ date }) => {
