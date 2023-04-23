@@ -14,12 +14,12 @@ const TransactionCard = (props) => {
 
     const catId = props.catId;
 
-    Axios.get(`http://127.0.0.1:4000/v1/category/${catId}`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/v1/category/${catId}`)
       .then(result => {
         setCat(result.data.category);
 
         const eventId = result.data.category.eventId;
-        Axios.get(`http://127.0.0.1:4000/v1/event/${eventId}`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}`)
           .then(result => {
             setEvent(result.data.event);
           })
@@ -52,7 +52,7 @@ const TransactionCard = (props) => {
           <Card className='mb-4 trxCard' onClick={() => history.push(`/transaction/${props._id}`)}>
             <Row>
               <div className='col-2 d-flex justify-content-center'>
-                <Image src={`http://127.0.0.1:4000/${event.eventLogo}`} className='trxCardImage my-2'></Image>
+                <Image src={`${process.env.REACT_APP_API_URL}/${event.eventLogo}`} className='trxCardImage my-2'></Image>
               </div>
               <div className='col-7 d-flex trxCardDiv1 my-2'>
                 <div className='d-flex align-items-center'>
@@ -84,7 +84,7 @@ const TransactionCard = (props) => {
         <Card className='mb-4 trxCard' onClick={() => history.push(`/transaction/${props._id}`)}>
           <Row>
             <div className='col-2 d-flex justify-content-center'>
-              <Image src={`http://127.0.0.1:4000/${event.eventLogo}`} className='trxCardImage my-2'></Image>
+              <Image src={`${process.env.REACT_APP_API_URL}/${event.eventLogo}`} className='trxCardImage my-2'></Image>
             </div>
             <div className='col-7 d-flex trxCardDiv1 my-2'>
               <div className='d-flex align-items-center'>

@@ -42,7 +42,7 @@ const Header = () => {
         const account = await ethereum.request({ method: 'eth_requestAccounts' })
         setWeb3User(account[0])
 
-        Axios.get(`http://127.0.0.1:4000/v1/admin/address/${account[0]}`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/admin/address/${account[0]}`)
           .then(result => {
 
             if (result.status === 200) {

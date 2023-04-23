@@ -44,6 +44,17 @@ const CreateTickets = (props) => {
     const [imageNFT2, setImageNFT2] = useState([null]);
     const [imageNFT3, setImageNFT3] = useState([null]);
 
+
+    const test = async () => {
+        const r = await fetch('http://localhost:3000/static/media/circle.2b2b7ec6c3b8bb8e5f19.png')
+
+
+        const w = await r.blob()
+        console.log('fetch',r,w);
+    }
+
+
+    test();
     useEffect(() => {
 
         const eventId = props.match.params.id;
@@ -51,7 +62,7 @@ const CreateTickets = (props) => {
         // console.log(event);
         if (eventId) {
             setIsUpdate(true);
-            Axios.get(`http://127.0.0.1:4000/v1/event/${eventId}/categories`)
+            Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}/categories`)
                 .then(result => {
                     setTicket(result.data.categories);
                 })
@@ -59,6 +70,8 @@ const CreateTickets = (props) => {
                     console.log(err);
                 })
         }
+
+        
         // else if (Object.keys(props.event).length !== 0) {
         //   setEvent(props.event);
         //   if (props.event.eventLogo)
@@ -99,7 +112,7 @@ const CreateTickets = (props) => {
         if (isUpdate) {
             const eventId = props.match.params.id;
 
-            Axios.put(`http://127.0.0.1:4000/v1/event/${eventId}`, event, {
+            Axios.put(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}`, event, {
                 headers: {
                     'content-type': 'multipart/form-data'
                 }
@@ -111,7 +124,7 @@ const CreateTickets = (props) => {
                         tickets: tickets
                     }
 
-                    Axios.put(`http://127.0.0.1:4000/v1/event/${eventId}/categories`, allTickets)
+                    Axios.put(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}/categories`, allTickets)
                         .then(res => {
                             console.log(res);
                         })
@@ -125,7 +138,7 @@ const CreateTickets = (props) => {
 
         } else {
 
-            Axios.post('http://127.0.0.1:4000/v1/event', event, {
+            Axios.post(`${process.env.REACT_APP_API_URL}/v1/event`, event, {
                 headers: {
                     'content-type': 'multipart/form-data'
                 }
@@ -136,7 +149,7 @@ const CreateTickets = (props) => {
                         eventId: res.data.event._id,
                         tickets: tickets
                     }
-                    Axios.post('http://127.0.0.1:4000/v1/categories', allTickets)
+                    Axios.post(`${process.env.REACT_APP_API_URL}/v1/categories`, allTickets)
                         .then(res => {
 
                             const allNft = {
@@ -146,7 +159,7 @@ const CreateTickets = (props) => {
                                 nft3: NFT3,
                             }
 
-                            Axios.post('http://127.0.0.1:4000/v1/nfts', allNft, {
+                            Axios.post(`${process.env.REACT_APP_API_URL}/v1/nfts`, allNft, {
                                 headers: {
                                     'content-type': 'multipart/form-data'
                                 }
@@ -197,11 +210,12 @@ const CreateTickets = (props) => {
 
     }
 
-    const imageChange1 = (index, e) => {
+    const imageChange1 = async (index, e) => {
 
         // console.log(e.target.files[0], e.target.name)
         let allNFT1 = [...NFT1];
-        allNFT1[index][e.target.name] = e.target.files[0]
+        allNFT1[index][e.target.name] = e.target.files[0];
+        console.log('test',await fetch(e.target.files[0]))
         setNFT1(allNFT1);
 
         let allImageNFT1 = [...imageNFT1];
@@ -258,7 +272,7 @@ const CreateTickets = (props) => {
 
     // console.log(NFT1, imageNFT1, NFT2, imageNFT2, NFT3, imageNFT3)
 
-    // console.log(tickets);
+    // console.log(NFT1[0].nftImage);
     return (
         <div className='mb-5'>
             <div className='justify-content-center align-items-center text-center'>
@@ -272,14 +286,29 @@ const CreateTickets = (props) => {
                             <Form.Group as={Row} className="mb-3" controlId="categoryName">
                                 <Form.Label column sm={2}>Name</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control
-                                        type="text"
-                                        name="categoryName"
-                                        placeholder="Enter your ticket category name here"
-                                        autoComplete="off"
-                                        value={ticket.categoryName}
-                                        onChange={e => handleChange(index, e)}
-                                    />
+                                    {
+                                        isUpdate ? (
+                                            <Form.Control
+                                                type="text"
+                                                name="categoryName"
+                                                placeholder="Enter your ticket category name here"
+                                                autoComplete="off"
+                                                value={ticket.categoryName}
+                                                onChange={e => handleChange(index, e)}
+                                                disabled
+                                            />
+                                        ) : (
+                                            <Form.Control
+                                                type="text"
+                                                name="categoryName"
+                                                placeholder="Enter your ticket category name here"
+                                                autoComplete="off"
+                                                value={ticket.categoryName}
+                                                onChange={e => handleChange(index, e)}
+                                            />
+
+                                        )
+                                    }
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-3" controlId="categoryPrice">
@@ -295,18 +324,36 @@ const CreateTickets = (props) => {
                                     />
                                 </Col>
                             </Form.Group>
-                            <Form.Group as={Row} className="mb-3" controlId="categoryDescription">
+
+                            <Form.Group as={Row} className="mb-3" controlId="categoryDescription" >
                                 <Form.Label column sm={2}>Description</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control
-                                        as="textarea"
-                                        name="categoryDescription"
-                                        placeholder="Enter your ticket category description here"
-                                        autoComplete="off"
-                                        value={ticket.categoryDescription}
-                                        onChange={e => handleChange(index, e)}
-                                        rows={3}
-                                    />
+                                    {
+                                        isUpdate ? (
+                                            <Form.Control
+                                                as="textarea"
+                                                name="categoryDescription"
+                                                placeholder="Enter your ticket category description here"
+                                                autoComplete="off"
+                                                value={ticket.categoryDescription}
+                                                onChange={e => handleChange(index, e)}
+                                                rows={3}
+                                                disabled
+                                            />
+                                        ) : (
+                                            <Form.Control
+                                                as="textarea"
+                                                name="categoryDescription"
+                                                placeholder="Enter your ticket category description here"
+                                                autoComplete="off"
+                                                value={ticket.categoryDescription}
+                                                onChange={e => handleChange(index, e)}
+                                                rows={3}
+
+                                            />
+
+                                        )
+                                    }
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-3" controlId="categoryStock">

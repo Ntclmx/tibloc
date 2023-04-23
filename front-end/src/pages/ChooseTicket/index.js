@@ -20,7 +20,7 @@ const ChooseTicket = (props) => {
     useEffect(() => {
         const id = props.match.params.id;
 
-        Axios.get(`http://127.0.0.1:4000/v1/event/${id}`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${id}`)
             .then(result => {
                 console.log(result.data.event);
                 setEvent(result.data.event);
@@ -33,7 +33,7 @@ const ChooseTicket = (props) => {
     useEffect(() => {
         const id = props.match.params.id;
 
-        Axios.get(`http://127.0.0.1:4000/v1/event/${id}/categories`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${id}/categories`)
             .then(result => {
                 console.log(result.data.categories);
                 setCategory(result.data.categories);

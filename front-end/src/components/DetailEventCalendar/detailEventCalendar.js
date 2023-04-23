@@ -16,7 +16,7 @@ import Axios from 'axios';
 import { UserContext } from '../../pages/MainApp/index'
 
 const DetailEventCalendar = (props) => {
-    const [value, onChange] = useState(new Date());
+    const [value, onChange] = useState(new Date(2017, 0, 1));
     const [bookmark, setBookmark] = useState(false);
     const [wishlistId, setWishlistId] = useState('');
     const { web3User } = useContext(UserContext);
@@ -26,7 +26,7 @@ const DetailEventCalendar = (props) => {
         const id = props._id
         const userId = web3User
 
-        Axios.get(`http://127.0.0.1:4000/v1/wishlists/event/${id}/user/${userId}`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/wishlists/event/${id}/user/${userId}`)
             .then(result => {
                 console.log(result.data.wishlists);
                 setWishlistId(result.data.wishlists[0]._id);
@@ -36,7 +36,7 @@ const DetailEventCalendar = (props) => {
                 console.log('B');
             })
 
-        Axios.get(`http://127.0.0.1:4000/v1/admin/address/${userId}`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/admin/address/${userId}`)
             .then(result => {
 
                 if (result.status === 200) {
@@ -59,7 +59,7 @@ const DetailEventCalendar = (props) => {
                 userId: web3User,
             };
 
-            Axios.post(`http://127.0.0.1:4000/v1/wishlist`, wishlist)
+            Axios.post(`${process.env.REACT_APP_API_URL}/v1/wishlist`, wishlist)
                 .then(result => {
                     console.log(result.data.wishlist);
                     setBookmark(true)
@@ -71,7 +71,7 @@ const DetailEventCalendar = (props) => {
 
         } else {
             console.log(wishlistId);
-            Axios.delete(`http://127.0.0.1:4000/v1/wishlist/${wishlistId}`)
+            Axios.delete(`${process.env.REACT_APP_API_URL}/v1/wishlist/${wishlistId}`)
                 .then(result => {
                     console.log(result);
                     setBookmark(false)
@@ -110,9 +110,14 @@ const DetailEventCalendar = (props) => {
                 </ListGroup>
                 <Calendar
                     className='my-1 px-2 pt-2 pb-3'
-                    onChange={onChange}
                     value={value}
-                    // defaultActiveStartDate={new Date(2017, 0, 1)}
+                    defaultActiveStartDate={new Date(2017, 0, 1)}
+                    activeStartDate={new Date(2017, 0, 1)}
+                    defaultValue={new Date(2017, 0, 1)}
+                    maxDate={new Date(2017, 0, 1)}
+                    minDate={new Date(2017, 0, 1)}
+
+
                     tileDisabled={({ date }) => {
                         if (date === disableDates) {
                             return true;

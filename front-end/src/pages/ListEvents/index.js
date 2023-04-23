@@ -33,7 +33,7 @@ const ListEvents = (props) => {
   useEffect(() => {
     const search = props.location.search
 
-    Axios.get(`http://127.0.0.1:4000/v1/events${search}`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/v1/events${search}`)
       .then(result => {
         const responseAPI = result.data;
 
@@ -46,7 +46,7 @@ const ListEvents = (props) => {
 
         for (let number = 1; number <= totalPage; number++) {
           items.push(
-            <Pagination.Item key={number} active={number === activePage}>
+            <Pagination.Item key={number} active={number === activePage} href={`/events?page=${number}`}>
               {number}
             </Pagination.Item>,
           );
@@ -97,7 +97,7 @@ const ListEvents = (props) => {
   const sortFunc = (sort) => {
     const search = props.location.search
 
-    Axios.get(`http://127.0.0.1:4000/v1/events${search}?sort=${sort}`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/v1/events${search}?sort=${sort}`)
       .then(result => {
         const responseAPI = result.data;
 
@@ -138,7 +138,7 @@ const ListEvents = (props) => {
             console.log(typeof (event));
             return <EventCard
               key={event._id}
-              eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}
+              eventLogo={`${process.env.REACT_APP_API_URL}/${event.eventLogo}`}
               eventTitle={event.eventTitle}
               eventDate={event.eventDate}
               _id={event._id}

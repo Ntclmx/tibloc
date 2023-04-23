@@ -9,7 +9,7 @@ const ComponentEvents = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://127.0.0.1:4000/v1/events")
+    Axios.get(`${process.env.REACT_APP_API_URL}/v1/events`)
       .then((result) => {
         const responseAPI = result.data;
         console.log(responseAPI)
@@ -26,7 +26,7 @@ const ComponentEvents = () => {
         console.log(typeof (event));
         return <EventCard
           key={event._id}
-          eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}
+          eventLogo={`${process.env.REACT_APP_API_URL}/${event.eventLogo}`}
           eventTitle={event.eventTitle}
           eventDate={event.eventDate}
           _id={event._id}
@@ -42,7 +42,7 @@ const ComponentEvents = () => {
 
 function HomeTabs() {
   return (
-    <div className='px-5'>
+    <div className='px-5 mx-5'>
 
       <Tabs
         defaultActiveKey="recommendation"

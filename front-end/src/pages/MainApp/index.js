@@ -165,8 +165,8 @@ const MainApp = () => {
                             </div>
                         </Route>
                         <Route path='/'>
-                            <div className='mx-5' >
-                                <div className='justify-content-center align-items-center my-3 pt-3 '>
+                            <div className='' >
+                                <div className='justify-content-center align-items-center mb-3 '>
                                     <DashboardGuest />
                                 </div>
                             </div>

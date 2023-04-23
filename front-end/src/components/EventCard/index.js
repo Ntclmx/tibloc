@@ -15,7 +15,7 @@ const EventCard = (props) => {
   const [allFalseCat, setAllFalseCat] = useState(true);
   const history = useHistory();
   useEffect(() => {
-    Axios.get(`http://127.0.0.1:4000/v1/event/${props._id}/categories`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${props._id}/categories`)
       .then(result => {
         const categories = result.data.categories;
 

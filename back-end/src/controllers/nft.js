@@ -107,6 +107,7 @@ exports.postNft = async (req, res, next) => {
         let nft1 = '';
         let nft2 = '';
         let nft3 = '';
+        console.log(req.files);
         for (const file of req.files) {
             if (file.fieldname === `nft1[${index}][nftImage]`) {
                 nft1 = file.path;

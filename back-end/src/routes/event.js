@@ -10,7 +10,6 @@ const paymentTypeController = require('../controllers/paymentType');
 const nftController = require('../controllers/nft');
 const adminController = require('../controllers/admin');
 
-const {verifyToken} = require("../middleware/AuthUser");
 
 // event
 router.post('/event', [

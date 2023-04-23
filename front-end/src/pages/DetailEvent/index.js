@@ -18,7 +18,7 @@ const DetailEvent = (props) => {
     const id = props.match.params.id;
     console.log(id);
 
-    Axios.get(`http://127.0.0.1:4000/v1/event/${id}`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${id}`)
       .then(result => {
         console.log(result.data.event);
         setEvent(result.data.event);
@@ -41,7 +41,7 @@ const DetailEvent = (props) => {
           <Breadcrumb.Item active>{event.eventTitle}</Breadcrumb.Item>
         </Breadcrumb>
 
-        <Image src={`http://localhost:4000/${event.eventLogo}`} className='detailEventImage' alt='test' />
+        <Image src={`${process.env.REACT_APP_API_URL}/${event.eventLogo}`} className='detailEventImage' alt='test' />
         <div className="detailEventGrey"></div>
 
         <div className="d-flex justify-content-center detailImageDivLogo">

@@ -29,7 +29,7 @@ const ChoosePayment = (props) => {
         setCategory(category);
         setCategoryId(categoryId);
 
-        Axios.get(`http://127.0.0.1:4000/v1/event/${id}`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${id}`)
             .then(result => {
                 setEvent(result.data.event);
             })
@@ -40,7 +40,7 @@ const ChoosePayment = (props) => {
 
     useEffect(() => {
 
-        Axios.get(`http://127.0.0.1:4000/v1/paymentType`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/paymentType`)
             .then(result => {
                 console.log(result.data.paymentType);
                 setPaymentType(result.data.paymentType);
@@ -66,7 +66,7 @@ const ChoosePayment = (props) => {
             "paymentWith": payment
         };
 
-        Axios.post('http://127.0.0.1:4000/v1/transaction', transaction)
+        Axios.post(`${process.env.REACT_APP_API_URL}/v1/transaction`, transaction)
             .then(res => {
 
                 console.log(res);
@@ -134,7 +134,7 @@ const ChoosePayment = (props) => {
                                         key={paymentType._id}
                                         paymentTypeKind={paymentType.paymentTypeKind}
                                         paymentTypeName={paymentType.paymentTypeName}
-                                        paymentTypeLogo={`http://127.0.0.1:4000/${paymentType.paymentTypeLogo}`}
+                                        paymentTypeLogo={`${process.env.REACT_APP_API_URL}/${paymentType.paymentTypeLogo}`}
                                         _id={paymentType._id}
                                         finalPaymentFunc={finalPaymentFunc}
                                         choosePaymentId={choosePaymentId}
@@ -150,7 +150,7 @@ const ChoosePayment = (props) => {
                                         key={paymentType._id}
                                         paymentTypeKind={paymentType.paymentTypeKind}
                                         paymentTypeName={paymentType.paymentTypeName}
-                                        paymentTypeLogo={`http://127.0.0.1:4000/${paymentType.paymentTypeLogo}`}
+                                        paymentTypeLogo={`${process.env.REACT_APP_API_URL}/${paymentType.paymentTypeLogo}`}
                                         _id={paymentType._id}
                                         finalPaymentFunc={finalPaymentFunc}
                                         choosePaymentId={choosePaymentId}

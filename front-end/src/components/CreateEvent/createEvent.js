@@ -28,9 +28,9 @@ const CreateEventComp = (props) => {
     const eventId = props.match.params.id;
     if (eventId) {
       setIsUpdate(true);
-      Axios.get(`http://127.0.0.1:4000/v1/event/${eventId}`)
+      Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}`)
         .then(result => {
-          setImagePreview(`http://localhost:4000/${result.data.event.eventLogo}`);
+          setImagePreview(`${process.env.REACT_APP_API_URL}/${result.data.event.eventLogo}`);
           setEvent(result.data.event);
         })
         .catch(err => {

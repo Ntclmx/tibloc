@@ -17,14 +17,11 @@ const PORT = process.env.PORT || 4000;
 
 const eventRoutes = require('./src/routes/event');
 const faqRoutes = require('./src/routes/faq');
-const authRoutes = require('./src/routes/auth');
-const userRoutes = require('./src/routes/user');
-const cookieParser = require("cookie-parser");
+
 // import SequelizeStore from "connect-session-sequelize";
 console.log("Start Routing1");
 const app = express();
 
-console.log(`Start Routing2, sess secret ${process.env.SESS_SECRET}`);
 
 // sessionStore = new sessionStore({
 //     host: 'localhost',
@@ -114,8 +111,6 @@ app.use((req, res, next) => {
 
 console.log("Start Routing");
 
-app.use('/v1/', authRoutes);
-app.use('/v1/', userRoutes);
 app.use('/v1/', eventRoutes);
 app.use('/v1/', faqRoutes);
 
