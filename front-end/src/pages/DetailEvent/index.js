@@ -13,6 +13,7 @@ import Circle from '../../assets/events/circle.png';
 
 const DetailEvent = (props) => {
   const [event, setEvent] = useState({});
+  const [org, setOrg] = useState({});
 
   useEffect(() => {
     const id = props.match.params.id;
@@ -22,6 +23,16 @@ const DetailEvent = (props) => {
       .then(result => {
         console.log(result.data.event);
         setEvent(result.data.event);
+
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/organizer/${result.data.event.eventOrganizer}`)
+          .then(result => {
+            setOrg(result.data.organizer);
+    
+          })
+          .catch(err => {
+            console.log(err);
+          })
+        
       })
       .catch(err => {
         console.log(err);
@@ -45,7 +56,7 @@ const DetailEvent = (props) => {
         <div className="detailEventGrey"></div>
 
         <div className="d-flex justify-content-center detailImageDivLogo">
-          <Image src={Circle} className='detailEventImage2 shadow'></Image>
+          <Image src={`${process.env.REACT_APP_API_URL}/${org.organizerLogo}`} className='detailEventImage2 shadow'></Image>
           {/* <Image src={eventImage} className='detailEventImage2 shadow'></Image> */}
         </div>
 

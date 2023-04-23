@@ -10,6 +10,7 @@ const CreateEventComp = (props) => {
 
   const history = useHistory();
   const [isUpdate, setIsUpdate] = useState(false);
+  const [eventOrganizers, setEventOrganizers] = useState([]);
 
   const [event, setEvent] = useState({
     eventTitle: '',
@@ -70,7 +71,18 @@ const CreateEventComp = (props) => {
     }
   };
 
-  const eventOrganizers = ['Groovy Event Organizer', 'The BIG Organizer', 'Dream Flavours Celebration'];
+  useEffect(() => {
+    Axios.get(`${process.env.REACT_APP_API_URL}/v1/organizers`)
+        .then(result => {
+          console.log(result);
+          setEventOrganizers(result.data.organizer)
+        })
+        .catch(err => {
+          console.log(err);
+        })
+  }, [])
+
+  // const eventOrganizers = ['Groovy Event Organizer', 'The BIG Organizer', 'Dream Flavours Celebration'];
   const eventCategories = ['Comedy', 'Music', 'Sport','Fun&Games'];
 
   return (
@@ -87,7 +99,7 @@ const CreateEventComp = (props) => {
                 <Form.Select className="form-control" name="eventOrganizer" value={event.eventOrganizer} onChange={handleChange}>
                   <option >Enter your event event organizer here</option>
                   {eventOrganizers.map(eventOrganizer => {
-                    return <option value={eventOrganizer}>{eventOrganizer}</option>
+                    return <option value={eventOrganizer._id}>{eventOrganizer.organizerName}</option>
                   })}
                 </Form.Select>
               </Col>

@@ -13,6 +13,7 @@ const EventCard = (props) => {
   const [allFalse, setAllFalse] = useState(true);
   const [showCat, setShowCat] = useState(false);
   const [allFalseCat, setAllFalseCat] = useState(true);
+  const [org, setOrg] = useState('');
   const history = useHistory();
   useEffect(() => {
     Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${props._id}/categories`)
@@ -33,6 +34,17 @@ const EventCard = (props) => {
         console.log(err);
       })
   }, [props]);
+
+  useEffect(() => {
+    Axios.get(`${process.env.REACT_APP_API_URL}/v1/organizer/${props.eventOrganizer}`)
+      .then(result => {
+        
+        setOrg(result.data.organizer)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }, [])
 
   useEffect(() => {
     if (props.dashboard === false) {
@@ -83,7 +95,7 @@ const EventCard = (props) => {
           setShowCat(false);
           if (cat.checked) {
 
-            console.log('aa',typeof(cat.name?.toLowerCase()), typeof(props.eventCategory?.toLowerCase()))
+            console.log('aa', typeof (cat.name?.toLowerCase()), typeof (props.eventCategory?.toLowerCase()))
 
             setAllFalseCat(false);
 
@@ -101,21 +113,21 @@ const EventCard = (props) => {
 
   }, [props.locs, props.cats, props.eventCategory, props.eventAddress, props.locsQuery, props.catsQuery, props.filter, props.dashboard])
 
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'IDR',
-  });
+  // const formatter = new Intl.NumberFormat('en-US', {
+  //   style: 'currency',
+  //   currency: 'IDR',
+  // });
 
 
-  const totalPrice = formatter.format(price);
+  // const totalPrice = formatter.format(price);
   if (props.dashboard) {
     return (
-      <Col  className='col-3 pb-3 d-flex justify-content-center align-items-start'>
+      <Col className='col-3 pb-3 d-flex justify-content-center align-items-start'>
         <Card className='event-card text-start shadow' onClick={() => history.push(`/event/${props._id}`)}>
           <Card.Header className='event-card-header d-flex'>
-            <Image src={Circle} className='event-card-promotor-image me-3'></Image>
+            <Image src={`${process.env.REACT_APP_API_URL}/${org.organizerLogo}`} className='event-card-promotor-image me-3'></Image>
             <div className='event-card-promotor-text'>
-              {props.eventOrganizer}
+              {org.organizerName}
             </div>
           </Card.Header>
           <Card.Img className='event-card-image' variant="top" src={props.eventLogo} alt='event' />
@@ -123,7 +135,7 @@ const EventCard = (props) => {
           <Card.Body className='event-card-body'>
             <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
             <Card.Text className='event-card-price pt-0'>
-              {totalPrice}
+              ETH {price}
             </Card.Text>
           </Card.Body>
         </Card>
@@ -134,12 +146,12 @@ const EventCard = (props) => {
     if (props.locsQuery !== '') {
       if (show || allFalse || props.eventAddress.toLowerCase().includes(props.locsQuery.toLowerCase())) {
         return (
-          <Col  className='col-3 pb-3 d-flex justify-content-start align-items-start'>
+          <Col className='col-3 pb-3 d-flex justify-content-start align-items-start'>
             <Card className='event-card text-start shadow' onClick={() => history.push(`/event/${props._id}`)}>
               <Card.Header className='event-card-header d-flex'>
-                <Image src={Circle} className='event-card-promotor-image me-3'></Image>
+                <Image src={`${process.env.REACT_APP_API_URL}/${org.organizerLogo}`} className='event-card-promotor-image me-3'></Image>
                 <div className='event-card-promotor-text'>
-                  {props.eventOrganizer}
+                  {org.organizerName}
                 </div>
               </Card.Header>
               <Card.Img className='event-card-image' variant="top" src={props.eventLogo} alt='event' />
@@ -147,7 +159,7 @@ const EventCard = (props) => {
               <Card.Body className='event-card-body'>
                 <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
                 <Card.Text className='event-card-price pt-0'>
-                  {totalPrice}
+                  ETH {price}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -159,12 +171,12 @@ const EventCard = (props) => {
     else {
       if (show || allFalse) {
         return (
-          <Col  className='col-3 pb-3 d-flex justify-content-start align-items-start'>
+          <Col className='col-3 pb-3 d-flex justify-content-start align-items-start'>
             <Card className='event-card text-start shadow' onClick={() => history.push(`/event/${props._id}`)}>
               <Card.Header className='event-card-header d-flex'>
-                <Image src={Circle} className='event-card-promotor-image me-3'></Image>
+                <Image src={`${process.env.REACT_APP_API_URL}/${org.organizerLogo}`} className='event-card-promotor-image me-3'></Image>
                 <div className='event-card-promotor-text'>
-                  {props.eventOrganizer}
+                  {org.organizerName}
                 </div>
               </Card.Header>
               <Card.Img className='event-card-image' variant="top" src={props.eventLogo} alt='event' />
@@ -172,7 +184,7 @@ const EventCard = (props) => {
               <Card.Body className='event-card-body'>
                 <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
                 <Card.Text className='event-card-price pt-0'>
-                  {totalPrice}
+                  ETH {price}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -186,12 +198,12 @@ const EventCard = (props) => {
     if (props.catsQuery !== '') {
       if (showCat || allFalseCat || props.eventCategory.toLowerCase().includes(props.catsQuery.toLowerCase())) {
         return (
-          <Col  className='col-3  pb-3 d-flex justify-content-start align-items-start'>
+          <Col className='col-3  pb-3 d-flex justify-content-start align-items-start'>
             <Card className='event-card text-start shadow' onClick={() => history.push(`/event/${props._id}`)}>
               <Card.Header className='event-card-header d-flex'>
-                <Image src={Circle} className='event-card-promotor-image me-3'></Image>
+                <Image src={`${process.env.REACT_APP_API_URL}/${org.organizerLogo}`} className='event-card-promotor-image me-3'></Image>
                 <div className='event-card-promotor-text'>
-                  {props.eventOrganizer}
+                  {org.organizerName}
                 </div>
               </Card.Header>
               <Card.Img className='event-card-image' variant="top" src={props.eventLogo} alt='event' />
@@ -199,7 +211,7 @@ const EventCard = (props) => {
               <Card.Body className='event-card-body'>
                 <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
                 <Card.Text className='event-card-price pt-0'>
-                  {totalPrice}
+                ETH {price}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -211,12 +223,12 @@ const EventCard = (props) => {
     else {
       if (showCat || allFalseCat) {
         return (
-          <Col  className='col-3  pb-3 d-flex justify-content-start align-items-start'>
+          <Col className='col-3  pb-3 d-flex justify-content-start align-items-start'>
             <Card className='event-card text-start shadow' onClick={() => history.push(`/event/${props._id}`)}>
               <Card.Header className='event-card-header d-flex'>
-                <Image src={Circle} className='event-card-promotor-image me-3'></Image>
+                <Image src={`${process.env.REACT_APP_API_URL}/${org.organizerLogo}`} className='event-card-promotor-image me-3'></Image>
                 <div className='event-card-promotor-text'>
-                  {props.eventOrganizer}
+                  {org.organizerName}
                 </div>
               </Card.Header>
               <Card.Img className='event-card-image' variant="top" src={props.eventLogo} alt='event' />
@@ -224,7 +236,7 @@ const EventCard = (props) => {
               <Card.Body className='event-card-body'>
                 <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
                 <Card.Text className='event-card-price pt-0'>
-                  {totalPrice}
+                ETH {price}
                 </Card.Text>
               </Card.Body>
             </Card>

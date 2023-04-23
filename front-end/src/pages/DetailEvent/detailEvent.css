@@ -15,6 +15,7 @@
 
 
 .detailEventImage2 {
+    object-fit: fill;
     border-radius: 50%;
     width: 150px;
     height: 150px;
