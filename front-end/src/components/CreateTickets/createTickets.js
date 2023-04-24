@@ -554,7 +554,7 @@ const CreateTickets = (props) => {
           className="mt-2 px-4 create-event-button text-dark"
           onClick={submitButton}
         >
-          Next
+          Create
         </Button>
       </div>
     </div>

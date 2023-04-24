@@ -31,6 +31,9 @@ function DeleteModal(props) {
 
         if (e.target.value === props.eventTitle) {
             setIsSame(true)
+        } else {
+            setIsSame(false)
+
         }
     }
 

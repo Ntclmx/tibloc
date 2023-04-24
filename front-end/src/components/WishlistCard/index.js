@@ -11,6 +11,7 @@ import Axios from 'axios';
 const WishlistCard = (props) => {
     const [price, setPrice] = useState(0);
     const history = useHistory();
+    const [org, setOrg] = useState('');
 
     useEffect(() => {
         Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${props._id}/categories`)
@@ -32,19 +33,30 @@ const WishlistCard = (props) => {
             })
     }, [props]);
 
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'IDR',
-    });
+    useEffect(() => {
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/organizer/${props.eventOrganizer}`)
+            .then(result => {
 
-    const totalPrice = formatter.format(price);
+                setOrg(result.data.organizer)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [])
+
+    // const formatter = new Intl.NumberFormat('en-US', {
+    //     style: 'currency',
+    //     currency: 'IDR',
+    // });
+
+    // const totalPrice = formatter.format(price);
     return (
         <Col col='4' className='col-4 pb-3 d-flex justify-content-start align-items-start'>
             <Card className='created-event-card text-start shadow' onClick={() => history.push(`/event/${props._id}`)}>
                 <Card.Header className='event-card-header d-flex'>
-                    <Image src={EventImg} className='event-card-promotor-image rounded-circle me-2' alt='promotor-img' />
+                    <Image src={`${process.env.REACT_APP_API_URL}/${org.organizerLogo}`} className='event-card-promotor-image rounded-circle me-2' alt='promotor-img' />
                     <div className=''>
-                        {props.eventOrganizer}
+                        {org.organizerName}
                     </div>
                 </Card.Header>
                 <Card.Img className='created-event-card-image' variant="top" src={props.eventLogo} alt='event' />
@@ -54,7 +66,7 @@ const WishlistCard = (props) => {
                         <Col className='col-10'>
                             <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
                             <Card.Text className='event-card-price pt-0'>
-                                {totalPrice}
+                                ETH {price}
                             </Card.Text>
 
                         </Col>
