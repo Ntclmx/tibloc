@@ -63,13 +63,16 @@ const getEtheriumContract = async () => {
   const structuredNfts = (nfts) => {
     return nfts
       .map((nft) => ({
-        id: Number(nft.id),
+        tokenId: Number(nft.tokenId),
         holderOf: nft.holderOf.toLowerCase(),
         salesPrice: window.web3.utils.fromWei(nft.salesPrice),
         title: nft.title,
         description: nft.description,
         tokenURI: nft.tokenURI,
         timestamp: nft.timestamp,
+        isUsed: nft.isUsed,
+        eventCategoryId: nft.eventCategoryId,
+        eventDate: nft.eventDate
       }))
       .reverse()
   }
@@ -77,7 +80,8 @@ const getEtheriumContract = async () => {
   const getAllNFTs = async () => {
     try {
       if (!ethereum) return alert('Please install Metamask')
-  
+
+      await isWallectConnected()
       const contract = await getEtheriumContract()
       const nfts = await contract.methods.getAllNFTs().call()
     //   const transactions = await contract.methods.getAllTransactions().call()
@@ -88,16 +92,49 @@ const getEtheriumContract = async () => {
       reportError(error)
     }
   }
+
+  const getAllNftsOwnedBy = async () => {
+    try{
+      if(!ethereum) return alert('Please install Metamask')
+      
+      await getAllNFTs()
+
+      const account = getGlobalState('connectedAccount')
+      const nfts = getGlobalState('nfts');
+      let nftsOwned = [];
+      for(const nft of nfts){
+        if(nft.holderOf === account) nftsOwned.push(nft)
+      }
+      setGlobalState('nftsOwned', nftsOwned);
+    } catch (error){
+      reportError(error)
+    }
+  }
+
+  const isOwned = async (eventCategoryId) => {
+    try{
+      if(!ethereum) return alert('Please install Metamask')
+      await getAllNftsOwnedBy()
+      const nftsOwned = getGlobalState('nftsOwned')
+      for(const nft of nftsOwned){
+        if(nft.eventCategoryId === eventCategoryId) return nft.tokenId
+      }
+    } catch (error) {
+      reportError(error);
+      return -1;
+    }
+    return -1
+  }
   
-  const mintNFT = async ({ title, description, metadataURI, price }) => {
+  const mintNFT = async ({ title, description, tokenURI, salesPrice, eventCategoryId, eventDate }) => {
     try {
-      price = window.web3.utils.toWei(price.toString(), 'ether')
+      salesPrice = window.web3.utils.toWei(salesPrice.toString(), 'ether')
       const contract = await getEtheriumContract()
       const account = getGlobalState('connectedAccount')
-      const mintPrice = window.web3.utils.toWei('0.001', 'ether')
+      const mintPrice = window.web3.utils.toWei(salesPrice + 0.001, 'ether')
   
       await contract.methods
-        .payToMint(title, description, metadataURI, price)
+        .payToMint(title, description, tokenURI, salesPrice, eventCategoryId, eventDate)
         .send({ from: account, value: mintPrice })
   
       return true
@@ -134,15 +171,21 @@ const getEtheriumContract = async () => {
     }
   }
 
-  const updateFlag = async ({id}) => {
+  const updateFlag = async (eventCategoryId) => {
     try {
+      if(!ethereum) return alert('Please install Metamask')
+      const tokenId = await isOwned(eventCategoryId)
+      if (tokenId === -1) return false
       const contract = await getEtheriumContract()
       const buyer = getGlobalState('connectedAccount')
 
-      await contract.methods.flagUsed(id).send({from: buyer})
+      await contract.methods.flagUsed(tokenId).send({from: buyer})
     }catch(error){
       reportError(error)
+      return false
     }
+
+    return true
   }
   
   const reportError = (error) => {

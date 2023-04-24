@@ -33,7 +33,7 @@ contract TiblocNFT is ERC721URIStorage, Ownable {
         uint256 tokenId,
         address indexed owner,
         uint256 cost,
-        string metadataURI,
+        string tokenURI,
         uint256 timestamp
     );
 

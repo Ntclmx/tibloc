@@ -10,7 +10,7 @@ const CategoryCard = (props) => {
 
     if (choose === true)
     {
-        if (props.chooseCategory !== props.categoryName)
+        if (props.chooseCategory !== props.detailCat.categoryName)
         {
             setChoose(false);
         }
@@ -20,12 +20,16 @@ const CategoryCard = (props) => {
     const chooseTicketFunc = () => {
         if (choose === false) {
             
-            props.showNum(props.categoryName, props.categoryPrice, props._id)
+            props.showNum(props.detailCat)
             setChoose(true);
             
         } else {
             
-            props.showNum("-", 0)
+            const tempShow = {
+                categoryName : "-",
+                categoryPrice : 0
+            };
+            props.showNum(tempShow)
             setChoose(false);
         }
     };
@@ -42,12 +46,12 @@ const CategoryCard = (props) => {
     return (
         <Card className='catCard text-start mb-3'>
             <Card.Header className='catCardHeader d-flex'>
-                <Card.Title className=' pb-0 mb-0'>{props.categoryName}</Card.Title>
-                <Card.Title className='ms-auto'>ETH {props.categoryPrice}</Card.Title>
+                <Card.Title className=' pb-0 mb-0'>{props.detailCat.categoryName}</Card.Title>
+                <Card.Title className='ms-auto'>ETH {props.detailCat.categoryPrice}</Card.Title>
             </Card.Header>
             <Card.Body className='d-flex p-0'>
                 <Card.Text className='muted catCardBodyText pt-2 mt-1 ms-3'>
-                    Tickets Left - {props.categoryStock}
+                    Tickets Left - {props.detailCat.categoryStock}
                 </Card.Text>
                 <div className='d-flex ms-auto'>
                     <div className='d-flex justify-content-center align-items-center me-3'>

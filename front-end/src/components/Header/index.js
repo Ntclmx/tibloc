@@ -20,6 +20,11 @@ import { QrReader } from 'react-qr-reader';
 import Axios from 'axios';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
+import {
+  setAlert,
+  setGlobalState
+} from "../../config/Store/index";
+import { isWallectConnected, getAllNFTs, updateFlag} from "../../config/Blockchain.Service";
 
 const Header = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -48,6 +53,7 @@ const Header = () => {
 
         const account = await ethereum.request({ method: 'eth_requestAccounts' })
         setWeb3User(account[0])
+        setGlobalState('connectedAccount', account[0].toLowerCase())
 
         Axios.get(`${process.env.REACT_APP_API_URL}/v1/admin/address/${account[0]}`)
           .then(result => {
@@ -87,11 +93,11 @@ const Header = () => {
     console.log(error);
   }
 
-  const handleScan = (result) => {
+  const handleScan = async (result) => {
     if (result) {
       console.log('result', result);
       setScanResult(result);
-
+      await updateFlag();
     }
   }
 
@@ -127,6 +133,21 @@ const Header = () => {
 
 
   }
+
+  const updateFlag = async () => {
+
+    try {
+      if(await updateFlag(scanResult)){
+        setAlert('Scan Succeed!', 'green')
+      } else {
+        setAlert('Scan Failed!', 'red')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  
+  }
+
   const textProfile = web3User === '' ? 'Connect Wallet' : `${web3User.substr(0, 5)}...${web3User.substr(-5)}`
 
   const buttonPlus = isAdmin ? <><a href="/create-event/events" className="ms-auto"><div ><Image src={Plus} className=" header-icon"></Image></div></a><a href="/transactions"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a></> : <a href="/transactions" className="ms-auto"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a>

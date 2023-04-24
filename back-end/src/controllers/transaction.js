@@ -342,7 +342,7 @@ exports.updateStock = (req, res, next) => {
 
             const response = {
                 message: 'Update Stock Success',
-                event: result
+                category: result
             };
 
             res.status(200).json(response);
