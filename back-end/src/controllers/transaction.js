@@ -281,30 +281,74 @@ exports.randomFunction = (req, res, next) => {
     res.status(200).json(result)
 }
 
-const randomNFT = async (categoryId) => {
+exports.randomNFT = async (req, res, next) => {
+
+
+    const categoryId = req.params.categoryId;
     const randomNum = Math.floor(Math.random() * 100) + 1;
-    console.log('random',randomNum);
+    console.log('random', randomNum);
 
     await Nft.find({ categoryId: categoryId })
         .then(results => {
 
             let minNum = 0;
-            let selectedID = '';
             for (const result of results) {
 
-                if (randomNum > minNum && randomNum <= result.nftProbability) {
-                    selectedID = result._id;
-                    break;
+                console.log(minNum, result.nftProbability)
+                if (randomNum > minNum && randomNum <= minNum + result.nftProbability) {
+
+
+                    const response = {
+                        message: 'Get Random NFT Success',
+                        nft: result,
+
+                    };
+
+                    return res.status(200).json(response);
                 }
                 else {
-                    minNum = result.nftProbability;
+                    minNum = minNum +result.nftProbability;
                 }
             }
 
-            console.log('selected', selectedID)
+            const response = {
+                message: 'Error',
+            };
+
+            return res.status(200).json(response);
         })
         .catch(err => {
             console.log(err);
         })
-    return
 }
+
+
+exports.updateStock = (req, res, next) => {
+    const categoryId = req.params.categoryId;
+    Category.findById(categoryId)
+        .then(result => {
+            if (!result) {
+                const error = new Error('Category not found');
+                error.errorStatus = 404;
+                throw error;
+            }
+
+            const minStock = result.categoryStock - 1
+            result.categoryStock = minStock;
+
+            return result.save();
+        })
+        .then(result => {
+
+            const response = {
+                message: 'Update Stock Success',
+                event: result
+            };
+
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            console.log('err: ', err);
+        })
+}
+

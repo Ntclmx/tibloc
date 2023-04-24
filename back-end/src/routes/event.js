@@ -64,7 +64,9 @@ router.get('/transaction/:transactionId', transactionController.getTransaction);
 
 router.get('/transactions/user/:userId', transactionController.getTransactionFromUser);
 
-router.get('/random', transactionController.randomFunction);
+router.get('/category/:categoryId/nft', transactionController.randomNFT);
+
+router.put('/category/:categoryId/stock', transactionController.updateStock);
 
 router.post('/transaction', transactionController.postTransaction);
 
