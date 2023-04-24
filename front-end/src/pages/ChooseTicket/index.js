@@ -81,10 +81,10 @@ const ChooseTicket = (props) => {
     try {
       //convert date to seconds format
       const eventDate = Math.floor(
-        Date.parse(event.eventDate).getTime() / 1000
+        new Date(event.eventDate).getTime()/1000
       );
 
-      //get Randomized IPFS (NFT Object)
+      // get Randomized IPFS (NFT Object)
       let randomizedIPFS = "";
       Axios.get(
         `${process.env.REACT_APP_API_URL}/v1/category/${selCat._id}/nft`
