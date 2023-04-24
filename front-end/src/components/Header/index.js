@@ -11,25 +11,29 @@ import CalendarWeek from '../../assets/header/cal1.png';
 import Bookmark from '../../assets/header/bookmark.png';
 import Plus from '../../assets/events/plus.png';
 import Scan from '../../assets/header/scan.png';
+import Trans from '../../assets/header/trans.png';
 import Profile from '../../assets/header/profile.png';
 import { Search } from 'react-bootstrap-icons';
 import Web3 from "web3";
 import { UserContext } from '../../pages/MainApp/index';
 import { QrReader } from 'react-qr-reader';
 import Axios from 'axios';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 
 const Header = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const { ethereum } = window;
   const [showQR, setShowQR] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toast, settToast] = useState(<></>);
   const [scanResult, setScanResult] = useState(false);
-
   const handleShowQr = () => setShowQR(true);
   const handleHideQr = () => setShowQR(false);
 
   window.web3 = new Web3(ethereum);
 
-  console.log('web3', window.web3)
+  // console.log('web3', window.web3)
 
   const { web3User, setWeb3User } = useContext(UserContext);
 
@@ -37,12 +41,15 @@ const Header = () => {
     async function connectWallet() {
       console.log('Connecting');
       try {
-        if (!ethereum) console.log('please install metamask')
+        if (!ethereum) {
+          console.log('please install metamask')
+          setShowToast(true)
+        }
 
         const account = await ethereum.request({ method: 'eth_requestAccounts' })
         setWeb3User(account[0])
 
-        Axios.get(`http://127.0.0.1:4000/v1/admin/address/${account[0]}`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/admin/address/${account[0]}`)
           .then(result => {
 
             if (result.status === 200) {
@@ -88,9 +95,41 @@ const Header = () => {
     }
   }
 
+  const handleClick = async () => {
+    console.log('Click Connecting');
+
+    try {
+      if (!ethereum) {
+        console.log('please install metamask')
+        setShowToast(true)
+      }
+
+      console.log(ethereum.selectedAddress);
+      const account = await ethereum.request({ method: 'eth_requestAccounts' })
+      setWeb3User(account[0])
+
+      Axios.get(`${process.env.REACT_APP_API_URL}/v1/admin/address/${account[0]}`)
+        .then(result => {
+
+          if (result.status === 200) {
+            setIsAdmin(true);
+          }
+
+
+        })
+        .catch(err => {
+          console.log(err);
+        })
+
+    } catch (error) {
+      console.log(error);
+    }
+
+
+  }
   const textProfile = web3User === '' ? 'Connect Wallet' : `${web3User.substr(0, 5)}...${web3User.substr(-5)}`
 
-  const buttonPlus = isAdmin ? <><a href="http://tibloc-nft.com/create-event/events" className="ms-auto"><div ><Image src={Plus} className=" header-icon"></Image></div></a><a href="/transactions"><div className="ms-3"><Image src={CalendarWeek} className=" header-icon"></Image></div></a></> : <a href="/transactions" className="ms-auto"><div className="ms-3"><Image src={CalendarWeek} className=" header-icon"></Image></div></a>
+  const buttonPlus = isAdmin ? <><a href="/create-event/events" className="ms-auto"><div ><Image src={Plus} className=" header-icon"></Image></div></a><a href="/transactions"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a></> : <a href="/transactions" className="ms-auto"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a>
 
 
   return (
@@ -107,6 +146,15 @@ const Header = () => {
         />
         {`Result: ${scanResult}`}
       </Modal>
+      <ToastContainer className="p-3 position-fixed" position={'top-end'} >
+        <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000}>
+          <Toast.Header>
+
+            <strong className="me-auto">Alert</strong>
+          </Toast.Header>
+          <Toast.Body>You haven't installed Metamask in your browser yet, click here for the guide</Toast.Body>
+        </Toast>
+      </ToastContainer>
       <Navbar expand="lg" className='header-top'>
         <Container fluid className='my-2 justify-content-start'>
           <Navbar.Brand href="http://tibloc-nft.com" className="navbar-brand text-light fw-bold text-uppercase px-2 header-logo">TIBLOC.</Navbar.Brand>
@@ -128,7 +176,7 @@ const Header = () => {
 
 
 
-          <Button className='ms-4 profileButton '>
+          <Button className='ms-4 profileButton ' onClick={handleClick}>
             <Image src={Profile} className=" header-icon-profile mb-1 me-3"></Image>
             {textProfile}
           </Button>

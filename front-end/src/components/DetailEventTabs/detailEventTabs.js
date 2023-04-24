@@ -45,6 +45,7 @@ function a11yProps(index) {
 const DetailEventTabs = (props) => {
     const [value, setValue] = React.useState(0);
     const [nfts, setNfts] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -54,14 +55,15 @@ const DetailEventTabs = (props) => {
         const id = props.match.params.id;
         console.log(id);
 
-        Axios.get(`http://127.0.0.1:4000/v1/event/${id}/categories`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${id}/categories`)
             .then(async result => {
-                console.log(result.data.categories);
+                console.log('categories', result.data.categories);
+                setCategories(result.data.categories)
                 let arrNfts = [];
                 for (const category of result.data.categories) {
                     const categoryId = category._id;
                     try {
-                        const nfts = await Axios.get(`http://127.0.0.1:4000/v1/nfts/category/${categoryId}`);
+                        const nfts = await Axios.get(`${process.env.REACT_APP_API_URL}/v1/nfts/category/${categoryId}`);
 
                         arrNfts = arrNfts.concat(nfts.data.Nft);
                     }
@@ -82,8 +84,6 @@ const DetailEventTabs = (props) => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label="Description" {...a11yProps(0)} />
-                    <Tab label="Timeline" {...a11yProps(1)} />
-                    <Tab label="Seat Plan" {...a11yProps(2)} />
                     <Tab label="Collectibles" {...a11yProps(2)} />
                     <Tab label="Terms and Conditions" {...a11yProps(3)} />
                 </Tabs>
@@ -92,19 +92,32 @@ const DetailEventTabs = (props) => {
                 <p>{props.eventDescription}</p>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                Item Three
-            </TabPanel>
-            <TabPanel value={value} index={3}>
                 <Row>
-                    {nfts.map(nft => {
-                        return <Image className='col-3 mb-2 nftImagePreview' src={`http://127.0.0.1:4000/${nft.nftImage}`}></Image>
-                    })}
+                    {
+                        categories.map(category => {
+                            return <>
+                                <p className='text-secondary'>{category.categoryName}</p>
+                                {nfts.map(nft => {
+
+                                    if (nft.categoryId === category._id) {
+
+                                        return <div className='col-3 mb-2'><Image className=' nftImagePreview' src={`${process.env.REACT_APP_API_URL}/${nft.nftImage}`} alt='nft'></Image></div>
+                                    }
+
+                                    return <></>
+                                })}
+
+                            </>
+
+
+                        })
+                    }
+                    {/* {nfts.map(nft => {
+                        return <Image className='col-3 mb-2 nftImagePreview' src={`${process.env.REACT_APP_API_URL}/${nft.nftImage}`}></Image>
+                    })} */}
                 </Row>
             </TabPanel>
-            <TabPanel value={value} index={4}>
+            <TabPanel value={value} index={2}>
                 {props.eventTnc}
             </TabPanel>
         </Box>

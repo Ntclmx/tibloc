@@ -5,13 +5,13 @@ import EventImg from '../../assets/events/event1.jpg'
 
 const BasicCard = (props) => {
   return (
-    <Col className="col-3">
+    <Col className="col-3 mb-3">
       <Card>
       <Card.Img variant="top" src={EventImg} alt={props.alt} />
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
         <Card.Text>
-          {props.text}
+          {props.date}
         </Card.Text>
       </Card.Body>
     </Card>

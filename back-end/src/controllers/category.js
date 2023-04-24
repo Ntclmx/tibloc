@@ -56,6 +56,29 @@ exports.getCategory = (req, res, next) => {
         })
 }
 
+exports.getQRCode = (req, res, next) => {
+    const categoryId = req.params.categoryId;
+    Category.findById(categoryId)
+        .then(result => {
+            if (!result) {
+                const error = new Error('Category not found');
+                error.errorStatus = 404;
+                throw error;
+            }
+
+            console.log(result.qrPath);
+            // const response = {
+            //     message: 'Get Category Success',
+            //     category: result
+            // };
+
+            res.download(result.qrPath);
+        })
+        .catch(err => {
+            next(err);
+        })
+}
+
 exports.getCategoryFromEvent = (req, res, next) => {
     const currPage = req.query.page || 1;
     const perPage = req.query.perPage || 12;
@@ -193,9 +216,10 @@ exports.postCategory = async (req, res, next) => {
 
                 arrResult.push(response);
                 idNow = result._id;
+                catName = result.categoryName;
                 idNow = idNow.toString();
 
-                let dirFile = generateQr(idNow);
+                let dirFile = generateQr(idNow, catName);
 
                 Category.findById(idNow)
                 .then(result => {
@@ -250,12 +274,13 @@ exports.generateQrTemp = (req, res, next) => {
     res.status(200).json(result)
 }
 
-const generateQr = (idCategory) => {
+const generateQr = (idCategory, catName) => {
     
-    const dirFile = `public/qr/${idCategory}.png`
+    const dirFile = `public/qr/${catName}.png`
     qr.toFile(dirFile, idCategory, function (err) {
         if(err) return console.error(err);
     })
 
     return dirFile
 };
+

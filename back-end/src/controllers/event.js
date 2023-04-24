@@ -83,7 +83,11 @@ exports.updateEvent = (req, res, next) => {
 
   let eventLogo = null;
   if (req.files) {
-    eventLogo = req.files[0].path;
+    try {
+      eventLogo = req.files[0].path;
+    } catch {
+      eventLogo = null
+    }
   }
 
   const eventTitle = req.body.eventTitle;
@@ -92,6 +96,9 @@ exports.updateEvent = (req, res, next) => {
   const eventAddress = req.body.eventAddress;
   const eventDate = req.body.eventDate;
   const eventId = req.params.eventId;
+  const eventOrganizer = req.body.eventOrganizer;
+  const eventTime = req.body.eventTime;
+  const eventCategory = req.body.eventCategory;
 
   Event.findById(eventId)
     .then(result => {
@@ -128,7 +135,7 @@ exports.updateEvent = (req, res, next) => {
       next(err);
     })
 
-  res.status(200).json(response);
+  // res.status(200).json(response);
 
 }
 

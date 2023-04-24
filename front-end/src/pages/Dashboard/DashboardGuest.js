@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 // import { getMe } from "../../features/authSlice";
 import CarouselImage1 from '../../assets/carousel/Home1.png';
 // import { UserContext } from '../MainApp/index'
+import Image from 'react-bootstrap/Image';
 
 const DashboardGuest = () => {
   // const dispatch = useDispatch();
@@ -40,15 +41,15 @@ const DashboardGuest = () => {
       <CarouselTibloc/>
       <h1 className="mt-5 mb-2 d-flex justify-content-center align-items-center dashboardTextBold">CATEGORY</h1>
       <ListCategory/>
-      <div className="my-5 d-flex justify-content-center align-items-center">
+      <div className="my-5 px-5 d-flex justify-content-center align-items-center">
         <Button variant="primary" size="lg" onClick={toEvent}>
           More...
         </Button>{' '}
       </div>
-      <div className="m-5  d-flex justify-content-center align-items-center">
-        <img src={CarouselImage1} alt="banner" className="dashboardImageBanner px-1"/>
+      <div className="d-flex justify-content-center align-items-center">
+        <Image src={CarouselImage1} alt="banner" className="dashboardImageBanner"/>
       </div>
-      <h1 className="mt-5 mb-2 dashboardTextBold">Learn More</h1>
+      
       <ArticleCard />      
     </div>
   );

@@ -27,17 +27,17 @@ const DetailTransaction = (props) => {
     useEffect(() => {
         const id = props.match.params.id;
 
-        Axios.get(`http://127.0.0.1:4000/v1/transaction/${id}`)
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/transaction/${id}`)
             .then(result => {
                 setTrx(result.data.transaction);
 
                 const catId = result.data.transaction.categoryId;
-                Axios.get(`http://127.0.0.1:4000/v1/category/${catId}`)
+                Axios.get(`${process.env.REACT_APP_API_URL}/v1/category/${catId}`)
                     .then(result => {
                         setCat(result.data.category);
 
                         const eventId = result.data.category.eventId;
-                        Axios.get(`http://127.0.0.1:4000/v1/event/${eventId}`)
+                        Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}`)
                             .then(result => {
                                 setEvent(result.data.event);
                             })
@@ -145,7 +145,7 @@ const DetailTransaction = (props) => {
 
                                 </div>
                                 <div className='justify-content-center mb-3'>
-                                    <Image src={`http://localhost:4000/${event.eventLogo}`} className='detailTrxImg'></Image>
+                                    <Image src={`${process.env.REACT_APP_API_URL}/${event.eventLogo}`} className='detailTrxImg'></Image>
                                 </div>
                                 <Row >
                                     <h4>{event.eventTitle}</h4>

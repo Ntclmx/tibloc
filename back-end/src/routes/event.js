@@ -9,8 +9,8 @@ const transactionController = require('../controllers/transaction');
 const paymentTypeController = require('../controllers/paymentType');
 const nftController = require('../controllers/nft');
 const adminController = require('../controllers/admin');
+const organizerController = require('../controllers/organizer');
 
-const {verifyToken} = require("../middleware/AuthUser");
 
 // event
 router.post('/event', [
@@ -33,6 +33,8 @@ router.post('/categories', categoryController.postCategory);
 router.get('/categories', categoryController.getAllCategories);
 
 router.get('/category/:categoryId', categoryController.getCategory);
+
+router.get('/category/:categoryId/qr', categoryController.getQRCode);
 
 router.get('/event/:eventId/categories', categoryController.getCategoryFromEvent);
 
@@ -74,6 +76,13 @@ router.get('/paymentType', paymentTypeController.getAllPaymentTypes);
 router.get('/paymentType/:paymentTypeId', paymentTypeController.getPaymentType);
 
 router.post('/paymentType', paymentTypeController.postPaymentType);
+
+// organizer
+router.get('/organizers', organizerController.getAllOrganizers);
+
+router.get('/organizer/:organizerId', organizerController.getOrganizer);
+
+router.post('/organizer', organizerController.postOrganizer);
 
 // nft
 router.get('/nfts', nftController.getAllNfts);

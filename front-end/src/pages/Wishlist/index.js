@@ -12,7 +12,7 @@ const Wishlist = () => {
 
     const userId = web3User;
 
-    Axios.get(`http://127.0.0.1:4000/v1/wishlists/user/${userId}`)
+    Axios.get(`${process.env.REACT_APP_API_URL}/v1/wishlists/user/${userId}`)
       .then(async (result) => {
         const wishlists = result.data.wishlists;
         let arrEvents = [];
@@ -22,7 +22,7 @@ const Wishlist = () => {
 
           try {
             const event = await Axios.get(
-              `http://127.0.0.1:4000/v1/event/${eventId}`
+              `${process.env.REACT_APP_API_URL}/v1/event/${eventId}`
             );
             console.log(event.data.event);
 
@@ -52,7 +52,7 @@ const Wishlist = () => {
                   {events.map(event => {
                     return <WishlistCard
                       key={event._id}
-                      eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}
+                      eventLogo={`${process.env.REACT_APP_API_URL}/${event.eventLogo}`}
                       eventTitle={event.eventTitle}
                       eventDate={event.eventDate}
                       _id={event._id}

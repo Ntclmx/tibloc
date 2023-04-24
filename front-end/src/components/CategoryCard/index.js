@@ -33,17 +33,17 @@ const CategoryCard = (props) => {
     const Component = choose ? <Image src={Minus} onClick={chooseTicketFunc} className='chooseTicketIcon'></Image> : <Image src={Plus} onClick={chooseTicketFunc} className='chooseTicketIcon'></Image> ;
 
 
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'IDR',
-    });
+    // const formatter = new Intl.NumberFormat('en-US', {
+    //     style: 'currency',
+    //     currency: 'IDR',
+    // });
 
-    const catPrice = formatter.format(props.categoryPrice);
+    // const catPrice = formatter.format(props.categoryPrice);
     return (
         <Card className='catCard text-start mb-3'>
             <Card.Header className='catCardHeader d-flex'>
                 <Card.Title className=' pb-0 mb-0'>{props.categoryName}</Card.Title>
-                <Card.Title className='ms-auto'>{catPrice}</Card.Title>
+                <Card.Title className='ms-auto'>ETH {props.categoryPrice}</Card.Title>
             </Card.Header>
             <Card.Body className='d-flex p-0'>
                 <Card.Text className='muted catCardBodyText pt-2 mt-1 ms-3'>

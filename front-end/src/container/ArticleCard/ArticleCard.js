@@ -5,34 +5,39 @@ import Row from "react-bootstrap/esm/Row";
 
 
 const ArticleCard = () => {
-  const [events, setEvents] = useState([]);
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://127.0.0.1:4000/v1/events")
+    Axios.get(`${process.env.REACT_APP_API_URL}/v1/Faqs`)
       .then((result) => {
         const responseAPI = result.data;
-        setEvents(responseAPI.events);
+        setArticles(responseAPI.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  // console.log(events)
   //d-flex flex-row flex-nowrap overflow-auto
 
   return (
-    <Row className="d-flex flex-row flex-nowrap overflow-auto">
-      {events.map((event) => {
-        return (
-          <BasicCard
-            img={`http://127.0.0.1:4000/${event.eventLogo}`}
-            title={event.eventTitle}
-            text={event.eventDate}
-            alt="alt aja"
-          />
-        );
-      })}
-    </Row>
+    <div className="mx-5 px-5">
+      <h1 className="mt-5 mb-2 dashboardTextBold">Learn More</h1>
+      <Row className="d-flex flex-row flex-nowrap overflow-auto ">
+        {articles.map((article) => {
+          return (
+            <BasicCard
+              img={`${process.env.REACT_APP_API_URL}/${article.eventLogo}`}
+              title={article.question}
+              date={article.createdAt}
+              id={article._id}
+              alt="alt aja"
+            />
+          );
+        })}
+      </Row>
+    </div>
   );
 };
 

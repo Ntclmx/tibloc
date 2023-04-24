@@ -8,7 +8,7 @@ const ListCreatedEvents = () => {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        Axios.get('http://127.0.0.1:4000/v1/events')
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/events`)
             .then(result => {
                 const responseAPI = result.data;
                 setEvents(responseAPI.events);
@@ -29,7 +29,7 @@ const ListCreatedEvents = () => {
                         console.log(typeof (event));
                         return <CreatedEventCard
                             key={event._id}
-                            eventLogo={`http://127.0.0.1:4000/${event.eventLogo}`}
+                            eventLogo={`${process.env.REACT_APP_API_URL}/${event.eventLogo}`}
                             eventTitle={event.eventTitle}
                             eventDate={event.eventDate}
                             _id={event._id}

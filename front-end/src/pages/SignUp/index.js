@@ -25,7 +25,7 @@ const SignUp = () => {
 
     const type = 'C'
     try {
-      await axios.post("http://localhost:4000/v1/users", {
+      await axios.post(`${process.env.REACT_APP_API_URL}/v1/users`, {
         name, email, password, confPassword, type
       });
       history.push("/dashboard-guest");

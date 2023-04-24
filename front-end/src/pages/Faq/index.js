@@ -6,7 +6,7 @@ import AnswerCard from "../../components/AnswerCard";
 const Faq = () => {
     const [dataFaq, setDataFaq] = useState([]);
     useEffect(() => {
-        Axios.get('http://localhost:4000/v1/faqs')
+        Axios.get(`${process.env.REACT_APP_API_URL}/v1/faqs`)
         .then(result => {
             console.log('data API', result.data);
             const responAPI = result.data;
@@ -31,8 +31,8 @@ const Faq = () => {
                     })
                 }   
             </nav>   
-
-            <div class="col-sm-9" data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
+            <div className="col-sm-3"></div>
+            <div class="ms-3 col-sm-8" data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
                 {
                     dataFaq.map(faq => {
                         return <AnswerCard 
