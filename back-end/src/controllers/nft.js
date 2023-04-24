@@ -111,7 +111,7 @@ exports.postNft = async (req, res, next) => {
       console.log(`loop index ${index}`);
       console.log(file);
       
-      for (let i = 1; i < 3; i++) {
+      for (let i = 1; i <= 3; i++) {
         if (file.fieldname.includes(`nft${i}[${index}]`)) {
           console.log(`Store NFT ${file.fieldname}`)
           const nftImagePath = file.path;
@@ -137,7 +137,7 @@ exports.postNft = async (req, res, next) => {
           // }, []);
 
           const insertNFT = new Nft({
-            categoryId: cat.categoryId,
+            categoryId: cat._id,
             nftImageURL: metadata.url,
             nftImageHttps: nftImage,
             nftProbability: nftProb,

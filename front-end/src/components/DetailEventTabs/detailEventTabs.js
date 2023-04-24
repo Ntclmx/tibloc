@@ -101,7 +101,7 @@ const DetailEventTabs = (props) => {
 
                                     if (nft.categoryId === category._id) {
 
-                                        return <div className='col-3 mb-2'><Image className=' nftImagePreview' src={`${process.env.REACT_APP_API_URL}/${nft.nftImage}`} alt='nft'></Image></div>
+                                        return <div className='col-3 mb-2'><Image className=' nftImagePreview' src={`${nft.nftImageHttps}`} alt='nft'></Image></div>
                                     }
 
                                     return <></>
