@@ -8,7 +8,7 @@ module.exports = async function({getNamedAccounts, deployments}){
     const {deployer} = await getNamedAccounts()
 
     log("=======================")
-    const args = ["Tibloc NFT", "TIB",10,deployer]
+    const args = ["Tibloc NFT","TIB", 0, deployer]
     const tiblocNft = await deploy("TiblocNFT", {
         from: deployer,
         args: args,

@@ -2,8 +2,9 @@
 pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-//import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 error PriceNotMet(address nftAddress, uint256 tokenId, uint256 price);
 error ItemNotForSale(address nftAddress, uint256 tokenId);
@@ -16,13 +17,15 @@ error PriceMustBeAboveZero();
 
 //tibloc is not an NFT marketplace, so users are free to choose what platform to list or sell their NFT
 //our contract is only to mint the NFT
-contract TiblocNFT is ERC721, Ownable {
+contract TiblocNFT is ERC721URIStorage, Ownable {
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
+
     using Strings for uint256;
     mapping(string => uint8) existingURIs;
     mapping(uint256 => address) public holderOf;
 
     address public contractOwner;
-    uint256 public i_tokenId = 0;
     uint256 public totalTx = 0;
     uint256 public adminCost = 0.001 ether;
     
@@ -73,7 +76,8 @@ contract TiblocNFT is ERC721, Ownable {
 
         payTo(contractOwner, msg.value);
 
-        i_tokenId++;
+        _tokenIds.increment();
+        uint256 i_tokenId = _tokenIds.current();
 
         minted.push(
             TransactionStruct(
@@ -99,6 +103,7 @@ contract TiblocNFT is ERC721, Ownable {
         );
 
         _safeMint(msg.sender, i_tokenId);
+        _setTokenURI(i_tokenId, tokenURI);
         existingURIs[tokenURI] = 1;
         holderOf[i_tokenId] = msg.sender;
     }

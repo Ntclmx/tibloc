@@ -5,6 +5,11 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 const cors = require("cors");
+const eventRoutes = require('./src/routes/event');
+const faqRoutes = require('./src/routes/faq');
+const authRoutes = require('./src/routes/auth');
+const userRoutes = require('./src/routes/user');
+// const cookieParser = require("cookie-parser");
 // const session = require("express-session");
 // const MongoStore = require('connect-mongo');
 // const sessionStore = require("connect-mongoose-session-store")(express);
@@ -14,12 +19,6 @@ const cors = require("cors");
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
-
-const eventRoutes = require('./src/routes/event');
-const faqRoutes = require('./src/routes/faq');
-const authRoutes = require('./src/routes/auth');
-const userRoutes = require('./src/routes/user');
-const cookieParser = require("cookie-parser");
 // import SequelizeStore from "connect-session-sequelize";
 console.log("Start Routing1");
 const app = express();

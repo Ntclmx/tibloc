@@ -1,4 +1,14 @@
 import Routes from "./Routes";
-import { store } from "./Store";
+import { useGlobalState,
+    setGlobalState,
+    getGlobalState,
+    setAlert,
+    setLoadingMsg,
+    truncate } from "./Store";
 
-export {Routes, store};
+export {Routes, useGlobalState,
+    setGlobalState,
+    getGlobalState,
+    setAlert,
+    setLoadingMsg,
+    truncate};

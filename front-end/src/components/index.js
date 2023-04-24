@@ -15,7 +15,6 @@ import WishlistCard from "./WishlistCard";
 import PaymentTypeCard from "./PaymentTypeCard";
 import TransactionCard from "./TransactionCard";
 import ThirdPartyLogin from "./Auth/auth";
-import UploadNFT from "./NFTs/UploadNFT.mjs";
 
-export { TransactionCard ,PaymentTypeCard, WishlistCard, CreatedEventCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs, ThirdPartyLogin, UploadNFT };
+export { TransactionCard ,PaymentTypeCard, WishlistCard, CreatedEventCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs, ThirdPartyLogin};
 

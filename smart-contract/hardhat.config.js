@@ -18,7 +18,7 @@ const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ""
 const MUMBAI_RPC_URL = process.env.MUMBAI_RPC_URL || ""
 
 module.exports = {
-    defaultNetwork: "sepolia",
+    defaultNetwork: "mumbai",
     networks: {
         hardhat: {
             chainId: 31337,
