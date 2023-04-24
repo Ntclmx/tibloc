@@ -54,17 +54,17 @@ const ChooseTicket = (props) => {
         
     }
 
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'IDR',
-    });
+    // const formatter = new Intl.NumberFormat('en-US', {
+    //     style: 'currency',
+    //     currency: 'IDR',
+    // });
 
-    const totalPrice = formatter.format(price);
+    // const totalPrice = formatter.format(price);
 
     let button = ''
     if (chooseCategory === '-')
     {
-        button = <div className='mx-1 px-2 mb-3 d-grid'><Button variant="primary" size="lg" disabled >Pay</Button></div>
+        button = <div className='mx-1 px-2 mb-3 d-grid'><Button variant="primary" size="lg" disabled >Mint</Button></div>
     }
     else {
         button = <Link to={{
@@ -76,14 +76,14 @@ const ChooseTicket = (props) => {
             }
         }} className='mx-1 px-2 mb-3 d-grid'>
             <Button variant="primary" size="lg" >
-                Pay
+                Mint
             </Button>
         </Link>
     }
 
     if (categories[0]) {
         return (
-            <div>
+            <div className='minDiv'>
                 <Row className='mb-5'>
                     <Col className='col-7'>
 
@@ -134,7 +134,7 @@ const ChooseTicket = (props) => {
                             <Card.Body className='p-0'>
                                 <Card.Text className='muted pt-2 mt-1 ms-3'>
                                     <p className='paymentCard'>Category  :  {chooseCategory}</p>
-                                    <p className='paymentCard'>Total     :  {totalPrice}</p>
+                                    <p className='paymentCard'>Total     :  {price}</p>
                                 </Card.Text>
                                 <div className='mx-2'>
                                     {button}
