@@ -75,7 +75,7 @@ const ChooseTicket = (props) => {
   // const totalPrice = formatter.format(price);
   const mintFunction = async (e) => {
     e.preventDefault();
-
+    console.log(`Start Process Minting...`)
     if (!idCategory) return;
 
     try {
@@ -83,21 +83,25 @@ const ChooseTicket = (props) => {
       const eventDate = Math.floor(
         new Date(event.eventDate).getTime()/1000
       );
+      console.log(`eventDate: ${eventDate}`)
 
       // get Randomized IPFS (NFT Object)
       let randomizedIPFS = "";
-      Axios.get(
+      await Axios.get(
         `${process.env.REACT_APP_API_URL}/v1/category/${selCat._id}/nft`
       )
         .then((result) => {
-          console.log(result.data.nft);
           randomizedIPFS = result.data.nft;
+          console.log('Randomized IPFS result: ' + randomizedIPFS.nftImageURL);
         })
         .catch((err) => {
           console.log(err);
         });
 
       setLoadingMsg("Initializing transaction...");
+
+      console.log(`Mint NFT...`)
+      console.log(selCat.categoryPrice)
       await mintNFT(
         selCat.categoryName,
         selCat.categoryDescription,
@@ -108,6 +112,7 @@ const ChooseTicket = (props) => {
       );
 
       // update stock
+      console.log(`Start Update Stock...`)
       Axios.put(
         `${process.env.REACT_APP_API_URL}/v1/category/${selCat._id}/stock`
       )
@@ -121,7 +126,7 @@ const ChooseTicket = (props) => {
       setAlert("Minting completed...", "green");
       window.location.reload();
     } catch (error) {
-      console.log("Error uploading file: ", error);
+      console.log("Minting Failed: ", error);
       setAlert("Minting failed...", "red");
     }
   };

@@ -1,21 +1,40 @@
 import Web3 from "web3";
-import abi from '../../src/constants/abi/TiblocNFT.json'
+import abi from '../../src/constants/abi/TiblocNFT.json';
 import { setGlobalState, getGlobalState, setAlert } from "./Store";
+import BigNumber from "bignumber.js";
+import network from '../../src/constants/networkMapping.json';
 
 const {ethereum} = window;
+console.log('Ethereum')
+console.log(ethereum)
 window.web3 = new Web3(ethereum)
 window.web3 = new Web3(window.web3.currentProvider)
 
 const getEtheriumContract = async () => {
+  console.log(`start process getEtheriumContract blockchain service`)
     const connectedAccount = getGlobalState('connectedAccount')
-  
+    console.log(connectedAccount)
+
     if (connectedAccount) {
-      const web3 = window.web3
-      const networkId = await web3.eth.net.getId()
-      const networkData = abi.networks[networkId]
-  
+      console.log(`Account connected!`)
+      console.log(ethereum)
+      console.log(window.web3)
+      console.log(window.web3.eth.net.getId())
+      const web3 = window.web3;
+      const networkId = await web3.eth.net.getId().then(console.log);
+      // console.log('test')
+      // const networkss = network.toString();
+      // console.log(networkss)
+      // const test = JSON.parse(networkss);
+      console.log('haha')
+      // console.log(test)
+      // const networkData = abi.networks[networkId];
+      const networkData = '0x9437Ef7a171fc528114900018f6b7960a00B5977';
+      // console.log(networkData.TiblocNFT)
       if (networkData) {
-        const contract = new web3.eth.Contract(abi.abi, networkData.address)
+        console.log(networkData)
+        const contract = new web3.eth.Contract(abi, networkData)
+        console.log('done getEtheriumContract')
         return contract
       } else {
         return null
@@ -79,14 +98,17 @@ const getEtheriumContract = async () => {
   
   const getAllNFTs = async () => {
     try {
+      console.log('Start get All Nfts')
       if (!ethereum) return alert('Please install Metamask')
 
       await isWallectConnected()
       const contract = await getEtheriumContract()
+      console.log('start call')
       const nfts = await contract.methods.getAllNFTs().call()
     //   const transactions = await contract.methods.getAllTransactions().call()
   
       setGlobalState('nfts', structuredNfts(nfts))
+      console.log('done call')
     //   setGlobalState('transactions', structuredNfts(transactions))
     } catch (error) {
       reportError(error)
@@ -95,6 +117,7 @@ const getEtheriumContract = async () => {
 
   const getAllNftsOwnedBy = async () => {
     try{
+      console.log('Start Get All Nfts Owned')
       if(!ethereum) return alert('Please install Metamask')
       
       await getAllNFTs()
@@ -113,10 +136,13 @@ const getEtheriumContract = async () => {
 
   const isOwned = async (eventCategoryId) => {
     try{
+      console.log(`Start isOwned...`)
       if(!ethereum) return alert('Please install Metamask')
       await getAllNftsOwnedBy()
       const nftsOwned = getGlobalState('nftsOwned')
+      console.log('nftsOwned: ',nftsOwned)
       for(const nft of nftsOwned){
+        console.log(nft.eventCategoryId, eventCategoryId)
         if(nft.eventCategoryId === eventCategoryId) return nft.tokenId
       }
     } catch (error) {
@@ -126,17 +152,31 @@ const getEtheriumContract = async () => {
     return -1
   }
   
-  const mintNFT = async ({ title, description, tokenURI, salesPrice, eventCategoryId, eventDate }) => {
+  const mintNFT = async ( title, description, tokenURI, salesPrice, eventCategoryId, eventDate ) => {
     try {
-      salesPrice = window.web3.utils.toWei(salesPrice.toString(), 'ether')
+      // salesPrice = window.web3.utils.toWei(salesPrice.toString(), 'ether')
+      console.log(`start process mintNFT blockchain service`)
       const contract = await getEtheriumContract()
       const account = getGlobalState('connectedAccount')
-      const mintPrice = window.web3.utils.toWei(salesPrice + 0.001, 'ether')
+      console.log(typeof(salesPrice), salesPrice)
+      console.log(typeof((salesPrice + 0.001).toString()),(salesPrice + 0.001).toString())
+      // console.log(Number((0.001)).toFixed(18))p
+      // console.log(window.web3.BigNumber.from(2.0))
+      console.log('test');
+      // const mintPrice = window.web3.utils.toWei((salesPrice + 0.001).toString(), 'ether');
+      // const tempNum = BigInt(10)
+      // console.log(tempNum.c[0], typeof tempNum.c[0], tempNum)
+      // console.log(typeof 1000000000000000000n)
+      
+      // const price =  (new BigNumber(salesPrice)).c[0] * 1000000000000000000n;
+      const price = 1000000000000000000n;
+      console.log(typeof price)
+      const mintPrice = window.web3.utils.toWei((salesPrice+0.001).toString(), 'ether');
+      console.log(typeof mintPrice)
   
-      await contract.methods
-        .payToMint(title, description, tokenURI, salesPrice, eventCategoryId, eventDate)
-        .send({ from: account, value: mintPrice })
-  
+      await contract.methods.payToMint(title, description, tokenURI, '1', eventCategoryId, eventDate).send({ from: account, value: mintPrice })
+
+      console.log(`done process mintNFT blockchain service`)
       return true
     } catch (error) {
       reportError(error)
@@ -173,8 +213,12 @@ const getEtheriumContract = async () => {
 
   const updateFlag = async (eventCategoryId) => {
     try {
+      console.log('Start Update Flag...')
       if(!ethereum) return alert('Please install Metamask')
+
+      console.log('event cat idddd',eventCategoryId)
       const tokenId = await isOwned(eventCategoryId)
+      console.log('tokenId', tokenId)
       if (tokenId === -1) return false
       const contract = await getEtheriumContract()
       const buyer = getGlobalState('connectedAccount')
@@ -190,6 +234,7 @@ const getEtheriumContract = async () => {
   
   const reportError = (error) => {
     setAlert(JSON.stringify(error), 'red')
+    console.log(error);
     throw new Error('No ethereum object.')
   }
   

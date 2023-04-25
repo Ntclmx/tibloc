@@ -49,7 +49,9 @@ const CreateTickets = (props) => {
     // console.log(event);
     if (eventId) {
       setIsUpdate(true);
-      Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}/categories`)
+      Axios.get(
+        `${process.env.REACT_APP_API_URL}/v1/event/${eventId}/categories`
+      )
         .then((result) => {
           setTicket(result.data.categories);
         })
@@ -89,10 +91,21 @@ const CreateTickets = (props) => {
     setNFT3(values);
   };
 
-  const submitButton = (e) => {
+  const submitButton = async (e) => {
     e.preventDefault();
     const { event } = props;
 
+    const detailOrganize = await Axios.get(
+      `${process.env.REACT_APP_API_URL}/v1/organizer/${event.eventOrganizer}`
+    )
+      .then((res) => {
+        // console.log(res.data);
+        return res.data.organizer;
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+    
     if (isUpdate) {
       const eventId = props.match.params.id;
 
@@ -141,6 +154,7 @@ const CreateTickets = (props) => {
                                 nft1: NFT1,
                                 nft2: NFT2,
                                 nft3: NFT3,
+                                organizer: detailOrganize,
                             }
 
                             Axios.post(`${process.env.REACT_APP_API_URL}/v1/nfts`, allNft, {
@@ -167,7 +181,7 @@ const CreateTickets = (props) => {
         }
 
         history.push('/events');
-    };
+  };
 
   const addCategory = () => {
     setTicket([
@@ -265,120 +279,131 @@ const CreateTickets = (props) => {
 
   // console.log(NFT1, imageNFT1, NFT2, imageNFT2, NFT3, imageNFT3)
 
-    // console.log(NFT1[0].nftImage);
-    return (
-        <div className='mb-5'>
-            <div className='justify-content-center align-items-center text-center'>
-                <h1 className='pt-2 pb-4'>{isUpdate ? 'Update Tickets Category' : 'Create Tickets Category'}</h1>
-            </div>
-            {tickets.map((ticket, index) => (
-                <Card key={index} className='mb-4'>
-                    <Card.Body>
-                        <Form className="input-form px-3 pt-4 pb-3">
-                            <h4 className="mb-3">Category {index + 1}</h4>
-                            <Form.Group as={Row} className="mb-3" controlId="categoryName">
-                                <Form.Label column sm={2}>Name</Form.Label>
-                                <Col sm={10}>
-                                    {
-                                        isUpdate ? (
-                                            <Form.Control
-                                                type="text"
-                                                name="categoryName"
-                                                placeholder="Enter your ticket category name here"
-                                                autoComplete="off"
-                                                value={ticket.categoryName}
-                                                onChange={e => handleChange(index, e)}
-                                                disabled
-                                            />
-                                        ) : (
-                                            <Form.Control
-                                                type="text"
-                                                name="categoryName"
-                                                placeholder="Enter your ticket category name here"
-                                                autoComplete="off"
-                                                value={ticket.categoryName}
-                                                onChange={e => handleChange(index, e)}
-                                            />
+  // console.log(NFT1[0].nftImage);
+  return (
+    <div className="mb-5">
+      <div className="justify-content-center align-items-center text-center">
+        <h1 className="pt-2 pb-4">
+          {isUpdate ? "Update Tickets Category" : "Create Tickets Category"}
+        </h1>
+      </div>
+      {tickets.map((ticket, index) => (
+        <Card key={index} className="mb-4">
+          <Card.Body>
+            <Form className="input-form px-3 pt-4 pb-3">
+              <h4 className="mb-3">Category {index + 1}</h4>
+              <Form.Group as={Row} className="mb-3" controlId="categoryName">
+                <Form.Label column sm={2}>
+                  Name
+                </Form.Label>
+                <Col sm={10}>
+                  {isUpdate ? (
+                    <Form.Control
+                      type="text"
+                      name="categoryName"
+                      placeholder="Enter your ticket category name here"
+                      autoComplete="off"
+                      value={ticket.categoryName}
+                      onChange={(e) => handleChange(index, e)}
+                      disabled
+                    />
+                  ) : (
+                    <Form.Control
+                      type="text"
+                      name="categoryName"
+                      placeholder="Enter your ticket category name here"
+                      autoComplete="off"
+                      value={ticket.categoryName}
+                      onChange={(e) => handleChange(index, e)}
+                    />
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="categoryPrice">
+                <Form.Label column sm={2}>
+                  Price
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    type="text"
+                    name="categoryPrice"
+                    placeholder="Enter your ticket category price here"
+                    autoComplete="off"
+                    value={ticket.categoryPrice}
+                    onChange={(e) => handleChange(index, e)}
+                  />
+                </Col>
+              </Form.Group>
 
-                                        )
-                                    }
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} className="mb-3" controlId="categoryPrice">
-                                <Form.Label column sm={2}>Price</Form.Label>
-                                <Col sm={10}>
-                                    <Form.Control
-                                        type="text"
-                                        name="categoryPrice"
-                                        placeholder="Enter your ticket category price here"
-                                        autoComplete="off"
-                                        value={ticket.categoryPrice}
-                                        onChange={e => handleChange(index, e)}
-                                    />
-                                </Col>
-                            </Form.Group>
-
-                            <Form.Group as={Row} className="mb-3" controlId="categoryDescription" >
-                                <Form.Label column sm={2}>Description</Form.Label>
-                                <Col sm={10}>
-                                    {
-                                        isUpdate ? (
-                                            <Form.Control
-                                                as="textarea"
-                                                name="categoryDescription"
-                                                placeholder="Enter your ticket category description here"
-                                                autoComplete="off"
-                                                value={ticket.categoryDescription}
-                                                onChange={e => handleChange(index, e)}
-                                                rows={3}
-                                                disabled
-                                            />
-                                        ) : (
-                                            <Form.Control
-                                                as="textarea"
-                                                name="categoryDescription"
-                                                placeholder="Enter your ticket category description here"
-                                                autoComplete="off"
-                                                value={ticket.categoryDescription}
-                                                onChange={e => handleChange(index, e)}
-                                                rows={3}
-
-                                            />
-
-                                        )
-                                    }
-                                </Col>
-                            </Form.Group>
-                            <Form.Group as={Row} className="mb-3" controlId="categoryStock">
-                                <Form.Label column sm={2}>Stock</Form.Label>
-                                <Col sm={10}>
-                                    <Form.Control
-                                        type="text"
-                                        name="categoryStock"
-                                        placeholder="Enter your ticket stock here"
-                                        autoComplete="off"
-                                        value={ticket.categoryStock}
-                                        onChange={e => handleChange(index, e)}
-                                    />
-                                </Col>
-                            </Form.Group>
-                            {
-                                isUpdate ? (
-                                    <></>
-                                ) : (
-                                    <>
-                                        <Form.Label column sm={2}>NFT</Form.Label>
-                                        <Row className='ms-1'>
-                                            <Col md={3} className='me-2'>
-                                                <Form.Group as={Row} className="form-group files color pb-3 pt-3" controlId='nftImage1'>
-                                                    <Card className='justify-content-center align-items-center'>
-                                                        <Form.Control
-                                                            type="file"
-                                                            className="form-control create-event-upload-image"
-                                                            name="nftImage"
-                                                            onChange={e => imageChange1(index, e)}
-
-                                                        />
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="categoryDescription"
+              >
+                <Form.Label column sm={2}>
+                  Description
+                </Form.Label>
+                <Col sm={10}>
+                  {isUpdate ? (
+                    <Form.Control
+                      as="textarea"
+                      name="categoryDescription"
+                      placeholder="Enter your ticket category description here"
+                      autoComplete="off"
+                      value={ticket.categoryDescription}
+                      onChange={(e) => handleChange(index, e)}
+                      rows={3}
+                      disabled
+                    />
+                  ) : (
+                    <Form.Control
+                      as="textarea"
+                      name="categoryDescription"
+                      placeholder="Enter your ticket category description here"
+                      autoComplete="off"
+                      value={ticket.categoryDescription}
+                      onChange={(e) => handleChange(index, e)}
+                      rows={3}
+                    />
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="categoryStock">
+                <Form.Label column sm={2}>
+                  Stock
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    type="text"
+                    name="categoryStock"
+                    placeholder="Enter your ticket stock here"
+                    autoComplete="off"
+                    value={ticket.categoryStock}
+                    onChange={(e) => handleChange(index, e)}
+                  />
+                </Col>
+              </Form.Group>
+              {isUpdate ? (
+                <></>
+              ) : (
+                <>
+                  <Form.Label column sm={2}>
+                    NFT
+                  </Form.Label>
+                  <Row className="ms-1">
+                    <Col md={3} className="me-2">
+                      <Form.Group
+                        as={Row}
+                        className="form-group files color pb-3 pt-3"
+                        controlId="nftImage1"
+                      >
+                        <Card className="justify-content-center align-items-center">
+                          <Form.Control
+                            type="file"
+                            className="form-control create-event-upload-image"
+                            name="nftImage"
+                            onChange={(e) => imageChange1(index, e)}
+                          />
 
                           {imageNFT1[index] ? (
                             <img

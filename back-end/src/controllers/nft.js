@@ -96,7 +96,7 @@ exports.getNftFromEvent = (req, res, next) => {
 
 exports.postNft = async (req, res, next) => {
   console.log(`Start Post NFT`);
-  const { categories, nft1, nft2, nft3, event } = req.body;
+  const { categories, nft1, nft2, nft3, organizer } = req.body;
   const nfts = [nft1, nft2, nft3];
   let arrResult = [];
   let index = 0;
@@ -119,7 +119,8 @@ exports.postNft = async (req, res, next) => {
           let nftImage = '';
 
           const properties = {
-            organizer: 'testorg'
+            organizer: organizer.organizerName,
+            category: cat.categoryName
           }
           const metadata = await storeNFT(nftImagePath, `${cat.categoryName} #${index + 1}`, cat.categoryDescription, properties);
           

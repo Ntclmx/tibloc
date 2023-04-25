@@ -24,7 +24,8 @@ import {
   setAlert,
   setGlobalState
 } from "../../config/Store/index";
-import { isWallectConnected, getAllNFTs, updateFlag} from "../../config/Blockchain.Service";
+import {updateFlag} from "../../config/Blockchain.Service";
+import { useHistory } from "react-router-dom";
 
 const Header = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -37,6 +38,7 @@ const Header = () => {
   const handleHideQr = () => setShowQR(false);
 
   window.web3 = new Web3(ethereum);
+  const history = useHistory();
 
   // console.log('web3', window.web3)
 
@@ -93,11 +95,13 @@ const Header = () => {
     console.log(error);
   }
 
-  const handleScan = async (result) => {
+  const handleScan = (result) => {
     if (result) {
       console.log('result', result);
       setScanResult(result);
-      await updateFlag();
+      console.log('variable scanResult',scanResult)
+      updateFlagging(result);
+      // window.location.reload();
     }
   }
 
@@ -134,12 +138,15 @@ const Header = () => {
 
   }
 
-  const updateFlag = async () => {
+  const updateFlagging = async (categoryId) => {
 
     try {
-      if(await updateFlag(scanResult)){
+      // console.log('scan result', categoryId.t)
+      if(await updateFlag(categoryId.text)){
         setAlert('Scan Succeed!', 'green')
+        console.log('Scan Success')
       } else {
+        console.log('Scan Failed')
         setAlert('Scan Failed!', 'red')
       }
     } catch (error) {
@@ -161,7 +168,17 @@ const Header = () => {
         </Modal.Header>
         <QrReader
           onError={handleScanError}
-          onResult={handleScan}
+          onResult={(result, error) => {
+            if (result) {
+              console.log('result', result);
+              setScanResult(result);
+              console.log('variable scanResult',scanResult)
+              updateFlagging(result);
+              // window.location.reload();
+            } if (!!error) {
+              console.log(error)
+            }
+          }}
           delay={300}
           className='mx-3'
         />
