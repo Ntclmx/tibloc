@@ -118,7 +118,7 @@ const DetailEventCalendar = (props) => {
 
     const disableDates = new Date('February 23, 2023');
 
-    const bookmarkFunc = () => {
+    const wishlistFunc = () => {
         if (bookmark === false) {
             const wishlist = {
                 eventId: props._id,
@@ -180,7 +180,7 @@ const DetailEventCalendar = (props) => {
 
     }
 
-    const Component = bookmark ? <Image src={BookmarksFill} onClick={bookmarkFunc} className='iconDetailEvent'></Image> : <Image src={Bookmark} onClick={bookmarkFunc} className='iconDetailEvent'></Image>;
+    const Component = bookmark ? <Image src={BookmarksFill} onClick={wishlistFunc} className='iconDetailEvent'></Image> : <Image src={Bookmark} onClick={wishlistFunc} className='iconDetailEvent'></Image>;
 
     const editButton = isAdmin ? <><a href={`/edit-event/events/${props._id}`} className='ms-auto'><Image src={Edit} className='iconDetailEvent ' ></Image></a><Image src={Delete} className='iconDetailEvent ms-auto' onClick={() => setModalShow(true)}></Image>
     <Image src={Download} className='iconDetailEvent ms-auto' onClick={downloadQRFunc}></Image></> : <></>
