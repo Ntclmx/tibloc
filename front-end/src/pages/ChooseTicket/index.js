@@ -4,7 +4,7 @@ import {
   setLoadingMsg,
   setAlert,
 } from "../../config/Store/index";
-import { mintNFT } from "../../config/Blockchain.Service";
+import { mintNFT } from "../../config/Blockchain.Service.jsx";
 import React, { useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 import Axios from "axios";

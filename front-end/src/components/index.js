@@ -10,11 +10,8 @@ import CreateTickets from "./CreateTickets/createTickets";
 import DetailEventTabs from "./DetailEventTabs/detailEventTabs";
 import DetailEventCalendar from "./DetailEventCalendar/detailEventCalendar";
 import CategoryCard from "./CategoryCard";
-import CreatedEventCard from "./CreatedEventCard";
 import WishlistCard from "./WishlistCard";
-import PaymentTypeCard from "./PaymentTypeCard";
 import TransactionCard from "./TransactionCard";
-import ThirdPartyLogin from "./Auth/auth";
 
-export { TransactionCard ,PaymentTypeCard, WishlistCard, CreatedEventCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs, ThirdPartyLogin};
+export { TransactionCard, WishlistCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs};
 

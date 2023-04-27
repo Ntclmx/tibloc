@@ -9,9 +9,9 @@ import ListEvents from '../ListEvents';
 import './mainApp.css';
 import Faq from '../Faq';
 import ChooseTicket from '../ChooseTicket'
-import ListCreatedEvents from '../ListCreatedEvents'
+
 import Wishlist from '../Wishlist'
-import ChoosePayment from '../ChoosePayment'
+
 import DetailTransaction from '../DetailTransaction'
 import ListTransactions from '../ListTransactions';
 import QrScan from '../QrScan';
@@ -85,13 +85,6 @@ const MainApp = () => {
                                 </div>
                             </div>
                         </Route>
-                        <Route path='/event/:id/categories/:catId/payment'>
-                            <div className='mx-5' >
-                                <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                    <ChoosePayment />
-                                </div>
-                            </div>
-                        </Route>
                         <Route path='/event/:id/categories'>
                             <div className='mx-5' >
                                 <div className='justify-content-center align-items-center my-3 pt-3 '>
@@ -139,14 +132,6 @@ const MainApp = () => {
                                     )}
                                         path="/edit-event/events/:id?" >
                                     </Route>
-                                </div>
-                            </div>
-                        </Route>
-
-                        <Route path='/list-created'>
-                            <div className='mx-5' >
-                                <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                    <ListCreatedEvents />
                                 </div>
                             </div>
                         </Route>
