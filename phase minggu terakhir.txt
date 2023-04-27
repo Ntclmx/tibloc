@@ -1,0 +1,33 @@
+fase I
+hari ini sampe hari jumat
+
+-> penulisan
+bab 3
+- bab 1: rumusan masalah (rabu)
+- bab 2: rian
+- bab 3 : scrum (rabu)
+
+kamis: bahas scrum, bahas class diagram, sequence, kamus data, coba hostingan
+sisanya liat skripsi
+		
+-> web
+bug scan + after flag (nael)
+list event home (nael)
+
+
+-> blockchain
+validasi buy tiket 2x di event yang sama(kezia)
+
+
+
+fase II
+sabtu sampai sebelum bimbingan
+bab 4 evaluasi, bab 5
+transaction history
+detail transaction
+alert succes message (kezia)
+after create event
+
+fase III
+setelah bimbingan sampai pengumpulan softcover 
+perpihan semua

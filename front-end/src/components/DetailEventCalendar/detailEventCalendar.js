@@ -182,7 +182,8 @@ const DetailEventCalendar = (props) => {
 
     const Component = bookmark ? <Image src={BookmarksFill} onClick={bookmarkFunc} className='iconDetailEvent'></Image> : <Image src={Bookmark} onClick={bookmarkFunc} className='iconDetailEvent'></Image>;
 
-    const editButton = isAdmin ? <a href={`/edit-event/events/${props._id}`} className='ms-auto'><Image src={Edit} className='iconDetailEvent ' ></Image></a> : <></>
+    const editButton = isAdmin ? <><a href={`/edit-event/events/${props._id}`} className='ms-auto'><Image src={Edit} className='iconDetailEvent ' ></Image></a><Image src={Delete} className='iconDetailEvent ms-auto' onClick={() => setModalShow(true)}></Image>
+    <Image src={Download} className='iconDetailEvent ms-auto' onClick={downloadQRFunc}></Image></> : <></>
     return (
         <div className='ps-5'>
             <DeleteModal
@@ -194,8 +195,7 @@ const DetailEventCalendar = (props) => {
             <div className='d-flex'>
                 {Component}
                 {editButton}
-                <Image src={Delete} className='iconDetailEvent ms-auto' onClick={() => setModalShow(true)}></Image>
-                <Image src={Download} className='iconDetailEvent ms-auto' onClick={downloadQRFunc}></Image>
+                
             </div>
             <Card className='mt-3'>
                 <ListGroup variant="flush">
