@@ -17,6 +17,7 @@ const faqRoutes = require('./src/routes/faq');
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
+const MONGO_URI = process.env.MONGO_URI || 4000;
 // import SequelizeStore from "connect-session-sequelize";
 console.log("Start Routing1");
 const app = express();
@@ -126,7 +127,7 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message: message, data: data });
 });
 
-mongoose.connect('mongodb+srv://tibloc:MongoDBtibloc@cluster0.vlfqswq.mongodb.net/tibloc?retryWrites=true&w=majority')
+mongoose.connect(MONGO_URI)
     .then(() => {
         app.listen(PORT, () => {
             console.log(`Tibloc running on http://localhost:${PORT}`);

@@ -168,3 +168,44 @@ exports.postNft = async (req, res, next) => {
 
   res.status(201).json(finalResponse);
 };
+
+exports.randomNFT = async (req, res, next) => {
+
+
+  const categoryId = req.params.categoryId;
+  const randomNum = Math.floor(Math.random() * 100) + 1;
+  console.log('random', randomNum);
+
+  await Nft.find({ categoryId: categoryId })
+      .then(results => {
+
+          let minNum = 0;
+          for (const result of results) {
+
+              console.log(minNum, result.nftProbability)
+              if (randomNum > minNum && randomNum <= minNum + result.nftProbability) {
+
+
+                  const response = {
+                      message: 'Get Random NFT Success',
+                      nft: result,
+
+                  };
+
+                  return res.status(200).json(response);
+              }
+              else {
+                  minNum = minNum +result.nftProbability;
+              }
+          }
+
+          const response = {
+              message: 'Error',
+          };
+
+          return res.status(200).json(response);
+      })
+      .catch(err => {
+          console.log(err);
+      })
+}

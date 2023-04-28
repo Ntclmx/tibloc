@@ -42,6 +42,8 @@ router.put('/event/:eventId/categories', categoryController.updateCategory);
 
 router.get('/qr', categoryController.generateQrTemp);
 
+router.put('/category/:categoryId/stock', categoryController.updateStock);
+
 // wishlist
 router.post('/wishlist', wishlistController.postWishlist);
 
@@ -64,9 +66,9 @@ router.get('/transaction/:transactionId', transactionController.getTransaction);
 
 router.get('/transactions/user/:userId', transactionController.getTransactionFromUser);
 
-router.get('/category/:categoryId/nft', transactionController.randomNFT);
 
-router.put('/category/:categoryId/stock', transactionController.updateStock);
+
+
 
 router.post('/transaction', transactionController.postTransaction);
 
@@ -94,6 +96,8 @@ router.get('/nft/:nftId', nftController.getNft);
 router.post('/nfts', nftController.postNft);
 
 router.get('/nfts/category/:categoryId', nftController.getNftFromEvent);
+
+router.get('/category/:categoryId/nft', nftController.randomNFT);
 
 // admin
 router.post('/admin', adminController.postAdmin);

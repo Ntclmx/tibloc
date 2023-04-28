@@ -274,6 +274,35 @@ exports.generateQrTemp = (req, res, next) => {
     res.status(200).json(result)
 }
 
+exports.updateStock = (req, res, next) => {
+    const categoryId = req.params.categoryId;
+    Category.findById(categoryId)
+        .then(result => {
+            if (!result) {
+                const error = new Error('Category not found');
+                error.errorStatus = 404;
+                throw error;
+            }
+
+            const minStock = result.categoryStock - 1
+            result.categoryStock = minStock;
+
+            return result.save();
+        })
+        .then(result => {
+
+            const response = {
+                message: 'Update Stock Success',
+                category: result
+            };
+
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            console.log('err: ', err);
+        })
+}
+
 const generateQr = (idCategory, catName) => {
     
     const dirFile = `public/qr/${catName}.png`

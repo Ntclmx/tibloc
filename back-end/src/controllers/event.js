@@ -40,7 +40,7 @@ exports.getAllEvents = (req, res, next) => {
         per_page: parseInt(perPage),
         current_page: parseInt(currPage)
       };
-
+      // res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.status(200).json(response);
     })
     .catch(err => {
