@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Footer, Header, EventProgress, CreateEventComp, CreateTickets } from '../../components'
+import { Footer, Header, EventProgress, CreateEventComp, CreateTickets, Alert, Loading } from '../../components'
 import DetailEvent from '../DetailEvent'
 import DashboardAdmin from '../Dashboard/DashboardAdmin';
 import DashboardCustomer from '../Dashboard/DashboardCustomer';
@@ -33,6 +33,8 @@ const MainApp = () => {
 
     return (
         <div className='main-app-wrapper '>
+            <Alert />
+            <Loading />
             <UserContext.Provider value={{ web3User, setWeb3User }}>
                 <div className='header-wrapper'>
                     <Header />

@@ -1,12 +1,10 @@
 import {
-  useGlobalState,
-  setGlobalState,
-  setLoadingMsg,
+  setLoading,
   setAlert,
 } from "../../config/Store/index";
 import { mintNFT } from "../../config/Blockchain.Service.jsx";
 import React, { useEffect, useState } from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Axios from "axios";
 import "./chooseTicket.css";
 import { GeoAltFill, Calendar2Fill, ClockFill } from "react-bootstrap-icons";
@@ -75,6 +73,7 @@ const ChooseTicket = (props) => {
   // const totalPrice = formatter.format(price);
   const mintFunction = async (e) => {
     e.preventDefault();
+    setLoading(true, "Initializing transaction...")
     console.log(`Start Process Minting...`)
     if (!idCategory) return;
 
@@ -98,20 +97,24 @@ const ChooseTicket = (props) => {
           console.log(err);
         });
 
-      setLoadingMsg("Initializing transaction...");
-
+        
+        setLoading(true, "Start Minting...")
       console.log(`Mint NFT...`)
       console.log(selCat.categoryPrice)
-      await mintNFT(
+      const mint = await mintNFT(
         selCat.categoryName,
         selCat.categoryDescription,
         randomizedIPFS.nftImageURL,
         selCat.categoryPrice,
         selCat._id,
+        //tambahan
+        event._id,
         eventDate
       );
 
       // update stock
+      if(mint){
+        setLoading(true, "Processing...")
       console.log(`Start Update Stock...`)
       Axios.put(
         `${process.env.REACT_APP_API_URL}/v1/category/${selCat._id}/stock`
@@ -125,6 +128,8 @@ const ChooseTicket = (props) => {
 
       setAlert("Minting completed...", "green");
       window.location.reload();
+      }
+      
     } catch (error) {
       console.log("Minting Failed: ", error);
       setAlert("Minting failed...", "red");

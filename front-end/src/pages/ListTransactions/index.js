@@ -5,73 +5,64 @@ import { TransactionCard } from '../../components';
 import './listTransaction.css';
 import Pagination from 'react-bootstrap/Pagination';
 import { withRouter } from 'react-router-dom';
-import { UserContext } from '../MainApp/index'
+import { UserContext } from '../MainApp/index';
+
+import { getAllNftsOwnedBy } from '../../config/Blockchain.Service';
+import { getGlobalState, setLoading, setLoadingTO } from '../../config/Store';
 
 const ListTransactions = (props) => {
+    setLoading(true, "Looking for NFTs...")
     const [transactions, setTransactions] = useState([]);
     const [query, setQuery] = useState('');
     const [page, setPage] = useState('');
     const { web3User } = useContext(UserContext);
+    const [nftsOwned, setNftsOwned] = useState({});
 
     useEffect(() => {
+        const getFromBlockchain = async () => {
 
-        const search = props.location.search;
-        const userId = web3User;
+            const search = props.location.search;
+            const userId = web3User;
+    
+            console.log("start get nfts owned")
+            await getAllNftsOwnedBy();
+            const nfts = getGlobalState("nftsOwned");
+            setNftsOwned(nfts);
+            console.log(nfts)    
+        }
+        
+        getFromBlockchain()
 
-        Axios.get(`${process.env.REACT_APP_API_URL}/v1/transactions/user/${userId}${search}`)
-            .then(result => {
-
-                setTransactions(result.data.transactions);
-
-                const activePage = result.data.current_page;
-                const totalPage = Math.ceil(result.data.total_data / result.data.per_page);
-
-                let items = [];
-
-                for (let number = 1; number <= totalPage; number++) {
-                    console.log(number === activePage);
-                    items.push(
-                        <Pagination.Item key={number} active={number === activePage} href={`/transactions?page=${number}`}>{number}</Pagination.Item>
-                    );
-                }
-
-                setPage(items);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, [props.location.search, web3User]);
+    } , [props.location.search, web3User])
 
     const queryFunc = (e) => {
         setQuery(e.currentTarget.value);
     };
+
+    setLoading(false,"")
     return (
         <div className='minDiv'>
             <div className='d-flex align-items-center'>
-                <h4 className='pt-2'>LIST TRANSACTION</h4>
+                <h4 className='pt-2'>LIST NFT OWNED</h4>
                 <Form className='ms-auto me-0'>
                     <Form.Group className="me-0" controlId="findTransaction">
                         <Form.Control type="text" className='listTransactionFind  pe-4' placeholder="Search Transaction Here" onChange={queryFunc} />
                     </Form.Group>
                 </Form>
             </div>
-
             {
-                transactions.length > 0 ? (
+                nftsOwned.length > 0 ? (
                     <Row className='mt-3'>
-                        {transactions.map(transaction => {
+                        {nftsOwned.map(nft => {
                             return <TransactionCard
-                                key={transaction._id}
-                                _id={transaction._id}
-                                catId={transaction.categoryId}
-                                trxAmount={transaction.transactionAmount}
-                                paymentStatus={transaction.paymentStatus}
+                                {...nft}
                                 query={query}
                             />
                         })}
                     </Row>
                 ) : (
                     <div className='text-center mt-5 pt-5'>
+                        {setLoadingTO(true, "Looking for NFTs...")}
                         <p className='text-muted mt-5 pt-4'>No Transaction</p>
                     </div>
                 )

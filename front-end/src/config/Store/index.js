@@ -14,12 +14,26 @@ const {setGlobalState, useGlobalState, getGlobalState} = createGlobalState({
   contract: null,
 })
 
-const setAlert = (msg, color = 'green') => {
+const setAlert = (msg, color) => {
+  console.log("set alert")
   setGlobalState('loading', false)
   setGlobalState('alert', {show: true, msg, color})
   setTimeout(() => {
     setGlobalState('alert', {show: false, msg:'', color})
   }, 6000)
+}
+
+const setLoading = (show, msg) => {
+  setGlobalState('alert', {show: false})
+  setGlobalState('loading', {show: show, msg: msg})
+}
+
+const setLoadingTO = (show, msg) => {
+  setGlobalState('alert', {show: false})
+  setGlobalState('loading', {show: show, msg: msg})
+  setTimeout(() => {
+    setGlobalState('loading', {show: false, msg:''})
+  }, 4000)
 }
 
 const setLoadingMsg = (msg) => {
@@ -45,5 +59,7 @@ export {
   getGlobalState,
   setAlert,
   setLoadingMsg,
+  setLoading,
+  setLoadingTO,
   truncate
 }

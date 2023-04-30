@@ -5,8 +5,6 @@ const router = express.Router();
 const eventController = require('../controllers/event');
 const categoryController = require('../controllers/category');
 const wishlistController = require('../controllers/wishlist');
-const transactionController = require('../controllers/transaction');
-const paymentTypeController = require('../controllers/paymentType');
 const nftController = require('../controllers/nft');
 const adminController = require('../controllers/admin');
 const organizerController = require('../controllers/organizer');
@@ -58,28 +56,6 @@ router.get('/wishlists/event/:eventId', wishlistController.getWishlistFromEvent 
 router.get('/wishlists/user/:userId', wishlistController.getWishlistFromUser );
 
 router.get('/wishlists/event/:eventId/user/:userId', wishlistController.getWishlistFromEventUser);
-
-// transaction
-router.get('/transactions', transactionController.getAllTransactions);
-
-router.get('/transaction/:transactionId', transactionController.getTransaction);
-
-router.get('/transactions/user/:userId', transactionController.getTransactionFromUser);
-
-
-
-
-
-router.post('/transaction', transactionController.postTransaction);
-
-router.post('/transaction/update', transactionController.updateTransaction);
-
-// payment type
-router.get('/paymentType', paymentTypeController.getAllPaymentTypes);
-
-router.get('/paymentType/:paymentTypeId', paymentTypeController.getPaymentType);
-
-router.post('/paymentType', paymentTypeController.postPaymentType);
 
 // organizer
 router.get('/organizers', organizerController.getAllOrganizers);

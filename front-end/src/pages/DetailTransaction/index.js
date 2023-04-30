@@ -10,145 +10,54 @@ import { withRouter } from 'react-router-dom';
 import Circle from '../../assets/events/circle.png';
 import Modal from 'react-bootstrap/Modal';
 import Moment from 'react-moment';
+import { getAllNftsOwnedBy } from '../../config/Blockchain.Service';
 
 
 const DetailTransaction = (props) => {
-    const [trx, setTrx] = useState({});
+    const [nft, setNft] = useState({});
     const [cat, setCat] = useState({});
     const [event, setEvent] = useState({});
     const [show, setShow] = useState(false);
     const [showTicket, setShowTicket] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const handleCloseTicket = () => setShowTicket(false);
-    const handleShowTicket = () => setShowTicket(true);
-
+    console.log(props.location.state)
     useEffect(() => {
-        const id = props.match.params.id;
+        setEvent(props.location.state.event)
+        setCat(props.location.state.category)
+        setNft(props.location.state.nft)
 
-        Axios.get(`${process.env.REACT_APP_API_URL}/v1/transaction/${id}`)
-            .then(result => {
-                setTrx(result.data.transaction);
+        //timestamp to date
+        nft.mintDate = nft.mintDate ? toDate(nft.mintDate) : ""
+        nft.flagDate = nft.flagDate ? toDate(nft.flagDate) : ""
+        
+        setNft(nft)
 
-                const catId = result.data.transaction.categoryId;
-                Axios.get(`${process.env.REACT_APP_API_URL}/v1/category/${catId}`)
-                    .then(result => {
-                        setCat(result.data.category);
-
-                        const eventId = result.data.category.eventId;
-                        Axios.get(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}`)
-                            .then(result => {
-                                setEvent(result.data.event);
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            })
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, [props])
-
-    let ticketStatus = '';
-
-    if (trx.ticketStatus) {
-        ticketStatus = <div className='d-flex'><h5 className='detailTrxText text-uppercase mb-2 me-1'>ISSUED</h5><h5 className='detailTrxTextClick text-uppercase mb-2' onClick={handleShowTicket}>CLICK HERE</h5></div>
-
-    }
-    else {
-        if (trx.paymentStatus === 'pending') {
-
-            ticketStatus = <h5 className='detailTrxText text-uppercase mb-2 text-danger'>PENDING</h5>
+        const toDate = (timestamp) => {
+            const dateFormat = new Date(timestamp);
+            return dateFormat.toLocaleString('en-GB');
         }
-        else {
+    })
 
-            ticketStatus = <h5 className='detailTrxText text-uppercase mb-2 text-danger'>ticket failed to issue</h5>
-        }
-    }
 
-    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    let newFormatDate = new Date(event.eventDate);
-    newFormatDate = newFormatDate.toLocaleDateString("en-US", options);
-
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'IDR',
-    });
-
-    const totalPrice = formatter.format(trx.transactionAmount);
-
-    let paymentStatusDiv = '';
-    let paymentPayDiv = '';
-    if (trx.paymentStatus === 'pending') {
-        paymentStatusDiv =
-            <>
-                <Col className='col-3 '>
-                    <h5 className='detailTrxText2 mb-2'>Expired at</h5>
-                </Col>
-                <Col className='col-9'>
-                    <h5 className='detailTrxText text-uppercase mb-2'><Moment add={{ hours: 1 }} >{trx.createdAt}</Moment></h5>
-                </Col>
-            </>
-
-        if (trx.paymentWith === 'gopay') {
-            paymentPayDiv =
-                <>
-                    <Col className='col-3 '>
-                        <h5 className='detailTrxText2 mb-2'>QR</h5>
-                    </Col>
-                    <Col className='col-9'>
-                        <h5 className='detailTrxText text-uppercase mb-2'>CLICK HERE <QrCodeScan onClick={handleShow} className='mb-1'/></h5>
-                    </Col>
-                </>
-        } else {
-            paymentPayDiv =
-                <>
-                    <Col className='col-3 '>
-                        <h5 className='detailTrxText2 mb-2'>Virtual Account</h5>
-                    </Col>
-                    <Col className='col-9'>
-                        <h5 className='detailTrxText text-uppercase mb-2'>{trx.paymentVA}</h5>
-                    </Col>
-                </>
-
-        }
-    }
+    
 
     if (event._id) {
         return (
             <>
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Payment QR</Modal.Title>
-                    </Modal.Header>
-                    <Image src={trx.paymentQR} className='detailTrxQR'></Image>
-                </Modal>
-                <Modal show={showTicket} onHide={handleCloseTicket}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Ticket QR</Modal.Title>
-                    </Modal.Header>
-                    <a href={trx.ticketQRPath}><Image src={trx.ticketQRPath} className='detailTrxQR'></Image></a>
-                </Modal>
                 <Card>
-                    <Card.Header className='detailTrxHead text-uppercase'>ID: {trx._id}</Card.Header>
+                    <Card.Header className='detailTrxHead text-uppercase'><h5>{event.eventTitle}</h5></Card.Header>
                     <Row className='d-flex'>
                         <div className='col-6 justify-content-center my-3 detailTrxCol'>
                             <div className='ps-3 pe-2'>
-                                <div className='d-flex'>
+                                {/* <div className='d-flex'>
                                     <Image src={Circle} className='detailTrxCircle mt-1 me-3'></Image>
                                     <h3 className='detailTrxEvent'>EVENT</h3>
 
-                                </div>
+                                </div> */}
                                 <div className='justify-content-center mb-3'>
                                     <Image src={`${process.env.REACT_APP_API_URL}/${event.eventLogo}`} className='detailTrxImg'></Image>
                                 </div>
                                 <Row >
-                                    <h4>{event.eventTitle}</h4>
                                     <Col className='col-1 '>
                                         <GeoAltFill className='mb-1' />
                                     </Col>
@@ -159,7 +68,7 @@ const DetailTransaction = (props) => {
                                         <Calendar2Fill className='mb-1 me-2' />
                                     </Col>
                                     <Col className='col-11 mb-2'>
-                                        <p className='chooseTicketText'>{newFormatDate}</p>
+                                        <p className='chooseTicketText'>{event.eventDate}</p>
                                     </Col>
                                     <Col className='col-1'>
                                         <ClockFill className='mb-1 me-2' />
@@ -174,60 +83,55 @@ const DetailTransaction = (props) => {
                             <div className='ps-3 pe-2'>
                                 <div className='detailTrxSmallDiv mb-4'>
                                     <Row className='mt-3 pb-3'>
-                                        <div className='d-flex'>
+                                        {/* <div className='d-flex'>
                                             <Image src={Circle} className='detailTrxCircle mt-1 me-3'></Image>
                                             <h3 className='detailTrxEvent'>TICKET</h3>
-                                        </div>
+                                        </div> */}
                                         <Row >
-                                            <Col className='col-3 '>
+                                            <Col className='col-4'>
                                                 <h5 className='detailTrxText2 mb-2'>Category</h5>
                                             </Col>
-                                            <Col className='col-9'>
+                                            <Col className='col-8'>
                                                 <h5 className='detailTrxText text-uppercase mb-2'>{cat.categoryName}</h5>
                                             </Col>
-                                            <Col className='col-3 '>
-                                                <h5 className='detailTrxText2  mb-2'>Status</h5>
+                                            <Col className='col-4 '>
+                                                <h5 className='detailTrxText2  mb-2'>Description</h5>
                                             </Col>
-                                            <Col className='col-9 mb-2 d-flex'>
-                                                {ticketStatus}
+                                            <Col className='col-8 mb-2 '>
+                                                <h5 className='detailTrxText2 mb-2'>{cat.categoryDescription}</h5>
+                                                
                                             </Col>
                                         </Row>
                                     </Row>
                                 </div>
 
                                 <div>
-                                    <div className='d-flex'>
+                                    {/* <div className='d-flex'>
                                         <Image src={Circle} className='detailTrxCircle mt-1 me-3'></Image>
                                         <h3 className='detailTrxEvent'>PAYMENT</h3>
-                                    </div>
+                                    </div> */}
 
                                     <Row >
-                                        <Col className='col-3 '>
-                                            <h5 className='detailTrxText2 mb-2'>ID</h5>
+                                        <Col className='col-4 '>
+                                            <h5 className='detailTrxText2 mb-2'>Mint Date</h5>
                                         </Col>
-                                        <Col className='col-9'>
-                                            <h5 className='detailTrxText text-uppercase mb-2'>{trx._id}</h5>
+                                        <Col className='col-8'>
+                                            <h5 className='detailTrxText text-uppercase mb-2'>{nft.mintDate}</h5>
                                         </Col>
-                                        <Col className='col-3 '>
-                                            <h5 className='detailTrxText2 mb-2'>Payment With</h5>
-                                        </Col>
-                                        <Col className='col-9'>
-                                            <h5 className='detailTrxText text-uppercase mb-2'>{trx.paymentWith}</h5>
-                                        </Col>
-                                        <Col className='col-3 '>
-                                            <h5 className='detailTrxText2 mb-2'>Amount</h5>
-                                        </Col>
-                                        <Col className='col-9'>
-                                            <h5 className='detailTrxText text-uppercase mb-2'>{totalPrice}</h5>
-                                        </Col>
-                                        <Col className='col-3 '>
+                                        <Col className='col-4 '>
                                             <h5 className='detailTrxText2 mb-2'>Status</h5>
                                         </Col>
-                                        <Col className='col-9'>
-                                            <h5 className='detailTrxText text-uppercase mb-2'>{trx.paymentStatus}</h5>
+                                        <Col className='col-8'>
+                                        {nft.isUsed?  <h5 className='text-uppercase mb-2 trxCardGradText-True'>Used</h5> : <h5 className='text-uppercase mb-2 detailTrxText'>Not Used</h5>}
+                                           
                                         </Col>
-                                        {paymentPayDiv}
-                                        {paymentStatusDiv}
+                                        <Col className='col-4 '>
+                                            <h5 className='detailTrxText2 mb-2'>Date Used</h5>
+                                        </Col>
+                                        <Col className='col-8'>
+                                            <h5 className='detailTrxText text-uppercase mb-2'>{nft.flagDate}</h5>
+                                        </Col>
+
                                     </Row>
 
                                 </div>

@@ -4,6 +4,7 @@ import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import { DashLg, PlusLg, Image } from "react-bootstrap-icons";
 import "./createTicket.css";
 import { useHistory } from "react-router-dom";
+import { setLoading, setAlert } from "../../config/Store";
 
 const CreateTickets = (props) => {
   const history = useHistory();
@@ -93,6 +94,8 @@ const CreateTickets = (props) => {
 
   const submitButton = async (e) => {
     e.preventDefault();
+    setLoading(true, "Processing...")
+
     const { event } = props;
 
     const detailOrganize = await Axios.get(
@@ -108,7 +111,7 @@ const CreateTickets = (props) => {
     
     if (isUpdate) {
       const eventId = props.match.params.id;
-
+      setLoading(true, "Start Updating Event...")
             Axios.put(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}`, event, {
                 headers: {
                     'content-type': 'multipart/form-data'
@@ -131,10 +134,13 @@ const CreateTickets = (props) => {
                 })
                 .catch(err => {
                     console.log(err.response.data);
+                    setAlert("Update Event Failed...", "red");
                 })
+                
+                setAlert("Update Event Succeed...", "green");
                 history.push("/events");
         } else {
-
+          setLoading(true, "Start Creating Event...")
             Axios.post(`${process.env.REACT_APP_API_URL}/v1/event`, event, {
                 headers: {
                     'content-type': 'multipart/form-data'
@@ -148,7 +154,7 @@ const CreateTickets = (props) => {
                     }
                     Axios.post(`${process.env.REACT_APP_API_URL}/v1/categories`, allTickets)
                         .then(res => {
-
+                          setLoading(true, "Processing image...")
                             const allNft = {
                                 categories: res.data.categories,
                                 nft1: NFT1,
@@ -177,9 +183,10 @@ const CreateTickets = (props) => {
                 })
                 .catch(err => {
                     console.log(err.response.data);
+                    setAlert("Create Event Failed...", "red");
                 })
         }
-
+        setAlert("Create Event Succeed...", "green");
         history.push('/events');
   };
 

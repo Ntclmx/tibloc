@@ -40,13 +40,14 @@ contract TiblocNFT is ERC721URIStorage, Ownable {
     struct TransactionStruct{
         uint256 tokenId;
         address holderOf;
-        uint256 salesPrice;
         string title;
         string description;
         string tokenURI;
-        uint256 timestamp;
+        uint256 mintTimestamp;
+        uint256 flagTimestamp;
         bool isUsed;
         string eventCategoryId;
+        string eventId;
         uint256 eventDate;
     }
 
@@ -66,13 +67,12 @@ contract TiblocNFT is ERC721URIStorage, Ownable {
     function payToMint(string memory title,
         string memory description,
         string memory tokenURI,
-        uint256 salesPrice,
         string memory eventCategoryId,
+        string memory eventId,
         uint256 eventDate) external payable{
         require(msg.value >= adminCost, "Ether too low for minting!");
-        require(msg.value >= adminCost + salesPrice, "Ether too low to buy NFT!");
-        require(existingURIs[tokenURI] == 0, "This NFT is already minted!");
-        require(msg.sender != owner(), "Sales not allowed!");
+        // require(existingURIs[tokenURI] == 0, "This NFT is already minted!");
+        // require(msg.sender != owner(), "Sales not allowed!");
 
         payTo(contractOwner, msg.value);
 
@@ -83,13 +83,14 @@ contract TiblocNFT is ERC721URIStorage, Ownable {
             TransactionStruct(
                 i_tokenId,
                 msg.sender,
-                salesPrice,
                 title,
                 description,
                 tokenURI,
                 block.timestamp,
+                0,
                 false,
                 eventCategoryId,
+                eventId,
                 eventDate
             )
         );
@@ -108,20 +109,12 @@ contract TiblocNFT is ERC721URIStorage, Ownable {
         holderOf[i_tokenId] = msg.sender;
     }
 
-    function changePrice(uint256 id, uint256 newPrice) external returns (bool){
-        require(newPrice > 0 ether, "Ether too low!");
-        require(msg.sender == minted[id-1].holderOf, "Operations Not Allowed");
-        require(block.timestamp <= minted[id-1].eventDate, "Operations Not Allowed");
-
-        minted[id-1].salesPrice = newPrice;
-        return true;
-    }
-
     function flagUsed(uint256 tokenId) external returns(bool){
         require(minted[tokenId - 1].isUsed == false, "Tickets already used!");
         require(msg.sender == minted[tokenId - 1].holderOf, "Operations Not Allowed");
 
         minted[tokenId - 1].isUsed = true;
+        minted[tokenId - 1].flagTimestamp = block.timestamp;
         return minted[tokenId - 1].isUsed;
     }
 

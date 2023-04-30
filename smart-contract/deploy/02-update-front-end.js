@@ -32,7 +32,7 @@ async function updateContractAddresses() {
     const contractAddresses = JSON.parse(fs.readFileSync(frontEndContractsFile, "utf8"))
     if (chainId in contractAddresses) {
         if (!contractAddresses[chainId]["TiblocNFT"].includes(tiblocNFT.address)) {
-            contractAddresses[chainId]["TiblocNFT"].push(tiblocNFT.address)
+            contractAddresses[chainId]["TiblocNFT"] = tiblocNFT.address
         }
     } else {
         contractAddresses[chainId] = { TiblocNFT : [tiblocNFT.address] }

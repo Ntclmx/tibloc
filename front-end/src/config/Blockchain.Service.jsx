@@ -1,7 +1,6 @@
 import Web3 from "web3";
 import abi from '../../src/constants/abi/TiblocNFT.json';
 import { setGlobalState, getGlobalState, setAlert } from "./Store";
-import BigNumber from "bignumber.js";
 import network from '../../src/constants/networkMapping.json';
 
 const {ethereum} = window;
@@ -17,20 +16,9 @@ const getEtheriumContract = async () => {
 
     if (connectedAccount) {
       console.log(`Account connected!`)
-      console.log(ethereum)
-      console.log(window.web3)
-      console.log(window.web3.eth.net.getId())
       const web3 = window.web3;
-      const networkId = await web3.eth.net.getId().then(console.log);
-      // console.log('test')
-      // const networkss = network.toString();
-      // console.log(networkss)
-      // const test = JSON.parse(networkss);
-      console.log('haha')
-      // console.log(test)
-      // const networkData = abi.networks[networkId];
-      const networkData = '0x9437Ef7a171fc528114900018f6b7960a00B5977';
-      // console.log(networkData.TiblocNFT)
+      const networkId = await web3.eth.net.getId();
+      const networkData = network[networkId].TiblocNFT.toString();
       if (networkData) {
         console.log(networkData)
         const contract = new web3.eth.Contract(abi, networkData)
@@ -84,13 +72,14 @@ const getEtheriumContract = async () => {
       .map((nft) => ({
         tokenId: Number(nft.tokenId),
         holderOf: nft.holderOf.toLowerCase(),
-        salesPrice: window.web3.utils.fromWei(nft.salesPrice),
         title: nft.title,
         description: nft.description,
         tokenURI: nft.tokenURI,
-        timestamp: nft.timestamp,
+        mintDate: nft.mintTimestamp,
+        flagDate: nft.flagTimestamp,
         isUsed: nft.isUsed,
         eventCategoryId: nft.eventCategoryId,
+        eventId: nft.eventId,
         eventDate: nft.eventDate
       }))
       .reverse()
@@ -124,10 +113,12 @@ const getEtheriumContract = async () => {
 
       const account = getGlobalState('connectedAccount')
       const nfts = getGlobalState('nfts');
+      // console.log(nfts)
       let nftsOwned = [];
       for(const nft of nfts){
         if(nft.holderOf === account) nftsOwned.push(nft)
       }
+      console.log(nftsOwned)
       setGlobalState('nftsOwned', nftsOwned);
     } catch (error){
       reportError(error)
@@ -152,35 +143,32 @@ const getEtheriumContract = async () => {
     return -1
   }
   
-  const mintNFT = async ( title, description, tokenURI, salesPrice, eventCategoryId, eventDate ) => {
+  const mintNFT = async ( title, description, tokenURI, salesPrice, eventCategoryId, eventId, eventDate ) => {
     try {
-      // salesPrice = window.web3.utils.toWei(salesPrice.toString(), 'ether')
+      if(!ethereum) return alert('Please install Metamask')
       console.log(`start process mintNFT blockchain service`)
       const contract = await getEtheriumContract()
       const account = getGlobalState('connectedAccount')
-      console.log(typeof(salesPrice), salesPrice)
-      console.log(typeof((salesPrice + 0.001).toString()),(salesPrice + 0.001).toString())
-      // console.log(Number((0.001)).toFixed(18))p
-      // console.log(window.web3.BigNumber.from(2.0))
-      console.log('test');
-      // const mintPrice = window.web3.utils.toWei((salesPrice + 0.001).toString(), 'ether');
-      // const tempNum = BigInt(10)
-      // console.log(tempNum.c[0], typeof tempNum.c[0], tempNum)
-      // console.log(typeof 1000000000000000000n)
-      
-      // const price =  (new BigNumber(salesPrice)).c[0] * 1000000000000000000n;
-      const price = 1000000000000000000n;
-      console.log(typeof price)
       const mintPrice = window.web3.utils.toWei((salesPrice+0.001).toString(), 'ether');
-      console.log(typeof mintPrice)
-  
-      await contract.methods.payToMint(title, description, tokenURI, '1', eventCategoryId, eventDate).send({ from: account, value: mintPrice })
+
+      console.log(`Start Check Duplicate eventId...`)
+      await getAllNftsOwnedBy()
+      const nftsOwned = getGlobalState('nftsOwned')
+      for(const nft of nftsOwned){
+        if(nft.eventId){
+          console.log(nft.eventId, eventId)
+          if(nft.eventId === eventId) throw new Error('User has already minted NFT from this event!')
+        }
+      }
+
+      await contract.methods.payToMint(title, description, tokenURI, eventCategoryId, eventId, eventDate).send({ from: account, value: mintPrice })
 
       console.log(`done process mintNFT blockchain service`)
       return true
     } catch (error) {
       reportError(error)
     }
+    return false
   }
   
 //   const buyNFT = async ({ id, cost }) => {
@@ -240,6 +228,7 @@ const getEtheriumContract = async () => {
   
   export {
     getAllNFTs,
+    getAllNftsOwnedBy,
     connectWallet,
     mintNFT,
     // buyNFT,

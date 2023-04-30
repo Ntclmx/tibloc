@@ -22,6 +22,7 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import {
   setAlert,
+  setLoading,
   setGlobalState
 } from "../../config/Store/index";
 import {updateFlag} from "../../config/Blockchain.Service";
@@ -142,6 +143,7 @@ const Header = () => {
 
     try {
       // console.log('scan result', categoryId.t)
+      setLoading(true, "Please accept transaction in Metamask...")
       if(await updateFlag(categoryId.text)){
         setAlert('Scan Succeed!', 'green')
         console.log('Scan Success')
@@ -170,6 +172,7 @@ const Header = () => {
           onError={handleScanError}
           onResult={(result, error) => {
             if (result) {
+              setLoading(true, "Connecting to Metamask...")
               console.log('result', result);
               setScanResult(result);
               console.log('variable scanResult',scanResult)

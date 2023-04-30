@@ -12,6 +12,8 @@ import DetailEventCalendar from "./DetailEventCalendar/detailEventCalendar";
 import CategoryCard from "./CategoryCard";
 import WishlistCard from "./WishlistCard";
 import TransactionCard from "./TransactionCard";
+import Alert from "./Alert/Alert";
+import Loading from "./Loading/Loading";
 
-export { TransactionCard, WishlistCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs};
+export { TransactionCard, WishlistCard, CategoryCard, DetailEventCalendar ,Header, Footer, EventCard, EventFilter, EventSort, CarouselTibloc, EventProgress, CreateEventComp, CreateTickets, DetailEventTabs, Alert, Loading};
 

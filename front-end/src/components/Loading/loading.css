@@ -1,0 +1,12 @@
+.loadingDiv {
+    z-index: 100;
+    width: 10p;
+}
+
+.my-modal .modal-content {
+    background-color: #0C0C14;
+}
+
+.text-colour {
+    color: white;
+}

@@ -81,7 +81,7 @@ function DeleteModal(props) {
 }
 
 const DetailEventCalendar = (props) => {
-    const [value, onChange] = useState(new Date(props.eventDate));
+    const [value] = useState(new Date(props.eventDate));
     const [bookmark, setBookmark] = useState(false);
     const [wishlistId, setWishlistId] = useState('');
     const { web3User } = useContext(UserContext);
