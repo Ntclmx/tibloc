@@ -60,7 +60,7 @@ app.use(express.static(__dirname));
 console.log("Start Routing3");
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: "*",
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
     })

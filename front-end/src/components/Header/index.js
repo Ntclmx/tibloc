@@ -16,7 +16,7 @@ import Profile from '../../assets/header/profile.png';
 import { Search } from 'react-bootstrap-icons';
 import Web3 from "web3";
 import { UserContext } from '../../pages/MainApp/index';
-import { QrReader } from 'react-qr-reader';
+import QrScanner from 'react-qr-scanner'
 import Axios from 'axios';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
@@ -33,7 +33,7 @@ const Header = () => {
   const { ethereum } = window;
   const [showQR, setShowQR] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [toast, settToast] = useState(<></>);
+  // const [toast, settToast] = useState(<></>);
   const [scanResult, setScanResult] = useState(false);
   const handleShowQr = () => setShowQR(true);
   const handleHideQr = () => setShowQR(false);
@@ -49,6 +49,7 @@ const Header = () => {
     async function connectWallet() {
       console.log('Connecting');
       try {
+        console.log('user',web3User);
         if (!ethereum) {
           console.log('please install metamask')
           setShowToast(true)
@@ -96,15 +97,15 @@ const Header = () => {
     console.log(error);
   }
 
-  const handleScan = (result) => {
-    if (result) {
-      console.log('result', result);
-      setScanResult(result);
-      console.log('variable scanResult',scanResult)
-      updateFlagging(result);
-      // window.location.reload();
-    }
-  }
+  // const handleScan = (result) => {
+  //   if (result) {
+  //     console.log('result', result);
+  //     setScanResult(result);
+  //     console.log('variable scanResult',scanResult)
+  //     updateFlagging(result);
+  //     // window.location.reload();
+  //   }
+  // }
 
   const handleClick = async () => {
     console.log('Click Connecting');
@@ -159,7 +160,39 @@ const Header = () => {
 
   const textProfile = web3User === '' ? 'Connect Wallet' : `${web3User.substr(0, 5)}...${web3User.substr(-5)}`
 
-  const buttonPlus = isAdmin ? <><a href="/create-event/events" className="ms-auto"><div ><Image src={Plus} className=" header-icon"></Image></div></a><a href="/transactions"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a></> : <a href="/transactions" className="ms-auto"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a>
+  
+  let buttonWishlist = <></>
+  let buttonTransactions = <></>
+  let buttonAdd = <></>
+  let buttonQR = <></>
+  let buttonProfile = <></>
+  if (isAdmin)
+  {
+    buttonAdd = <a href="/create-event/events" className="ms-auto"><div ><Image src={Plus} className=" header-icon"></Image></div></a>
+
+    if(web3User)
+    {
+      buttonWishlist = <a href="/wishlist"><div className="mx-3"><Image src={Bookmark} className=" header-icon"></Image></div></a>
+      buttonTransactions = <a href="/transactions"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a>  
+      buttonQR = <div className="" onClick={handleShowQr}><Image src={Scan} className=" header-icon"></Image></div>
+      buttonProfile =<Button className='ms-4 profileButton ' onClick={handleClick}><Image src={Profile} className=" header-icon-profile mb-1 me-3"></Image>{textProfile}</Button>
+    } else {
+      buttonProfile =<Button className='ms-auto profileButton ' onClick={handleClick}><Image src={Profile} className=" header-icon-profile mb-1 me-3"></Image>{textProfile}</Button>
+    }
+    
+  } else {
+    if(web3User)
+    {
+      buttonWishlist = <a href="/transactions" className="ms-auto"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a>
+      buttonTransactions = <a href="/transactions"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a>  
+      buttonQR = <div className="" onClick={handleShowQr}><Image src={Scan} className=" header-icon"></Image></div>
+      buttonProfile =<Button className='ms-4 profileButton ' onClick={handleClick}><Image src={Profile} className=" header-icon-profile mb-1 me-3"></Image>{textProfile}</Button>
+    } else {
+
+      buttonProfile =<Button className='ms-auto profileButton ' onClick={handleClick}><Image src={Profile} className=" header-icon-profile mb-1 me-3"></Image>{textProfile}</Button>
+    }
+  }
+
 
 
   return (
@@ -168,7 +201,23 @@ const Header = () => {
         <Modal.Header closeButton>
           <Modal.Title>Scan QR</Modal.Title>
         </Modal.Header>
-        <QrReader
+        <QrScanner
+          onError={handleScanError}
+          onScan={(result, error) => {
+            if (result) {
+              console.log('result', result);
+              setScanResult(result);
+              console.log('variable scanResult',scanResult)
+              updateFlagging(result);
+              // window.location.reload();
+            } if (!!error) {
+              console.log(error)
+            }
+          }}
+          delay={300}
+          className='mx-3'
+        />
+        {/* <QrReader
           onError={handleScanError}
           onResult={(result, error) => {
             if (result) {
@@ -184,7 +233,7 @@ const Header = () => {
           }}
           delay={300}
           className='mx-3'
-        />
+        /> */}
         {`Result: ${scanResult}`}
       </Modal>
       <ToastContainer className="p-3 position-fixed" position={'top-end'} >
@@ -204,23 +253,16 @@ const Header = () => {
             <Form.Control type="text" className='headerSearchText ps-5' placeholder='Search Here' onChange={e => handleChange(e)}></Form.Control>
           </Form>
 
-          {buttonPlus}
-          <a href="/wishlist">
-            <div className="mx-3">
-              <Image src={Bookmark} className=" header-icon"></Image>
-            </div>
-          </a>
-
-          <div className="" onClick={handleShowQr}>
-            <Image src={Scan} className=" header-icon"></Image>
-          </div>
+          {buttonAdd}
+          {buttonTransactions}
+          {buttonWishlist}
+          {buttonQR}
+          {buttonProfile}  
+          
 
 
 
-          <Button className='ms-4 profileButton ' onClick={handleClick}>
-            <Image src={Profile} className=" header-icon-profile mb-1 me-3"></Image>
-            {textProfile}
-          </Button>
+          
 
         </Container>
       </Navbar>

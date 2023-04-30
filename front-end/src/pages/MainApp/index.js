@@ -14,7 +14,6 @@ import Wishlist from '../Wishlist'
 
 import DetailTransaction from '../DetailTransaction'
 import ListTransactions from '../ListTransactions';
-import QrScan from '../QrScan';
 
 
 const MainApp = () => {
@@ -141,13 +140,6 @@ const MainApp = () => {
                             <div className='mx-5' >
                                 <div className='justify-content-center align-items-center my-3 pt-3 '>
                                     <Wishlist />
-                                </div>
-                            </div>
-                        </Route>
-                        <Route path='/qr'>
-                            <div className='mx-5' >
-                                <div className='justify-content-center align-items-center my-3 pt-3 '>
-                                    <QrScan />
                                 </div>
                             </div>
                         </Route>
