@@ -183,7 +183,7 @@ const Header = () => {
   } else {
     if(web3User)
     {
-      buttonWishlist = <a href="/transactions" className="ms-auto"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a>
+      buttonWishlist = <a href="/wishlist"><div className="ms-auto"><Image src={Bookmark} className=" header-icon"></Image></div></a>
       buttonTransactions = <a href="/transactions"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a>  
       buttonQR = <div className="" onClick={handleShowQr}><Image src={Scan} className=" header-icon"></Image></div>
       buttonProfile =<Button className='ms-4 profileButton ' onClick={handleClick}><Image src={Profile} className=" header-icon-profile mb-1 me-3"></Image>{textProfile}</Button>
