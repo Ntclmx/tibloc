@@ -145,7 +145,7 @@ const Header = () => {
     try {
       // console.log('scan result', categoryId.t)
       setLoading(true, "Please accept transaction in Metamask...")
-      if(await updateFlag(categoryId.text)){
+      if(await updateFlag(categoryId)){
         setAlert('Scan Succeed!', 'green')
         console.log('Scan Success')
       } else {
@@ -205,10 +205,10 @@ const Header = () => {
           onError={handleScanError}
           onScan={(result, error) => {
             if (result) {
-              console.log('result', result);
-              setScanResult(result);
+              console.log('result', result.text);
+              setScanResult(result.text);
               console.log('variable scanResult',scanResult)
-              updateFlagging(result);
+              updateFlagging(result.text);
               // window.location.reload();
             } if (!!error) {
               console.log(error)

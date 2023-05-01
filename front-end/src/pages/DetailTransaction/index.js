@@ -20,26 +20,28 @@ const DetailTransaction = (props) => {
     const [show, setShow] = useState(false);
     const [showTicket, setShowTicket] = useState(false);
 
-    console.log(props.location.state)
+    // console.log(props.location.state)
     useEffect(() => {
+
+        console.log('detail', props.location.state.nft)
         setEvent(props.location.state.event)
         setCat(props.location.state.category)
-        setNft(props.location.state.nft)
-
-        //timestamp to date
-        nft.mintDate = nft.mintDate ? toDate(nft.mintDate) : ""
-        nft.flagDate = nft.flagDate ? toDate(nft.flagDate) : ""
         
-        setNft(nft)
-
         const toDate = (timestamp) => {
             const dateFormat = new Date(timestamp);
             return dateFormat.toLocaleString('en-GB');
         }
+        //timestamp to date
+        let Nft = props.location.state.nft
+        // Nft.mintDate = nft.mintDate === "0" ? "" : toDate(parseInt(nft.mintDate))
+        // Nft.flagDate = nft.flagDate === "0" ? "" : toDate(parseInt(nft.flagDate))
+
+        setNft(Nft)
+
     })
 
 
-    
+
 
     if (event._id) {
         return (
@@ -99,7 +101,7 @@ const DetailTransaction = (props) => {
                                             </Col>
                                             <Col className='col-8 mb-2 '>
                                                 <h5 className='detailTrxText2 mb-2'>{cat.categoryDescription}</h5>
-                                                
+
                                             </Col>
                                         </Row>
                                     </Row>
@@ -122,8 +124,8 @@ const DetailTransaction = (props) => {
                                             <h5 className='detailTrxText2 mb-2'>Status</h5>
                                         </Col>
                                         <Col className='col-8'>
-                                        {nft.isUsed?  <h5 className='text-uppercase mb-2 trxCardGradText-True'>Used</h5> : <h5 className='text-uppercase mb-2 detailTrxText'>Not Used</h5>}
-                                           
+                                            {nft.isUsed ? <h5 className='text-uppercase mb-2 trxCardGradText-True'>Used</h5> : <h5 className='text-uppercase mb-2 detailTrxText'>Not Used</h5>}
+
                                         </Col>
                                         <Col className='col-4 '>
                                             <h5 className='detailTrxText2 mb-2'>Date Used</h5>
