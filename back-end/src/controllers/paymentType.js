@@ -1,4 +1,4 @@
-
+const PaymentType = require('../models/PaymentType');
 
 exports.getAllPaymentTypes = (req, res, next) => {
     const currPage = req.query.page || 1;
