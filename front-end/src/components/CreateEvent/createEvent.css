@@ -1,4 +1,10 @@
+.card-create-event{
+    /* background: #0c0c14; */
+    background: transparent;
+}
+
 .create-event-upload-image {
+    background: #0C0C14;
     width: 100%;
     height: 300px;
     opacity: 0%;
@@ -15,15 +21,25 @@
 
 .create-event-button:hover {
     background-color: rgba(255, 255, 255, 0);
-    background: linear-gradient(#ffffff, #ffffff) padding-box,
+    background: linear-gradient(#0c0c14, #0c0c14) padding-box,
     linear-gradient(to top left, #1767F1, #CA0CF2,  #D74D29, #F8C129) border-box;
     border: 1px solid transparent;
 }
 
 .create-event-button {
     background-color: rgb(190, 190, 190);
-    background: linear-gradient(#ffffff, #ffffff) padding-box,
+    background: linear-gradient(#0c0c14, #0c0c14) padding-box,
     rgb(190, 190, 190) border-box;
     border: 1px solid transparent;
     font-weight: bolder;
+}
+
+.form-control-create-event{
+    background-color: rgba(0, 0, 0, 0.0);
+    background: linear-gradient(#0C0C14, #0C0C14) padding-box,
+        linear-gradient(to top left, #1767F1, #CA0CF2, #D74D29, #F8C129) border-box;
+    border-radius: .5em;
+    border: 2px solid transparent;
+    padding-left: 2.375rem;
+    width: 100%;
 }

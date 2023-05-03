@@ -90,13 +90,13 @@ const CreateEventComp = (props) => {
       <div className='justify-content-center align-items-center text-center'>
         <h1 className='pt-2 pb-4'>{isUpdate ? 'Update Event' : "Create Event"}</h1>
       </div>
-      <Card>
+      <Card className='card-create-event'>
         <Card.Body>
           <Form className="input-form px-3 pt-4 pb-3">
             <Form.Group as={Row} className="mb-3" controlId="eventOrganizer">
               <Form.Label column sm={2}>Organizer</Form.Label>
               <Col sm={4}>
-                <Form.Select className="form-control" name="eventOrganizer" value={event.eventOrganizer} onChange={handleChange}>
+                <Form.Select className="form-control-create-event" name="eventOrganizer" value={event.eventOrganizer} onChange={handleChange}>
                   <option >Enter your event event organizer here</option>
                   {eventOrganizers.map(eventOrganizer => {
                     return <option value={eventOrganizer._id}>{eventOrganizer.organizerName}</option>
@@ -114,19 +114,19 @@ const CreateEventComp = (props) => {
                   autoComplete="off"
                   value={event.eventTitle}
                   onChange={handleChange}
+                  className='form-control-create-event'
                 />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="form-group files color pb-3 " controlId='eventLogo'>
               <Form.Label column sm={2}>Logo</Form.Label>
               <Col sm={10}>
-                <Card className='justify-content-center align-items-center'>
+                <Card className='justify-content-center align-items-center form-control-create-event '>
                   <Form.Control
                     type="file"
-                    className="form-control create-event-upload-image"
+                    className="form-control-create-event create-event-upload-image"
                     name="eventLogo"
                     onChange={imageChange}
-
                   />
 
                   {imagePreview ? (
@@ -151,6 +151,7 @@ const CreateEventComp = (props) => {
                       autoComplete="off"
                       value={event.eventDate}
                       onChange={handleChange}
+                      className='form-control-create-event'
                     />
                   </Col>
                 </Form.Group>
@@ -166,6 +167,7 @@ const CreateEventComp = (props) => {
                       autoComplete="off"
                       value={event.eventTime}
                       onChange={handleChange}
+                      className='form-control-create-event'
                     />
                   </Col>
                 </Form.Group>
@@ -183,6 +185,7 @@ const CreateEventComp = (props) => {
                   value={event.eventDescription}
                   onChange={handleChange}
                   rows={3}
+                  className='form-control-create-event'
                 />
               </Col>
             </Form.Group>
@@ -196,6 +199,7 @@ const CreateEventComp = (props) => {
                   autoComplete="off"
                   value={event.eventAddress}
                   onChange={handleChange}
+                  className='form-control-create-event'
                 />
               </Col>
             </Form.Group>
@@ -210,13 +214,14 @@ const CreateEventComp = (props) => {
                   value={event.eventTnc}
                   onChange={handleChange}
                   rows={3}
+                  className='form-control-create-event'
                 />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="eventCategory">
               <Form.Label column sm={2}>Category</Form.Label>
               <Col sm={10}>
-                <Form.Select className="form-control" name="eventCategory" value={event.eventCategory} onChange={handleChange}>
+                <Form.Select className="form-control-create-event" name="eventCategory" value={event.eventCategory} onChange={handleChange}>
                   <option >Enter your event category here</option>
                   {eventCategories.map(eventCategory => {
                     return <option value={eventCategory}>{eventCategory}</option>

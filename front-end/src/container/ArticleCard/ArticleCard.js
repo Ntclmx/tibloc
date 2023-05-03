@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Axios from 'axios';
 import BasicCard from "../../components/BasicCard";
 import Row from "react-bootstrap/esm/Row";
-
+import './ArticleCard.css'
 
 const ArticleCard = () => {
   const [articles, setArticles] = useState([]);

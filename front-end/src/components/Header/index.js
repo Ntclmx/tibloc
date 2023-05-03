@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import CalendarWeek from '../../assets/header/cal1.png';
 import Bookmark from '../../assets/header/bookmark.png';
 import Plus from '../../assets/events/plus.png';
 import Scan from '../../assets/header/scan.png';
@@ -33,16 +32,11 @@ const Header = () => {
   const { ethereum } = window;
   const [showQR, setShowQR] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  // const [toast, settToast] = useState(<></>);
   const [scanResult, setScanResult] = useState(false);
   const handleShowQr = () => setShowQR(true);
   const handleHideQr = () => setShowQR(false);
 
   window.web3 = new Web3(ethereum);
-  const history = useHistory();
-
-  // console.log('web3', window.web3)
-
   const { web3User, setWeb3User } = useContext(UserContext);
 
   useEffect(() => {
@@ -97,16 +91,6 @@ const Header = () => {
     console.log(error);
   }
 
-  // const handleScan = (result) => {
-  //   if (result) {
-  //     console.log('result', result);
-  //     setScanResult(result);
-  //     console.log('variable scanResult',scanResult)
-  //     updateFlagging(result);
-  //     // window.location.reload();
-  //   }
-  // }
-
   const handleClick = async () => {
     console.log('Click Connecting');
 
@@ -143,7 +127,6 @@ const Header = () => {
   const updateFlagging = async (categoryId) => {
 
     try {
-      // console.log('scan result', categoryId.t)
       setLoading(true, "Please accept transaction in Metamask...")
       if(await updateFlag(categoryId)){
         setAlert('Scan Succeed!', 'green')
@@ -183,7 +166,7 @@ const Header = () => {
   } else {
     if(web3User)
     {
-      buttonWishlist = <a href="/wishlist" ><div className='mx-3'><Image src={Bookmark} className=" header-icon"></Image></div></a>
+      buttonWishlist = <a href="/wishlist" ><div className=''><Image src={Bookmark} className=" header-icon"></Image></div></a>
       buttonTransactions = <a href="/transactions" className="ms-auto"><div className="ms-3"><Image src={Trans} className=" header-icon"></Image></div></a>  
       buttonQR = <div className="" onClick={handleShowQr}><Image src={Scan} className=" header-icon"></Image></div>
       buttonProfile =<Button className='ms-4 profileButton ' onClick={handleClick}><Image src={Profile} className=" header-icon-profile mb-1 me-3"></Image>{textProfile}</Button>
@@ -196,8 +179,8 @@ const Header = () => {
 
 
   return (
-    <>
-      <Modal show={showQR} onHide={handleHideQr}>
+    <div>
+      <Modal show={showQR} onHide={handleHideQr} >
         <Modal.Header closeButton>
           <Modal.Title>Scan QR</Modal.Title>
         </Modal.Header>
@@ -209,7 +192,6 @@ const Header = () => {
               setScanResult(result.text);
               console.log('variable scanResult',scanResult)
               updateFlagging(result.text);
-              // window.location.reload();
             } if (!!error) {
               console.log(error)
             }
@@ -217,23 +199,6 @@ const Header = () => {
           delay={300}
           className='mx-3'
         />
-        {/* <QrReader
-          onError={handleScanError}
-          onResult={(result, error) => {
-            if (result) {
-              setLoading(true, "Connecting to Metamask...")
-              console.log('result', result);
-              setScanResult(result);
-              console.log('variable scanResult',scanResult)
-              updateFlagging(result);
-              // window.location.reload();
-            } if (!!error) {
-              console.log(error)
-            }
-          }}
-          delay={300}
-          className='mx-3'
-        /> */}
         {`Result: ${scanResult}`}
       </Modal>
       <ToastContainer className="p-3 position-fixed" position={'top-end'} >
@@ -245,28 +210,21 @@ const Header = () => {
           <Toast.Body>You haven't installed Metamask in your browser yet, click here for the guide</Toast.Body>
         </Toast>
       </ToastContainer>
-      <Navbar expand="lg" className='header-top'>
+      <Navbar expand="lg" >
         <Container fluid className='my-2 justify-content-start'>
-          <Navbar.Brand href="/" className="navbar-brand text-light fw-bold text-uppercase px-2 header-logo">TIBLOC.</Navbar.Brand>
+          <Navbar.Brand href="/" className="navbar-brand fw-bold px-2 header-logo">Tibloc.</Navbar.Brand>
           <Form className='text-center header-search m-0 p-0 d-flex'>
             <a href={url}><Button className='position-absolute headerSearchButton ms-2' ><Search></Search></Button></a>
             <Form.Control type="text" className='headerSearchText ps-5' placeholder='Search Here' onChange={e => handleChange(e)}></Form.Control>
           </Form>
-
           {buttonAdd}
           {buttonTransactions}
           {buttonWishlist}
           {buttonQR}
           {buttonProfile}  
-          
-
-
-
-          
-
         </Container>
       </Navbar>
-    </>
+    </div>
   )
 }
 

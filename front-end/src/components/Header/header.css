@@ -1,18 +1,11 @@
-.header-top {
-    background: #0C0C14;
-}
-
 .header-logo {
-    background-color: rgba(0, 0, 0, 0.0);
-    background: linear-gradient(#0C0C14, #0C0C14) padding-box,
-        linear-gradient(to top left, #1767F1, #CA0CF2, #D74D29, #F8C129) border-box;
-    border-radius: 50em;
-    border: 2px solid transparent;
-    /* width: 50px; */
-    
+    background: -webkit-linear-gradient(top left,#1767F1, #CA0CF2, #D74D29, #F8C129);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    font-size: x-large;
 }
 
-.header-top .form-control {
+.form-control {
     background-color: rgba(0, 0, 0, 0.0);
     background: linear-gradient(#0C0C14, #0C0C14) padding-box,
         linear-gradient(to top left, #1767F1, #CA0CF2, #D74D29, #F8C129) border-box;
@@ -27,7 +20,7 @@
     background: linear-gradient(#0C0C14, #0C0C14) padding-box,
         linear-gradient(to top left, #1767F1, #CA0CF2, #D74D29, #F8C129) border-box;
     border: 2px solid transparent;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .header-icon-profile {
@@ -70,3 +63,8 @@
     border-color: rgba(0, 0, 0, 0.0);
 }
 
+.modal-content{
+    padding: 8px;
+    background: #0C0C14;
+box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}

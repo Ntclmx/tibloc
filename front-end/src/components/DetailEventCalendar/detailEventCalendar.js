@@ -197,7 +197,7 @@ const DetailEventCalendar = (props) => {
                 {editButton}
                 
             </div>
-            <Card className='mt-3'>
+            <Card className='mt-3 card-properties border-gradient-purple'>
                 <ListGroup variant="flush">
                     <ListGroup.Item>
                         <Row>
@@ -232,7 +232,7 @@ const DetailEventCalendar = (props) => {
                         }
                     }}
                 />
-                <Button variant="primary" size="lg" className='mx-2 px-2 mb-3' href={`/event/${props._id}/categories`}>
+                <Button variant="secondary" size="lg" className='mx-2 px-2 mb-3' href={`/event/${props._id}/categories`}>
                     Choose Ticket
                 </Button>
             </Card>

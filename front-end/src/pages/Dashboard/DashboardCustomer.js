@@ -6,6 +6,7 @@ import ArticleCard from "../../container/ArticleCard/ArticleCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getMe } from "../../features/authSlice";
+import './dashboard.css'
 
 const DashboardCustomer = () => {
   console.log(`Start Dashboard...`);
@@ -32,7 +33,7 @@ const DashboardCustomer = () => {
       <h1 className="my-5 d-flex justify-content-center align-items-center">CATEGORY</h1>
       <ListCategory/>
       <div className="my-5 d-flex justify-content-center align-items-center">
-        <Button variant="primary" size="lg">
+        <Button className='btn-primary gradient-outline' variant="primary" size="lg">
           More...
         </Button>{' '}
       </div>

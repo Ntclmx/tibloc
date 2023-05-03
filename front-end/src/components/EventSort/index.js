@@ -28,7 +28,7 @@ const EventSort = (props) => {
                 <Form.Group className="mb-3 ms-3" controlId="eventOrganizer">
 
                     <Form.Select className="form-control" name="eventOrganizer" value={sort}  size="sm" onChange={handleChange}>
-                        <option >Sort By</option>
+                        <option className='option-props'>Sort By</option>
                         {sortAll.map(sortA => {
                             return <option value={sortA.value}>{sortA.name}</option>
                         })}

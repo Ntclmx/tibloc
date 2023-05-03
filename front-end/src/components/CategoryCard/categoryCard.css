@@ -2,9 +2,9 @@
     border-width: 2px;
     height: 100px;
     background-color: rgba(255, 255, 255, 0);
-    background: linear-gradient(#ffffff, #ffffff) padding-box,
+    background: linear-gradient(#0c0c14, #0c0c14) padding-box,
     linear-gradient(to top left, #1767F1, #CA0CF2,  #D74D29, #F8C129) border-box;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
 }
 
 .catCardTitle {
@@ -18,7 +18,8 @@
 }
 
 .catCardHeader {
-    background-color: white;
+    background: transparent;
+    /* background-color: white; */
     font-size: medium;
     font-weight: 600;
 }

@@ -3,6 +3,7 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Row from 'react-bootstrap/Row';
 import Axios from 'axios';
+import './ListCategory.css';
 import { EventCard } from "../../components";
 
 const ComponentEvents = (props) => {

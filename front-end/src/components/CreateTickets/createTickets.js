@@ -295,7 +295,7 @@ const CreateTickets = (props) => {
         </h1>
       </div>
       {tickets.map((ticket, index) => (
-        <Card key={index} className="mb-4">
+        <Card key={index} className="mb-4 card-create-ticket">
           <Card.Body>
             <Form className="input-form px-3 pt-4 pb-3">
               <h4 className="mb-3">Category {index + 1}</h4>
@@ -306,6 +306,7 @@ const CreateTickets = (props) => {
                 <Col sm={10}>
                   {isUpdate ? (
                     <Form.Control
+                    className="form-control-create-event"
                       type="text"
                       name="categoryName"
                       placeholder="Enter your ticket category name here"
@@ -316,6 +317,7 @@ const CreateTickets = (props) => {
                     />
                   ) : (
                     <Form.Control
+                    className="form-control-create-event"
                       type="text"
                       name="categoryName"
                       placeholder="Enter your ticket category name here"
@@ -332,6 +334,7 @@ const CreateTickets = (props) => {
                 </Form.Label>
                 <Col sm={10}>
                   <Form.Control
+                  className="form-control-create-event"
                     type="text"
                     name="categoryPrice"
                     placeholder="Enter your ticket category price here"
@@ -353,6 +356,7 @@ const CreateTickets = (props) => {
                 <Col sm={10}>
                   {isUpdate ? (
                     <Form.Control
+                    className="form-control-create-event"
                       as="textarea"
                       name="categoryDescription"
                       placeholder="Enter your ticket category description here"
@@ -364,6 +368,7 @@ const CreateTickets = (props) => {
                     />
                   ) : (
                     <Form.Control
+                    className="form-control-create-event"
                       as="textarea"
                       name="categoryDescription"
                       placeholder="Enter your ticket category description here"
@@ -381,6 +386,7 @@ const CreateTickets = (props) => {
                 </Form.Label>
                 <Col sm={10}>
                   <Form.Control
+                  className="form-control-create-event"
                     type="text"
                     name="categoryStock"
                     placeholder="Enter your ticket stock here"
@@ -407,7 +413,7 @@ const CreateTickets = (props) => {
                         <Card className="justify-content-center align-items-center">
                           <Form.Control
                             type="file"
-                            className="form-control create-event-upload-image"
+                            className="create-event-upload-image"
                             name="nftImage"
                             onChange={(e) => imageChange1(index, e)}
                           />
@@ -442,6 +448,7 @@ const CreateTickets = (props) => {
                         </Form.Label>
                         <Col sm={8}>
                           <Form.Control
+                          className="form-control-create-event"
                             type="text"
                             name="nftProbability"
                             autoComplete="off"
@@ -459,7 +466,7 @@ const CreateTickets = (props) => {
                         <Card className="justify-content-center align-items-center">
                           <Form.Control
                             type="file"
-                            className="form-control create-event-upload-image"
+                            className="form-control-create-event create-event-upload-image"
                             name="nftImage"
                             onChange={(e) => imageChange2(index, e)}
                           />
@@ -494,6 +501,7 @@ const CreateTickets = (props) => {
                         </Form.Label>
                         <Col sm={8}>
                           <Form.Control
+                          className="form-control-create-event"
                             type="text"
                             name="nftProbability"
                             autoComplete="off"
@@ -508,10 +516,10 @@ const CreateTickets = (props) => {
                         className="form-group files color pb-3 pt-3"
                         controlId="nftImage3"
                       >
-                        <Card className="justify-content-center align-items-center">
+                        <Card className="justify-content-center align-items-center card-create-ticket-nft">
                           <Form.Control
                             type="file"
-                            className="form-control create-event-upload-image"
+                            className="form-control-create-event create-event-upload-image"
                             name="nftImage"
                             onChange={(e) => imageChange3(index, e)}
                           />
@@ -546,6 +554,7 @@ const CreateTickets = (props) => {
                         </Form.Label>
                         <Col sm={8}>
                           <Form.Control
+                          className="form-control-create-event"
                             type="text"
                             name="nftProbability"
                             autoComplete="off"

@@ -82,10 +82,10 @@ const DetailEventTabs = (props) => {
     return (
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Description" {...a11yProps(0)} />
-                    <Tab label="Collectibles" {...a11yProps(2)} />
-                    <Tab label="Terms and Conditions" {...a11yProps(3)} />
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor='white'>
+                    <Tab label="Description" {...a11yProps(0) } textColor= "white"/>
+                    <Tab label="Collectibles" {...a11yProps(2)} textColor= "white"/>
+                    <Tab label="Terms and Conditions" {...a11yProps(3)} textColor= "white"/>
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>

@@ -1,11 +1,13 @@
 .filter-card {
+    background: transparent;
+    background-color: transparent;
     border: 3px solid;
     border-color: rgba(12, 12, 20, 0.3);
 }
 
 .filter-card-font-bold {
     font-size: large;
-    font-weight: bolder;
+    font-weight: 500;
 }
 
 .filter-card-font-small {

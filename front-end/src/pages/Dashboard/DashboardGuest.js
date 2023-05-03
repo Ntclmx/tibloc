@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import CarouselImage1 from '../../assets/carousel/Home1.png';
 // import { UserContext } from '../MainApp/index'
 import Image from 'react-bootstrap/Image';
+import './dashboard.css'
 
 const DashboardGuest = () => {
   // const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const DashboardGuest = () => {
       <h1 className="mt-5 mb-2 d-flex justify-content-center align-items-center dashboardTextBold">CATEGORY</h1>
       <ListCategory/>
       <div className="my-5 px-5 d-flex justify-content-center align-items-center">
-        <Button variant="primary" size="lg" onClick={toEvent}>
+        <Button variant="secondary" size="lg" onClick={toEvent}>
           More...
         </Button>{' '}
       </div>

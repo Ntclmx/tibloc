@@ -140,7 +140,7 @@ const ChooseTicket = (props) => {
   if (chooseCategory === "-") {
     button = (
       <div className="mx-1 px-2 mb-3 d-grid">
-        <Button variant="primary" size="lg" disabled>
+        <Button variant="secondary" size="lg" disabled>
           Mint
         </Button>
       </div>
@@ -148,7 +148,7 @@ const ChooseTicket = (props) => {
   } else {
     button = (
       <div className="mx-1 px-2 mb-3 d-grid">
-        <Button variant="primary" size="lg" onClick={mintFunction}>
+        <Button variant="secondary" size="lg" onClick={mintFunction} className='btn-secondary'>
           Mint
         </Button>
       </div>
@@ -202,7 +202,7 @@ const ChooseTicket = (props) => {
             })}
           </Col>
           <Col className="col-4 ms-5">
-            <Card className="text-start mb-3">
+            <Card className="text-start mb-3 detail-card shadow">
               <Card.Header className="catCardHeader d-flex">
                 <Card.Title className=" pb-0 mb-0">Detail</Card.Title>
               </Card.Header>

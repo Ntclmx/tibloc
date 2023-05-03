@@ -1,15 +1,30 @@
-@font-face {
+/* @font-face {
   font-family: 'Outfit';
   font-weight: 900;
   src: local('Outfit'), url(../fonts/Outfit-Black.ttf) format('truetype');
-}
+} */
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400&family=Outfit&display=swap');
 
+body{
+  font-family: 'Outfit', sans-serif;
+  color: rgb(231, 229, 245);
+  /* color: radial-gradient(at 15% 33%, hsla(195,100%,50%,1) 0px, transparent 50%); */
+  background-color:hsla(240,25%,6%,1);
+background-image:
+radial-gradient(at 15% 33%, hsla(195,100%,3%,1) 0px, transparent 50%),
+radial-gradient(at 13% 72%, hsla(270,100%,3%,1) 0px, transparent 50%),
+radial-gradient(at 54% 19%, hsla(297,100%,3%,1) 0px, transparent 50%),
+radial-gradient(at 63% 98%, hsla(351,100%,3%,1) 0px, transparent 50%),
+radial-gradient(at 92% 40%, hsla(176,100%,3%,1) 0px, transparent 50%),
+radial-gradient(at 1% 86%, hsla(331,100%,3%,1) 0px, transparent 50%),
+radial-gradient(at 6% 74%, hsla(323,100%,3%,1) 0px, transparent 50%);
+}
 .App {
   text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 80vmin;
   pointer-events: none;
 }
 
@@ -41,4 +56,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.btn-secondary {
+  color: whitesmoke !important;
+  background-color: rgba(255, 255, 255, 0) !important;
+  /* background: linear-gradient(to top left, #1767F1, #CA0CF2,  #D74D29, #F8C129); */
+    background: linear-gradient(#0c0c14, #0c0c14) padding-box,
+    linear-gradient(to top left, #1767F1, #CA0CF2,  #D74D29, #F8C129) border-box !important;
+    border: 2px solid transparent !important;
 }

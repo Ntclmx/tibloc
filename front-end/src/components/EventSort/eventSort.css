@@ -8,6 +8,10 @@
     font-weight: lighter;
 }
 
+.option-props{
+    color: whitesmoke;
+}
+
 .link-sort {
     text-decoration: none;
     color: black;
