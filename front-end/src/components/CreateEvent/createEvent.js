@@ -83,7 +83,7 @@ const CreateEventComp = (props) => {
   }, [])
 
   // const eventOrganizers = ['Groovy Event Organizer', 'The BIG Organizer', 'Dream Flavours Celebration'];
-  const eventCategories = ['Comedy', 'Music', 'Sport','Fun&Games'];
+  const eventCategories = ['Comedy', 'Music', 'Sport', 'Fun&Games'];
 
   return (
     <div className='mb-5'>
@@ -96,7 +96,7 @@ const CreateEventComp = (props) => {
             <Form.Group as={Row} className="mb-3" controlId="eventOrganizer">
               <Form.Label column sm={2}>Organizer</Form.Label>
               <Col sm={4}>
-                <Form.Select className="form-control-create-event" name="eventOrganizer" value={event.eventOrganizer} onChange={handleChange}>
+                <Form.Select className="form-select-style" name="eventOrganizer" value={event.eventOrganizer} onChange={handleChange}>
                   <option >Enter your event event organizer here</option>
                   {eventOrganizers.map(eventOrganizer => {
                     return <option value={eventOrganizer._id}>{eventOrganizer.organizerName}</option>

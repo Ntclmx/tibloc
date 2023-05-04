@@ -571,14 +571,14 @@ const CreateTickets = (props) => {
                   className="ms-2 create-ticket-button"
                   onClick={addCategory}
                 >
-                  <PlusLg color="secondary"></PlusLg>
+                  <PlusLg color="light"></PlusLg>
                 </Button>
                 {index !== 0 ? (
                   <Button
                     className="me-3 create-ticket-button"
                     onClick={() => removeCategory(index)}
                   >
-                    <DashLg color="secondary"></DashLg>
+                    <DashLg color="light"></DashLg>
                   </Button>
                 ) : (
                   <div></div>
