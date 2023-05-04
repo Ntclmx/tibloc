@@ -36,9 +36,12 @@
 }
 
 .form-control-create-event{
+    background:transparent;
     border: 2px solid;
-    border-image: linear-gradient(120deg,  #7d7e80, #c7c7c7)1 100%;
-    background: transparent;
+    border-image-slice:1;
+    border-width: 2px;
+    border-image-source: linear-gradient(120deg,  #7d7e80, #c7c7c7)1 100%;
+
     color: whitesmoke;
     /* background-color: rgba(0, 0, 0, 0.0);
     background: linear-gradient(#0C0C14, #0C0C14) padding-box,

@@ -1,5 +1,6 @@
 .card-create-ticket{
     background:transparent;
+    color: whitesmoke
 }
 
 .create-ticket-button {
@@ -9,9 +10,11 @@
 
 .createTicketSmallText {
     font-size: smaller;
+    color: whitesmoke;
 }
 
 .createTicketNFT {
+    color: whitesmoke;
     border-radius: 15px 15px 15px 15px;
     height: 180px;
     max-width: 260px;
@@ -20,8 +23,13 @@
 }
 
 .card-create-ticket-nft{
-    border: 2px solid;
-    border-image: linear-gradient(120deg,  #7d7e80, #c7c7c7)1 100%;
+    /* border: 2px solid;
+    border-image: linear-gradient(120deg,  #7d7e80, #c7c7c7)1 100%; */
+    color: whitesmoke;
     border-radius: .5em;
     background:transparent;
+    border: 2px solid;
+    border-image-slice:1;
+    border-width: 2px;
+    border-image-source: linear-gradient(120deg,  #7d7e80, #c7c7c7)1 100%;
 }
