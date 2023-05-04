@@ -1,6 +1,7 @@
 .card-create-event{
     /* background: #0c0c14; */
     background: transparent;
+    color: whitesmoke;
 }
 
 .create-event-upload-image {
@@ -35,11 +36,15 @@
 }
 
 .form-control-create-event{
-    background-color: rgba(0, 0, 0, 0.0);
+    border: 2px solid;
+    border-image: linear-gradient(120deg,  #7d7e80, #c7c7c7)1 100%;
+    background: transparent;
+    color: whitesmoke;
+    /* background-color: rgba(0, 0, 0, 0.0);
     background: linear-gradient(#0C0C14, #0C0C14) padding-box,
-        linear-gradient(to top left, #1767F1, #CA0CF2, #D74D29, #F8C129) border-box;
+        linear-gradient(to top left, #1767F1, #CA0CF2, #D74D29, #F8C129) border-box; */
     border-radius: .5em;
-    border: 2px solid transparent;
+    /* border: 2px solid transparent; */
     padding-left: 2.375rem;
     width: 100%;
 }

@@ -410,7 +410,7 @@ const CreateTickets = (props) => {
                         className="form-group files color pb-3 pt-3"
                         controlId="nftImage1"
                       >
-                        <Card className="justify-content-center align-items-center">
+                        <Card className="justify-content-center align-items-center card-create-ticket-nft">
                           <Form.Control
                             type="file"
                             className="create-event-upload-image"
@@ -463,7 +463,7 @@ const CreateTickets = (props) => {
                         className="form-group files color pb-3 pt-3"
                         controlId="nftImage2"
                       >
-                        <Card className="justify-content-center align-items-center">
+                        <Card className="justify-content-center align-items-center card-create-ticket-nft">
                           <Form.Control
                             type="file"
                             className="form-control-create-event create-event-upload-image"

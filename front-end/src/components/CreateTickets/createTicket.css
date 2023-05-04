@@ -20,6 +20,8 @@
 }
 
 .card-create-ticket-nft{
-    border: 2px solid blue;
+    border: 2px solid;
+    border-image: linear-gradient(120deg,  #7d7e80, #c7c7c7)1 100%;
+    border-radius: .5em;
     background:transparent;
 }
