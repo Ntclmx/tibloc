@@ -11,6 +11,7 @@ import Circle from '../../assets/events/circle.png';
 import Modal from 'react-bootstrap/Modal';
 import Moment from 'react-moment';
 import { getAllNftsOwnedBy } from '../../config/Blockchain.Service';
+import moment from 'moment';
 
 
 const DetailTransaction = (props) => {
@@ -19,6 +20,8 @@ const DetailTransaction = (props) => {
     const [event, setEvent] = useState({});
     const [show, setShow] = useState(false);
     const [showTicket, setShowTicket] = useState(false);
+    const [mintDate, setMintDate] = useState('');
+    const [flagDate, setFlagDate] = useState('');
 
     // console.log(props.location.state)
     useEffect(() => {
@@ -26,19 +29,21 @@ const DetailTransaction = (props) => {
         console.log('detail', props.location.state.nft)
         setEvent(props.location.state.event)
         setCat(props.location.state.category)
-        
-        const toDate = (timestamp) => {
-            const dateFormat = new Date(timestamp);
-            return dateFormat.toLocaleString('en-GB');
-        }
+        setNft(props.location.state.nft)
+
         //timestamp to date
-        let Nft = props.location.state.nft
-        // Nft.mintDate = nft.mintDate === "0" ? "" : toDate(parseInt(nft.mintDate))
-        // Nft.flagDate = nft.flagDate === "0" ? "" : toDate(parseInt(nft.flagDate))
+        const mintDate = nft.mintDate === "0" ? "-" : (moment.unix(nft.mintDate))._d
+        const flagDate = nft.flagDate === "0" ? "-" : (moment.unix(nft.flagDate))._d;
 
-        setNft(Nft)
+        setMintDate(mintDate.toString())
+        setFlagDate(flagDate.toString())
 
+        // console.log(moment.unix(nft.mintDate))
+        // console.log()
     })
+
+    console.log(mintDate)
+    console.log(flagDate)
 
 
 
@@ -46,7 +51,7 @@ const DetailTransaction = (props) => {
     if (event._id) {
         return (
             <>
-                <Card>
+                <Card className='detailTrx'>
                     <Card.Header className='detailTrxHead text-uppercase'><h5>{event.eventTitle}</h5></Card.Header>
                     <Row className='d-flex'>
                         <div className='col-6 justify-content-center my-3 detailTrxCol'>
@@ -107,18 +112,14 @@ const DetailTransaction = (props) => {
                                     </Row>
                                 </div>
 
-                                <div>
-                                    {/* <div className='d-flex'>
-                                        <Image src={Circle} className='detailTrxCircle mt-1 me-3'></Image>
-                                        <h3 className='detailTrxEvent'>PAYMENT</h3>
-                                    </div> */}
-
-                                    <Row >
+                                <div className='detailTrxSmallDiv mb-4'>
+                                    <Row className='mt-3 pb-3'>
                                         <Col className='col-4 '>
                                             <h5 className='detailTrxText2 mb-2'>Mint Date</h5>
                                         </Col>
                                         <Col className='col-8'>
-                                            <h5 className='detailTrxText text-uppercase mb-2'>{nft.mintDate}</h5>
+                                            {/* <h5 className='detailTrxText text-uppercase mb-2'>{nft.mintDate}</h5> */}
+                                            <h5 className='detailTrxText2 mb-2'>{mintDate.toString()}</h5>
                                         </Col>
                                         <Col className='col-4 '>
                                             <h5 className='detailTrxText2 mb-2'>Status</h5>
@@ -131,7 +132,29 @@ const DetailTransaction = (props) => {
                                             <h5 className='detailTrxText2 mb-2'>Date Used</h5>
                                         </Col>
                                         <Col className='col-8'>
+                                            <h5 className='detailTrxText2 mb-2'>{flagDate}</h5>
+                                        </Col>
+
+                                    </Row>
+
+                                </div>
+                                <div>
+                                    <Row >
+                                        
+                                        <h5 className='detailTrxText2 mb-4'>Import NFT to Metamask with Detail:</h5>
+                                        
+                                        <Col className='col-4 '>
+                                            <h5 className='detailTrxText2 mb-2'>Contract Address</h5>
+                                        </Col>
+                                        <Col className='col-8'>
                                             <h5 className='detailTrxText text-uppercase mb-2'>{nft.flagDate}</h5>
+
+                                        </Col>
+                                        <Col className='col-4 '>
+                                            <h5 className='detailTrxText2 mb-2'>TokenID</h5>
+                                        </Col>
+                                        <Col className='col-8'>
+                                            <h5 className='detailTrxText text-uppercase mb-2'>{nft.tokenId}</h5>
                                         </Col>
 
                                     </Row>

@@ -91,7 +91,7 @@ const ChooseTicket = (props) => {
       )
         .then((result) => {
           randomizedIPFS = result.data.nft;
-          console.log('Randomized IPFS result: ' + randomizedIPFS.nftImageURL);
+          // console.log('Randomized IPFS result: ' + randomizedIPFS.nftImageURL);
         })
         .catch((err) => {
           console.log(err);

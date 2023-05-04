@@ -1,5 +1,9 @@
+.detailTrx{
+    background: transparent;
+}
+
 .detailTrxHead {
-    background-color: white;
+    /* background-color: white; */
     font-weight: bold;
 }
 
@@ -18,11 +22,19 @@
 }
 
 .detailTrxCol {
-    border-right :1px solid #aaaa;
+    /* border-right :1px solid;
+    border-image: linear-gradient(to bottom, #1767F1, #CA0CF2, #D74D29, #F8C129) 1 100%; */
+    border-right: 2px solid;
+    border-image: linear-gradient(to bottom,  #1767F1, #CA0CF2)1 100%;
 }
 
 .detailTrxSmallDiv {
-    border-bottom :1px solid #aaaa;
+    /* border-bottom :1px solid;
+    border-image: linear-gradient(#1767F1, #CA0CF2, #D74D29, #F8C129) 1 100%; */
+    border-bottom: 2px solid;
+    border-image-slice:1;
+    border-width: 2px;
+    border-image-source: linear-gradient(to right, #1767F1, #CA0CF2);
 
 }
 
@@ -38,7 +50,7 @@
 .detailTrxText {
     margin-top: 0;
     margin-bottom: 0;
-    font-weight: bolder;
+    font-weight: bold;
     font-size: medium;
 }
 
@@ -65,6 +77,6 @@
 .detailTrxText2 {
     margin-top: 0;
     margin-bottom: 0;
-    font-weight: normal;
+    font-weight: 400;
     font-size: medium;
 }
