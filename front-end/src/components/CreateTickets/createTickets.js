@@ -92,7 +92,20 @@ const CreateTickets = (props) => {
     setNFT3(values);
   };
 
+  const [validated, setValidated] = useState(false);
+
   const submitButton = async (e) => {
+    const form = e.currentTarget;
+
+    if (form.checkValidity() === false) {
+      console.log('masuk')
+      e.preventDefault();
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    setValidated(true);
+
     e.preventDefault();
     setLoading(true, "Processing...")
 
@@ -108,86 +121,86 @@ const CreateTickets = (props) => {
       .catch((err) => {
         console.log(err.response.data);
       });
-    
+
     if (isUpdate) {
       const eventId = props.match.params.id;
       setLoading(true, "Start Updating Event...")
-            Axios.put(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}`, event, {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            })
-                .then(res => {
-
-                    const allTickets = {
-                        eventId: eventId,
-                        tickets: tickets
-                    }
-
-                    Axios.put(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}/categories`, allTickets)
-                        .then(res => {
-                            console.log(res);
-                        })
-                        .catch(err => {
-                            console.log(err.response.data);
-                        });
-                })
-                .catch(err => {
-                    console.log(err.response.data);
-                    setAlert("Update Event Failed...", "red");
-                })
-                
-                setAlert("Update Event Succeed...", "green");
-                history.push("/events");
-        } else {
-          setLoading(true, "Start Creating Event...")
-            Axios.post(`${process.env.REACT_APP_API_URL}/v1/event`, event, {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            })
-                .then(res => {
-
-                    const allTickets = {
-                        eventId: res.data.event._id,
-                        tickets: tickets
-                    }
-                    Axios.post(`${process.env.REACT_APP_API_URL}/v1/categories`, allTickets)
-                        .then(res => {
-                          setLoading(true, "Processing image...")
-                            const allNft = {
-                                categories: res.data.categories,
-                                nft1: NFT1,
-                                nft2: NFT2,
-                                nft3: NFT3,
-                                organizer: detailOrganize,
-                            }
-
-                            Axios.post(`${process.env.REACT_APP_API_URL}/v1/nfts`, allNft, {
-                                headers: {
-                                    'content-type': 'multipart/form-data'
-                                }
-                            })
-                                .then(res => {
-
-                                    console.log(res.data);
-                                    history.push("/events");
-                                })
-                                .catch(err => {
-                                    console.log(err.response.data);
-                                });
-                        })
-                        .catch(err => {
-                            console.log(err.response.data);
-                        });
-                })
-                .catch(err => {
-                    console.log(err.response.data);
-                    setAlert("Create Event Failed...", "red");
-                })
+      Axios.put(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}`, event, {
+        headers: {
+          'content-type': 'multipart/form-data'
         }
-        setAlert("Create Event Succeed...", "green");
-        history.push('/events');
+      })
+        .then(res => {
+
+          const allTickets = {
+            eventId: eventId,
+            tickets: tickets
+          }
+
+          Axios.put(`${process.env.REACT_APP_API_URL}/v1/event/${eventId}/categories`, allTickets)
+            .then(res => {
+              console.log(res);
+            })
+            .catch(err => {
+              console.log(err.response.data);
+            });
+        })
+        .catch(err => {
+          console.log(err.response.data);
+          setAlert("Update Event Failed...", "red");
+        })
+
+      setAlert("Update Event Succeed...", "green");
+      history.push("/events");
+    } else {
+      setLoading(true, "Start Creating Event...")
+      Axios.post(`${process.env.REACT_APP_API_URL}/v1/event`, event, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      })
+        .then(res => {
+
+          const allTickets = {
+            eventId: res.data.event._id,
+            tickets: tickets
+          }
+          Axios.post(`${process.env.REACT_APP_API_URL}/v1/categories`, allTickets)
+            .then(res => {
+              setLoading(true, "Processing image...")
+              const allNft = {
+                categories: res.data.categories,
+                nft1: NFT1,
+                nft2: NFT2,
+                nft3: NFT3,
+                organizer: detailOrganize,
+              }
+
+              Axios.post(`${process.env.REACT_APP_API_URL}/v1/nfts`, allNft, {
+                headers: {
+                  'content-type': 'multipart/form-data'
+                }
+              })
+                .then(res => {
+
+                  console.log(res.data);
+                  history.push("/events");
+                })
+                .catch(err => {
+                  console.log(err.response.data);
+                });
+            })
+            .catch(err => {
+              console.log(err.response.data);
+            });
+        })
+        .catch(err => {
+          console.log(err.response.data);
+          setAlert("Create Event Failed...", "red");
+        })
+    }
+    setAlert("Create Event Succeed...", "green");
+    history.push('/events');
   };
 
   const addCategory = () => {
@@ -294,10 +307,10 @@ const CreateTickets = (props) => {
           {isUpdate ? "Update Tickets Category" : "Create Tickets Category"}
         </h1>
       </div>
-      {tickets.map((ticket, index) => (
-        <Card key={index} className="mb-4 card-create-ticket">
-          <Card.Body>
-            <Form className="input-form px-3 pt-4 pb-3">
+      <Form noValidate validated={validated} className="input-form px-3 pt-4 pb-3" onSubmit={submitButton}>
+        {tickets.map((ticket, index) => (
+          <Card key={index} className="mb-4 card-create-ticket">
+            <Card.Body>
               <h4 className="mb-3">Category {index + 1}</h4>
               <Form.Group as={Row} className="mb-3" controlId="categoryName">
                 <Form.Label column sm={2}>
@@ -306,7 +319,8 @@ const CreateTickets = (props) => {
                 <Col sm={10}>
                   {isUpdate ? (
                     <Form.Control
-                    className="form-control-create-event"
+
+                      className="form-control-create-event"
                       type="text"
                       name="categoryName"
                       placeholder="Enter your ticket category name here"
@@ -317,7 +331,8 @@ const CreateTickets = (props) => {
                     />
                   ) : (
                     <Form.Control
-                    className="form-control-create-event"
+                      required
+                      className="form-control-create-event"
                       type="text"
                       name="categoryName"
                       placeholder="Enter your ticket category name here"
@@ -334,7 +349,8 @@ const CreateTickets = (props) => {
                 </Form.Label>
                 <Col sm={10}>
                   <Form.Control
-                  className="form-control-create-event"
+                    required
+                    className="form-control-create-event"
                     type="text"
                     name="categoryPrice"
                     placeholder="Enter your ticket category price here"
@@ -356,7 +372,7 @@ const CreateTickets = (props) => {
                 <Col sm={10}>
                   {isUpdate ? (
                     <Form.Control
-                    className="form-control-create-event"
+                      className="form-control-create-event"
                       as="textarea"
                       name="categoryDescription"
                       placeholder="Enter your ticket category description here"
@@ -368,7 +384,8 @@ const CreateTickets = (props) => {
                     />
                   ) : (
                     <Form.Control
-                    className="form-control-create-event"
+                      required
+                      className="form-control-create-event"
                       as="textarea"
                       name="categoryDescription"
                       placeholder="Enter your ticket category description here"
@@ -386,7 +403,8 @@ const CreateTickets = (props) => {
                 </Form.Label>
                 <Col sm={10}>
                   <Form.Control
-                  className="form-control-create-event"
+                    required
+                    className="form-control-create-event"
                     type="text"
                     name="categoryStock"
                     placeholder="Enter your ticket stock here"
@@ -412,6 +430,7 @@ const CreateTickets = (props) => {
                       >
                         <Card className="justify-content-center align-items-center card-create-ticket-nft">
                           <Form.Control
+                            required
                             type="file"
                             className="create-event-upload-image"
                             name="nftImage"
@@ -448,7 +467,8 @@ const CreateTickets = (props) => {
                         </Form.Label>
                         <Col sm={8}>
                           <Form.Control
-                          className="form-control-create-event"
+                            required
+                            className="form-control-create-event"
                             type="text"
                             name="nftProbability"
                             autoComplete="off"
@@ -465,6 +485,7 @@ const CreateTickets = (props) => {
                       >
                         <Card className="justify-content-center align-items-center card-create-ticket-nft">
                           <Form.Control
+                            required
                             type="file"
                             className="form-control-create-event create-event-upload-image"
                             name="nftImage"
@@ -501,7 +522,8 @@ const CreateTickets = (props) => {
                         </Form.Label>
                         <Col sm={8}>
                           <Form.Control
-                          className="form-control-create-event"
+                            required
+                            className="form-control-create-event"
                             type="text"
                             name="nftProbability"
                             autoComplete="off"
@@ -518,6 +540,7 @@ const CreateTickets = (props) => {
                       >
                         <Card className="justify-content-center align-items-center card-create-ticket-nft">
                           <Form.Control
+                            required
                             type="file"
                             className="form-control-create-event create-event-upload-image"
                             name="nftImage"
@@ -554,7 +577,8 @@ const CreateTickets = (props) => {
                         </Form.Label>
                         <Col sm={8}>
                           <Form.Control
-                          className="form-control-create-event"
+                            required
+                            className="form-control-create-event"
                             type="text"
                             name="nftProbability"
                             autoComplete="off"
@@ -584,20 +608,20 @@ const CreateTickets = (props) => {
                   <div></div>
                 )}
               </div>
-            </Form>
-          </Card.Body>
-        </Card>
-      ))}
-      <div className="d-flex flex-row-reverse mt-3">
-        <Button
-          variant="primary"
-          type="submit"
-          className="mt-2 px-4 create-event-button"
-          onClick={submitButton}
-        >
-          Create
-        </Button>
-      </div>
+            </Card.Body>
+          </Card>
+        ))}
+        <div className="d-flex flex-row-reverse mt-3">
+          <Button
+            variant="primary"
+            type="submit"
+            className="mt-2 px-4 create-event-button"
+
+          >
+            Create
+          </Button>
+        </div>
+      </Form>
     </div>
   );
 };

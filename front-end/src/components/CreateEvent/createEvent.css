@@ -6,6 +6,7 @@
 
 .form-select-style{
     border: 2px solid;
+    border-radius: .5em;
     border-color: rgb(226, 226, 226);
     background: transparent;
     color: rgb(127, 125, 138);

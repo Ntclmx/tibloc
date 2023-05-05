@@ -24,6 +24,8 @@ const CreateEventComp = (props) => {
     eventLogo: '',
   });
 
+  const [validated, setValidated] = useState(false);
+
   useEffect(() => {
 
     const eventId = props.match.params.id;
@@ -59,6 +61,18 @@ const CreateEventComp = (props) => {
   }
 
   const submitButton = (e) => {
+
+    const form = e.currentTarget;
+
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    setValidated(true);
+    
+    
     e.preventDefault();
     console.log(event);
     props.updateEvent(event);
@@ -92,22 +106,23 @@ const CreateEventComp = (props) => {
       </div>
       <Card className='card-create-event'>
         <Card.Body>
-          <Form className="input-form px-3 pt-4 pb-3">
+          <Form noValidate validated={validated} className="input-form px-3 pt-4 pb-3" onSubmit={submitButton}>
             <Form.Group as={Row} className="mb-3" controlId="eventOrganizer">
               <Form.Label column sm={2}>Organizer</Form.Label>
               <Col sm={4}>
-                <Form.Select className="form-select-style" name="eventOrganizer" value={event.eventOrganizer} onChange={handleChange}>
-                  <option >Enter your event organizer here</option>
+                <Form.Control required as="select" type="select" className="form-select-style" name="eventOrganizer" value={event.eventOrganizer} onChange={handleChange}>
+                  <option value={""}>Enter your event organizer here</option>
                   {eventOrganizers.map(eventOrganizer => {
                     return <option className='textBlack' value={eventOrganizer._id}>{eventOrganizer.organizerName}</option>
                   })}
-                </Form.Select>
+                </Form.Control>
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="eventTitle">
               <Form.Label column sm={2}>Title</Form.Label>
               <Col sm={10}>
                 <Form.Control
+                  required
                   type="text"
                   name="eventTitle"
                   placeholder="Enter your event event title here"
@@ -116,6 +131,7 @@ const CreateEventComp = (props) => {
                   onChange={handleChange}
                   className='form-control-create-event'
                 />
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="form-group files color pb-3 " controlId='eventLogo'>
@@ -123,10 +139,12 @@ const CreateEventComp = (props) => {
               <Col sm={10}>
                 <Card className='justify-content-center align-items-center form-control-create-event '>
                   <Form.Control
+                    required
                     type="file"
                     className="form-control-create-event create-event-upload-image"
                     name="eventLogo"
                     onChange={imageChange}
+                    
                   />
 
                   {imagePreview ? (
@@ -152,6 +170,7 @@ const CreateEventComp = (props) => {
                       value={event.eventDate}
                       onChange={handleChange}
                       className='form-control-create-event'
+                      required
                     />
                   </Col>
                 </Form.Group>
@@ -168,6 +187,7 @@ const CreateEventComp = (props) => {
                       value={event.eventTime}
                       onChange={handleChange}
                       className='form-control-create-event'
+                      required
                     />
                   </Col>
                 </Form.Group>
@@ -186,6 +206,7 @@ const CreateEventComp = (props) => {
                   onChange={handleChange}
                   rows={3}
                   className='form-control-create-event'
+                  required
                 />
               </Col>
             </Form.Group>
@@ -200,6 +221,7 @@ const CreateEventComp = (props) => {
                   value={event.eventAddress}
                   onChange={handleChange}
                   className='form-control-create-event'
+                  required
                 />
               </Col>
             </Form.Group>
@@ -215,22 +237,23 @@ const CreateEventComp = (props) => {
                   onChange={handleChange}
                   rows={3}
                   className='form-control-create-event'
+                  required
                 />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="eventCategory">
               <Form.Label column sm={2}>Category</Form.Label>
               <Col sm={10}>
-                <Form.Select className="form-select-style" name="eventCategory" value={event.eventCategory} onChange={handleChange}>
-                  <option >Enter your event category here</option>
+                <Form.Control required as="select" type="select"  className="form-select-style" name="eventCategory" value={event.eventCategory} onChange={handleChange}>
+                  <option value={""} >Enter your event category here</option>
                   {eventCategories.map(eventCategory => {
                     return <option value={eventCategory}>{eventCategory}</option>
                   })}
-                </Form.Select>
+                </Form.Control>
               </Col>
             </Form.Group>
             <div className="d-flex flex-row-reverse">
-              <Button variant="primary" type="submit" className='mt-2 px-4 create-event-button' onClick={submitButton}>
+              <Button variant="primary" type="submit" className='mt-2 px-4 create-event-button' >
                 Next
               </Button>
             </div>
