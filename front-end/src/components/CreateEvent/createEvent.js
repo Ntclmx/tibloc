@@ -97,9 +97,9 @@ const CreateEventComp = (props) => {
               <Form.Label column sm={2}>Organizer</Form.Label>
               <Col sm={4}>
                 <Form.Select className="form-select-style" name="eventOrganizer" value={event.eventOrganizer} onChange={handleChange}>
-                  <option >Enter your event event organizer here</option>
+                  <option >Enter your event organizer here</option>
                   {eventOrganizers.map(eventOrganizer => {
-                    return <option value={eventOrganizer._id}>{eventOrganizer.organizerName}</option>
+                    return <option className='textBlack' value={eventOrganizer._id}>{eventOrganizer.organizerName}</option>
                   })}
                 </Form.Select>
               </Col>
@@ -221,7 +221,7 @@ const CreateEventComp = (props) => {
             <Form.Group as={Row} className="mb-3" controlId="eventCategory">
               <Form.Label column sm={2}>Category</Form.Label>
               <Col sm={10}>
-                <Form.Select className="form-control-create-event" name="eventCategory" value={event.eventCategory} onChange={handleChange}>
+                <Form.Select className="form-select-style" name="eventCategory" value={event.eventCategory} onChange={handleChange}>
                   <option >Enter your event category here</option>
                   {eventCategories.map(eventCategory => {
                     return <option value={eventCategory}>{eventCategory}</option>
@@ -230,7 +230,7 @@ const CreateEventComp = (props) => {
               </Col>
             </Form.Group>
             <div className="d-flex flex-row-reverse">
-              <Button variant="primary" type="submit" className='mt-2 px-4 create-event-button text-dark' onClick={submitButton}>
+              <Button variant="primary" type="submit" className='mt-2 px-4 create-event-button' onClick={submitButton}>
                 Next
               </Button>
             </div>
