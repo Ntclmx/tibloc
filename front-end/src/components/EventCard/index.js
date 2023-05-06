@@ -135,7 +135,7 @@ const EventCard = (props) => {
           <Card.Body className='event-card-body'>
             <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
             <Card.Text className='event-card-price pt-0'>
-              ETH {price}
+              MATIC {price}
             </Card.Text>
           </Card.Body>
         </Card>
@@ -159,7 +159,7 @@ const EventCard = (props) => {
               <Card.Body className='event-card-body'>
                 <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
                 <Card.Text className='event-card-price pt-0'>
-                  ETH {price}
+                  MATIC {price}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -184,7 +184,7 @@ const EventCard = (props) => {
               <Card.Body className='event-card-body'>
                 <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
                 <Card.Text className='event-card-price pt-0'>
-                  ETH {price}
+                  MATIC {price}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -211,7 +211,7 @@ const EventCard = (props) => {
               <Card.Body className='event-card-body'>
                 <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
                 <Card.Text className='event-card-price pt-0'>
-                ETH {price}
+                MATIC {price}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -236,7 +236,7 @@ const EventCard = (props) => {
               <Card.Body className='event-card-body'>
                 <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
                 <Card.Text className='event-card-price pt-0'>
-                ETH {price}
+                MATIC {price}
                 </Card.Text>
               </Card.Body>
             </Card>

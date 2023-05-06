@@ -66,7 +66,7 @@ const WishlistCard = (props) => {
                         <Col className='col-10'>
                             <Card.Title className='event-card-title pb-0 mb-0'>{props.eventTitle}</Card.Title>
                             <Card.Text className='event-card-price pt-0'>
-                                ETH {price}
+                                MATIC {price}
                             </Card.Text>
 
                         </Col>

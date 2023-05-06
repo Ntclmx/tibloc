@@ -4,13 +4,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import './detailTrx.css';
-import { GeoAltFill, Calendar2Fill, ClockFill, QrCodeScan } from 'react-bootstrap-icons';
-import Axios from 'axios';
+import { GeoAltFill, Calendar2Fill, ClockFill } from 'react-bootstrap-icons';
 import { withRouter } from 'react-router-dom';
-import Circle from '../../assets/events/circle.png';
-import Modal from 'react-bootstrap/Modal';
-import Moment from 'react-moment';
-import { getAllNftsOwnedBy } from '../../config/Blockchain.Service';
 import moment from 'moment';
 
 
@@ -18,8 +13,6 @@ const DetailTransaction = (props) => {
     const [nft, setNft] = useState({});
     const [cat, setCat] = useState({});
     const [event, setEvent] = useState({});
-    const [show, setShow] = useState(false);
-    const [showTicket, setShowTicket] = useState(false);
     const [mintDate, setMintDate] = useState('');
     const [flagDate, setFlagDate] = useState('');
 
@@ -147,7 +140,7 @@ const DetailTransaction = (props) => {
                                             <h5 className='detailTrxText2 mb-2'>Contract Address</h5>
                                         </Col>
                                         <Col className='col-8'>
-                                            <h5 className='detailTrxText text-uppercase mb-2'>{nft.flagDate}</h5>
+                                            <h5 className='detailTrxText text-uppercase mb-2'>0x5FF9fe701A652963D1B8FffE26F1EC3cfBF5F42d</h5>
 
                                         </Col>
                                         <Col className='col-4 '>

@@ -47,7 +47,7 @@ const CategoryCard = (props) => {
         <Card className='catCard text-start mb-3'>
             <Card.Header className='catCardHeader d-flex'>
                 <Card.Title className=' pb-0 mb-0'>{props.detailCat.categoryName}</Card.Title>
-                <Card.Title className='ms-auto'>ETH {props.detailCat.categoryPrice}</Card.Title>
+                <Card.Title className='ms-auto'>MATIC {props.detailCat.categoryPrice}</Card.Title>
             </Card.Header>
             <Card.Body className='d-flex p-0'>
                 <Card.Text className='muted catCardBodyText pt-2 mt-1 ms-3'>
