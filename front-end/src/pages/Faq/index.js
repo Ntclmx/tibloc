@@ -21,7 +21,7 @@ const Faq = () => {
 
     return (
         <div class="row">
-            <nav id="navbar-example3" class="col-sm-3 flex-column align-items-stretch p-3 cardFindFAQ">
+            <nav id="navbar-example3" class="col-sm-3 flex-column align-items-stretch p-3 cardFindFAQ text-white">
                 <div className="">
 
                     <a class="navbar-brand " href="/Faq">FAQ & Article</a>

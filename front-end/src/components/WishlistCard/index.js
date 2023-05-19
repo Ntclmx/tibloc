@@ -6,6 +6,7 @@ import EventImg from '../../assets/events/event1.jpg'
 import Image from 'react-bootstrap/Image';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
+import './wishistcard.css'
 
 
 const WishlistCard = (props) => {
@@ -52,15 +53,15 @@ const WishlistCard = (props) => {
     // const totalPrice = formatter.format(price);
     return (
         <Col col='4' className='col-4 pb-3 d-flex justify-content-start align-items-start'>
-            <Card className='created-event-card text-start shadow' onClick={() => history.push(`/event/${props._id}`)}>
+            <Card className='wishlist-event-card text-start ' onClick={() => history.push(`/event/${props._id}`)}>
                 <Card.Header className='event-card-header d-flex'>
                     <Image src={`${process.env.REACT_APP_API_URL}/${org.organizerLogo}`} className='event-card-promotor-image rounded-circle me-2' alt='promotor-img' />
                     <div className=''>
                         {org.organizerName}
                     </div>
                 </Card.Header>
-                <Card.Img className='created-event-card-image' variant="top" src={props.eventLogo} alt='event' />
-                <Card.Text className='position-absolute edit-event-card-date text-white py-1'>{props.eventDate}</Card.Text>
+                <Card.Img className='wishlist-event-card-image' variant="top" src={props.eventLogo} alt='event' />
+                <Card.Text className='position-absolute wishlist-card-date text-white py-1'>{props.eventDate}</Card.Text>
                 <Card.Body>
                     <Row>
                         <Col className='col-10'>

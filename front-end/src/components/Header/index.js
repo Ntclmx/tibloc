@@ -207,7 +207,7 @@ const Header = () => {
 
             <strong className="me-auto">Alert</strong>
           </Toast.Header>
-          <Toast.Body>You haven't installed Metamask in your browser yet, click here for the guide</Toast.Body>
+          <Toast.Body className='text-dark'>You haven't installed Metamask in your browser yet, click here for the guide</Toast.Body>
         </Toast>
       </ToastContainer>
       <Navbar expand="lg" >

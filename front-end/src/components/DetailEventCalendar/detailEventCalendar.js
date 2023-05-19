@@ -58,7 +58,7 @@ function DeleteModal(props) {
             aria-labelledby="contained-modal-title-vcenter"
             scrollable={false}
         >
-            <Modal.Header closeButton>
+            <Modal.Header closeButton className='btn-close-white'>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Delete Event
                 </Modal.Title>
@@ -187,6 +187,7 @@ const DetailEventCalendar = (props) => {
     return (
         <div className='ps-5'>
             <DeleteModal
+                
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 eventTitle={props.eventTitle}

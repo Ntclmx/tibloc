@@ -320,7 +320,7 @@ const CreateTickets = (props) => {
                   {isUpdate ? (
                     <Form.Control
 
-                      className="form-control-create-event"
+                      className="form-control-create-event text-dark"
                       type="text"
                       name="categoryName"
                       placeholder="Enter your ticket category name here"
@@ -372,7 +372,7 @@ const CreateTickets = (props) => {
                 <Col sm={10}>
                   {isUpdate ? (
                     <Form.Control
-                      className="form-control-create-event"
+                      className="form-control-create-event text-dark"
                       as="textarea"
                       name="categoryDescription"
                       placeholder="Enter your ticket category description here"
@@ -485,7 +485,7 @@ const CreateTickets = (props) => {
                       >
                         <Card className="justify-content-center align-items-center card-create-ticket-nft">
                           <Form.Control
-                            required
+                            
                             type="file"
                             className="form-control-create-event create-event-upload-image"
                             name="nftImage"
@@ -522,7 +522,7 @@ const CreateTickets = (props) => {
                         </Form.Label>
                         <Col sm={8}>
                           <Form.Control
-                            required
+                            
                             className="form-control-create-event"
                             type="text"
                             name="nftProbability"
@@ -540,7 +540,7 @@ const CreateTickets = (props) => {
                       >
                         <Card className="justify-content-center align-items-center card-create-ticket-nft">
                           <Form.Control
-                            required
+                            
                             type="file"
                             className="form-control-create-event create-event-upload-image"
                             name="nftImage"
@@ -577,7 +577,7 @@ const CreateTickets = (props) => {
                         </Form.Label>
                         <Col sm={8}>
                           <Form.Control
-                            required
+                            
                             className="form-control-create-event"
                             type="text"
                             name="nftProbability"

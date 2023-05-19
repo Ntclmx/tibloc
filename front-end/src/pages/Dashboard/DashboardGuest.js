@@ -7,7 +7,7 @@ import ArticleCard from "../../container/ArticleCard/ArticleCard";
 // import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 // import { getMe } from "../../features/authSlice";
-import CarouselImage1 from '../../assets/carousel/Home1.png';
+import CarouselImage1 from '../../assets/carousel/2.png';
 // import { UserContext } from '../MainApp/index'
 import Image from 'react-bootstrap/Image';
 import './dashboard.css'
