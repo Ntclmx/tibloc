@@ -117,7 +117,7 @@ const DetailEventCalendar = (props) => {
     }, [props, web3User])
 
     const disableDates = new Date('February 23, 2023');
-
+    console.log('webbbbbbbbbbbbbbbbbbbbbbbbbbbbb',web3User);
     const wishlistFunc = () => {
         if (bookmark === false) {
             const wishlist = {
@@ -194,7 +194,8 @@ const DetailEventCalendar = (props) => {
                 _id={props._id}
             />
             <div className='d-flex'>
-                {Component}
+                { web3User ? Component : <></>}
+                {/* {Component} */}
                 {editButton}
                 
             </div>
