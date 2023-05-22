@@ -15,7 +15,7 @@ const Footer = () => {
           <Col className='col-12 mb-3'>
             <Nav className="me-auto">
               <Nav.Link className='me-5 footerNavLink' href="/home">About Us</Nav.Link>
-              <Nav.Link className='mx-5 footerNavLink' href="/features">Help Center</Nav.Link>
+              <Nav.Link className='mx-5 footerNavLink' href="https://drive.google.com/drive/folders/1cqaIdXxQlWy1DXvEX68lJpk5RRkVypm7" target="_blank" rel="noreferrer">Help Center</Nav.Link>
               <Nav.Link className='mx-5 footerNavLink' href="/pricing">Privacy Policy</Nav.Link>
               <Nav.Link className='ms-5 footerNavLink' href="/pricing">Terms & Conditions</Nav.Link>
             </Nav>
