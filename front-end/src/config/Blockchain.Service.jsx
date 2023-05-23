@@ -38,7 +38,7 @@ const getEtheriumContract = async () => {
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
       setGlobalState('connectedAccount', accounts[0].toLowerCase())
     } catch (error) {
-      reportError(error)
+      reportError("Failed to connect wallet Metamask")
     }
   }
   
@@ -63,7 +63,7 @@ const getEtheriumContract = async () => {
         console.log('No accounts found.')
       }
     } catch (error) {
-      reportError(error)
+      reportError("No Wallet Found")
     }
   }
   
@@ -100,7 +100,7 @@ const getEtheriumContract = async () => {
       console.log('done call')
     //   setGlobalState('transactions', structuredNfts(transactions))
     } catch (error) {
-      reportError(error)
+      reportError("Failed to get All NFTs")
     }
   }
 
@@ -121,7 +121,7 @@ const getEtheriumContract = async () => {
       console.log(nftsOwned)
       setGlobalState('nftsOwned', nftsOwned);
     } catch (error){
-      reportError(error)
+      reportError("Failed to get All NFTs")
     }
   }
 
@@ -157,12 +157,13 @@ const getEtheriumContract = async () => {
       for(const nft of nftsOwned){
         if(nft.eventId){
           console.log(nft.eventId, eventId)
-          if(nft.eventId === eventId) throw new Error('User has already minted NFT from this event!')
+          if(nft.eventId === eventId) {
+            reportError('User has already minted NFT from this event!')
+          }
         }
       }
 
       await contract.methods.payToMint(title, description, tokenURI, eventCategoryId, eventId, eventDate).send({ from: account, value: mintPrice })
-
       console.log(`done process mintNFT blockchain service`)
       return true
     } catch (error) {
@@ -195,7 +196,7 @@ const getEtheriumContract = async () => {
   
       await contract.methods.changePrice(Number(id), cost).send({ from: buyer })
     } catch (error) {
-      reportError(error)
+      reportError("Failed to Update NFT")
     }
   }
 
@@ -213,7 +214,7 @@ const getEtheriumContract = async () => {
 
       await contract.methods.flagUsed(tokenId).send({from: buyer})
     }catch(error){
-      reportError(error)
+      reportError("Failed to Verify Ticket")
       return false
     }
 
@@ -221,9 +222,9 @@ const getEtheriumContract = async () => {
   }
   
   const reportError = (error) => {
-    setAlert(JSON.stringify(error), 'red')
+    setAlert(String(error).substring(6), 'red')
     console.log(error);
-    throw new Error('No ethereum object.')
+    throw new Error(error)
   }
   
   export {

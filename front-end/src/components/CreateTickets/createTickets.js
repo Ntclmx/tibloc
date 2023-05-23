@@ -182,8 +182,8 @@ const CreateTickets = (props) => {
                 }
               })
                 .then(res => {
-
                   console.log(res.data);
+                  setAlert("Create Event Succeed...", "green");
                   history.push("/events");
                 })
                 .catch(err => {
@@ -193,6 +193,7 @@ const CreateTickets = (props) => {
             .catch(err => {
               console.log(err.response.data);
             });
+            setLoading(false, "")
         })
         .catch(err => {
           console.log(err.response.data);

@@ -13,10 +13,12 @@ import Col from "react-bootstrap/Col";
 import { CategoryCard } from "../../components";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { useHistory } from 'react-router-dom';
 
 const ChooseTicket = (props) => {
   const [categories, setCategory] = useState({});
   const [event, setEvent] = useState({});
+  const history = useHistory();
 
   const [price, setPrice] = useState(0);
   const [chooseCategory, setChooseCategory] = useState("-");
@@ -98,7 +100,7 @@ const ChooseTicket = (props) => {
         });
 
         
-        setLoading(true, "Start Minting...")
+      setLoading(true, "Start Minting...")
       console.log(`Mint NFT...`)
       console.log(selCat.categoryPrice)
       const mint = await mintNFT(
@@ -127,12 +129,13 @@ const ChooseTicket = (props) => {
         });
 
       setAlert("Minting completed...", "green");
+      history.push({pathname : `/transactions/`});
       window.location.reload();
       }
       
     } catch (error) {
-      console.log("Minting Failed: ", error);
-      setAlert("Minting failed...", "red");
+      console.log("Minting Failed: ", String(error).substring(6));
+      setAlert(String(error).substring(6), "red");
     }
   };
 
